@@ -1,3 +1,17 @@
 CLAUDE.md
-__pycache__/
+
+# Large files live in the team Google Drive, never in git (CLAUDE.md Section 4)
+data/images/
+data/plates/*.png
+data/clips/
+models/
+
+# Python
 .venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store

@@ -26,8 +26,8 @@ def test_pair_overlap_rejected():
 
 def test_load_annotations(tmp_path):
     p = tmp_path / "pairs.json"
-    p.write_text('{"images": {"charts_001": [{"a": [[0,0],[1,0],[1,1]], "b": [[2,2],[3,2],[3,3]]}]}}')
-    assert len(load_annotations(p)["charts_001"]) == 1
+    p.write_text('{"images": {"charts_0001": [{"a": [[0,0],[1,0],[1,1]], "b": [[2,2],[3,2],[3,3]]}]}}')
+    assert len(load_annotations(p)["charts_0001"]) == 1
 
 
 def test_prepare_dataset(tmp_path):
@@ -45,7 +45,9 @@ def test_prepare_dataset(tmp_path):
     with manifest.open() as f:
         rows = list(csv.DictReader(f))
     assert len(rows) == 4 and sum(r["split"] == "tune" for r in rows) == 1
-    assert Image.open(out / "charts" / "charts_000.png").size == (64, 32)
+    assert Image.open(out / "charts" / "charts_0000.png").size == (64, 32)
+    assert rows[0]["image_id"] == "charts_0000"
+    assert rows[0]["file"].endswith("charts_0000.png")
 
 
 def test_study_no_logs(tmp_path):

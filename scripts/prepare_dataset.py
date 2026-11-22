@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import random
+import re
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -36,6 +37,7 @@ ALIASES = {
     "fruit (40)": "food",
     "food (40)": "food",
     "color coded items": "coded_items",
+    "coded items": "coded_items",
     "coded_items": "coded_items",
     "natural scenes": "natural",
     "natural": "natural",
@@ -121,7 +123,11 @@ def prepare(
                 f"Unknown category for {filename}: {category_label}"
             )
 
-        image_id = Path(filename).stem
+        original_id = Path(filename).stem
+        match = re.fullmatch(r"(.+?)_(\d+)", original_id)
+        if match is None:
+            raise ValueError(f"Invalid image ID format: {original_id}")
+        image_id = f"{match.group(1)}_{int(match.group(2)):04d}"
 
         if image_id in seen:
             raise ValueError(f"Duplicate image_id: {image_id}")

@@ -1,0 +1,53 @@
+# ChromaFix packaging and tool config. Maintained by: Anshika.
+# Dependencies follow CLAUDE.md Section 3. Install with:
+#   pip install -e ".[dev]"          core + dev tools
+#   pip install -e ".[dev,neural]"   add PyTorch for neural recoloring
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chromafix"
+version = "0.1.0"
+description = "Screening, simulation, and recoloring for color vision deficiency (CS 4391, Group 6)."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Anshika" }]
+dependencies = [
+    "numpy",
+    "scikit-image",
+    "Pillow",
+    "opencv-python",
+    "scipy",
+    "fastapi",
+    "uvicorn",
+    "python-multipart",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "colour-science",  # reference values in tests only
+    "httpx",           # required by FastAPI's TestClient in the server tests
+    "matplotlib",      # scripts/plot_eval.py
+]
+neural = [
+    "torch",
+    "torchvision",
+]
+
+[tool.setuptools.packages.find]
+include = ["chromafix*", "server*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]   # lets tests import scripts.* without installing them
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

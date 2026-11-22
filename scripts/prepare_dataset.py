@@ -36,6 +36,7 @@ ALIASES = {
     "fruit (40)": "food",
     "food (40)": "food",
     "color coded items": "coded_items",
+    "coded items": "coded_items",
     "coded_items": "coded_items",
     "natural scenes": "natural",
     "natural": "natural",

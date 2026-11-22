@@ -11,3 +11,6 @@ data/clips/
 models/
 # macOS metadata
 .DS_Store
+
+# Local raw image dataset
+data/raw_images/

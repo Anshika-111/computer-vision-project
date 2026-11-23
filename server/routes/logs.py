@@ -3,10 +3,12 @@
 import threading
 from datetime import datetime
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from server.schemas import MethodName, ProfileJSON
 
 router = APIRouter()
 
@@ -16,22 +18,6 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SafeId = Annotated[str, Field(pattern=r"^[A-Za-z0-9_-]{1,64}$")]
 
 _write_lock = threading.Lock()
-
-
-class ProfileJSON(BaseModel):
-    """JSON form of a CVDProfile (CLAUDE.md Section 6)."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    type: Literal["normal", "protan", "deutan", "tritan"]
-    severity: float = Field(ge=0.0, le=1.0)
-    confidence: float = Field(default=1.0, ge=0.0, le=1.0)
-
-    @model_validator(mode="after")
-    def _normal_has_zero_severity(self) -> "ProfileJSON":
-        if self.type == "normal" and self.severity != 0.0:
-            raise ValueError("severity must be 0.0 when type is 'normal'")
-        return self
 
 
 class StudyLog(BaseModel):
@@ -49,7 +35,7 @@ class StudyLog(BaseModel):
     game: SafeId
     trial_id: int = Field(ge=0)
     image_id: SafeId
-    condition: Literal["none", "fixed", "personalized", "neural"]
+    condition: MethodName
     answer: str = Field(max_length=64)
     correct: bool
     rt_ms: int = Field(ge=0)

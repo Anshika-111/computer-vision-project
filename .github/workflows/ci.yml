@@ -1,0 +1,66 @@
+# CI for ChromaFix: tests, lint, and web build on every PR and push to main.
+# Maintained by: Anshika. Mirrors the merge rules in CLAUDE.md Section 10.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Cancel an older run on the same branch when a new commit is pushed.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Run tests
+        run: pytest
+
+  lint:
+    name: ruff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install ruff (version pinned in pyproject.toml)
+        run: pip install "$(python -c 'import tomllib; d = tomllib.load(open("pyproject.toml", "rb")); print(next(x for x in d["project"]["optional-dependencies"]["dev"] if x.startswith("ruff")))')"
+      - name: Lint
+        run: ruff check . --output-format github
+      - name: Format check
+        if: ${{ !cancelled() }}  # report formatting even when lint fails
+        run: ruff format --check .
+
+  web:
+    name: web build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Type-check and build
+        run: npm run build

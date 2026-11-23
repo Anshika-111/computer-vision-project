@@ -28,7 +28,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "ruff",
+    "ruff==0.17.6",  # pinned so local and CI lint agree
     "colour-science",  # reference values in tests only
     "httpx",           # required by FastAPI's TestClient in the server tests
     "matplotlib",      # scripts/plot_eval.py

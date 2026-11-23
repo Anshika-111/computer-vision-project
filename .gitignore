@@ -14,3 +14,6 @@ models/
 
 # Local raw image dataset
 data/raw_images/
+
+# Python build metadata from pip install -e
+*.egg-info/

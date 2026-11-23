@@ -127,12 +127,12 @@ from chromafix.profile import CVDProfile
 from chromafix.simulate import simulate
 from chromafix.recolor import recolor
 
-img = load_image("data/images/charts/charts_0012.png")   # linear RGB, float32, [0, 1]
+img = load_image("data/images/charts/charts_0012.png")  # linear RGB, float32, [0, 1]
 me = CVDProfile(type="deutan", severity=0.6)
 
-seen = simulate(img, me.type, me.severity)                # what I see now
-fixed = recolor(img, me, method="personalized")           # corrected for me
-seen_fixed = simulate(fixed, me.type, me.severity)        # what I see after correction
+seen = simulate(img, me.type, me.severity)  # what I see now
+fixed = recolor(img, me, method="personalized")  # corrected for me
+seen_fixed = simulate(fixed, me.type, me.severity)  # what I see after correction
 
 save_image("out/seen_fixed.png", seen_fixed)
 ```

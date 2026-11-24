@@ -1,43 +1,44 @@
-// App shell. Author: Iris.
-// For now this only hosts live mode with fixed test matrices; the profile-driven
-// controls arrive once /api/matrix exists.
+// App shell: shared CVD profile plus the Screening, Images, and Live tabs. Author: Iris.
 import { useState } from "react";
 
-import type { Mat3 } from "./api";
-import { LiveView } from "./live/LiveView";
-import { IDENTITY } from "./live/matrix";
+import type { CVDProfile } from "./api";
+import { ImageView } from "./images/ImageView";
+import { LiveMode } from "./live/LiveMode";
+import { ProfileControls } from "./profile/ProfileControls";
+import { ScreeningView } from "./screening/ScreeningView";
 
-// Not symmetric on purpose: if the matrix reached the shader transposed,
-// red objects would turn blue instead of green.
-const CYCLE_CHANNELS: Mat3 = [
-  [0, 0, 1],
-  [1, 0, 0],
-  [0, 1, 0],
+type Tab = "screening" | "images" | "live";
+
+const TABS: { value: Tab; label: string }[] = [
+  { value: "screening", label: "Screening" },
+  { value: "images", label: "Images" },
+  { value: "live", label: "Live camera" },
 ];
 
-const TEST_MATRICES: { label: string; matrix: Mat3 }[] = [
-  { label: "Original", matrix: IDENTITY },
-  { label: "Test: red → green → blue → red", matrix: CYCLE_CHANNELS },
-];
+const DEFAULT_PROFILE: CVDProfile = { type: "deutan", severity: 1, confidence: 1 };
 
 export function App() {
-  const [selected, setSelected] = useState(0);
-  const matrix = TEST_MATRICES[selected]?.matrix ?? IDENTITY;
+  const [tab, setTab] = useState<Tab>("screening");
+  const [profile, setProfile] = useState<CVDProfile>(DEFAULT_PROFILE);
 
   return (
     <main>
       <h1>ChromaFix</h1>
-      <label>
-        View{" "}
-        <select value={selected} onChange={(event) => setSelected(Number(event.target.value))}>
-          {TEST_MATRICES.map((option, index) => (
-            <option key={option.label} value={index}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      <LiveView matrix={matrix} />
+      <ProfileControls profile={profile} onChange={setProfile} />
+      <nav className="tabs" aria-label="Sections">
+        {TABS.map((t) => (
+          <button
+            key={t.value}
+            aria-current={tab === t.value ? "page" : undefined}
+            onClick={() => setTab(t.value)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
+      {tab === "screening" && <ScreeningView onScored={setProfile} />}
+      {tab === "images" && <ImageView profile={profile} />}
+      {tab === "live" && <LiveMode profile={profile} />}
     </main>
   );
 }

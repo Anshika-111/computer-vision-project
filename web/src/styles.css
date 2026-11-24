@@ -24,3 +24,80 @@ main {
   height: auto;
   background: #000;
 }
+
+.muted {
+  color: #5c5c5c;
+  font-size: 0.9em;
+}
+
+.profile-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin: 16px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabs button {
+  padding: 8px 14px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.tabs button[aria-current="page"] {
+  border-bottom-color: #1a1a1a;
+  font-weight: 600;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.screening .plate {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 8px 0;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choices button {
+  min-width: 44px;
+  min-height: 44px;
+  font: inherit;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 16px;
+}
+
+.panels figure {
+  margin: 0;
+}
+
+.panels img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

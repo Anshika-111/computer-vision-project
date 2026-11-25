@@ -1,201 +1,201 @@
 image_id,category,file,source,source_url,license,photographer,lighting,split,has_pairs
-charts_0001,charts,data/images/charts/charts_0001.png,web,https://community.plotly.com/t/setting-color-scheme-on-bar-chart-grouped-by-two-columns/34801/7,,,na,test,false
-charts_0002,charts,data/images/charts/charts_0002.png,web,https://blogs.sas.com/content/iml/2024/02/28/group-colors-bar-chart.html,,,na,test,false
-charts_0003,charts,data/images/charts/charts_0003.png,web,https://michaeltoth.me/detailed-guide-to-the-bar-chart-in-r-with-ggplot.html,,,na,test,false
-charts_0004,charts,data/images/charts/charts_0004.png,web,https://daydreamingnumbers.com/what-are-heatmaps-and-what-is-a-good-way-to-use-one/,,,na,test,false
-charts_0005,charts,data/images/charts/charts_0005.png,web,https://www.displayr.com/how-to-create-a-heatmap-in-displayr/,,,na,tune,false
-charts_0006,charts,data/images/charts/charts_0006.png,web,https://apexcharts.com/angular-chart-demos/heatmap-charts/,,,na,tune,false
-charts_0007,charts,data/images/charts/charts_0007.png,web,https://blogs.sas.com/content/iml/2019/07/15/create-discrete-heat-map-sgplot.html,,,na,test,false
-charts_0008,charts,data/images/charts/charts_0008.png,web,https://python.plainenglish.io/heat-map-data-visualization-using-python-plotly-a-hands-on-example-92b5b7e0a9e7,,,na,tune,false
-charts_0009,charts,data/images/charts/charts_0009.png,web,https://fr.mathworks.com/help/matlab/ref/scatter.html,,,na,test,false
-charts_0010,charts,data/images/charts/charts_0010.png,web,https://www.researchgate.net/figure/Scatter-plot-with-points-color-coded-by-composer_fig5_364690185,,,na,test,false
-charts_0011,charts,data/images/charts/charts_0011.png,web,https://r-charts.com/correlation/scatter-plot-group/,,,na,test,false
-charts_0012,charts,data/images/charts/charts_0012.png,web,https://intoli.com/blog/resizing-matplotlib-legend-markers/,,,na,tune,false
-charts_0013,charts,data/images/charts/charts_0013.png,web,https://python-charts.com/matplotlib/markers/,,,na,test,false
-charts_0014,charts,data/images/charts/charts_0014.png,web,https://python-charts.com/correlation/scatter-plot-pandas/,,,na,test,false
-charts_0015,charts,data/images/charts/charts_0015.png,web,https://discourse.bokeh.org/t/how-to-make-scatter-plots-with-log-scale-on-both-axes/6745/#post-9,,,na,test,false
-charts_0016,charts,data/images/charts/charts_0016.png,web,https://towardsdatascience.com/matplotlib-vs-ggplot2-c86dd35a9378/,,,na,test,false
-charts_0017,charts,data/images/charts/charts_0017.png,web,https://towardsdatascience.com/matplotlib-vs-ggplot2-c86dd35a9378/,,,na,test,false
-charts_0018,charts,data/images/charts/charts_0018.png,web,https://r-charts.com/evolution/line-graph-multiple-lines-ggplot2/,,,na,test,false
-charts_0019,charts,data/images/charts/charts_0019.png,web,https://www.datarevelations.com/how-many-lines-are-too-many-lines/,,,na,test,false
-charts_0020,charts,data/images/charts/charts_0020.png,web,https://www.heap.io/blog/line-graph-redesign,,,na,tune,false
-charts_0021,charts,data/images/charts/charts_0021.png,web,https://forum.posit.co/t/creating-a-line-graph-with-multiple-lines/175611,,,na,test,false
-charts_0022,charts,data/images/charts/charts_0022.png,web,https://stephanieevergreen.com/ways-to-show-change-over-time/,,,na,test,false
-charts_0023,charts,data/images/charts/charts_0023.png,web,https://www.pythoncharts.com/pandas/multiple-columns-line-chart-pandas/,,,na,test,false
-charts_0024,charts,data/images/charts/charts_0024.png,web,https://www.amcharts.com/demos/v4/100-stacked-column-chart/,,,na,test,false
-charts_0025,charts,data/images/charts/charts_0025.png,web,https://www.cdc.gov/cove/data-visualization-types/stacked-bar-chart.html,,,na,test,false
-charts_0026,charts,data/images/charts/charts_0026.png,web,https://www.goldensoftware.com/stacked-bar-chart/,,,na,test,false
-charts_0027,charts,data/images/charts/charts_0027.png,web,https://datavizcatalogue.com/methods/stacked_bar_graph.html,,,na,test,false
-charts_0028,charts,data/images/charts/charts_0028.png,web,https://viz-ggplot2.rsquaredacademy.com/ggplot2-bar-plot,,,na,test,false
-charts_0029,charts,data/images/charts/charts_0029.png,web,https://datavizproject.com/data-type/stacked-bar-chart/,,,na,test,false
-charts_0030,charts,data/images/charts/charts_0030.png,web,https://www.anychart.com/ar/products/anychart/gallery/Bar_Charts/100_Percent_Stacked_Bar_Chart.php,,,na,test,false
-maps_0001,maps,data/images/maps/maps_0001.png,web,https://www.clearlyandsimply.com/2009/06/multicolored-choropleth-maps-with-excel/,,,na,test,false
-maps_0002,maps,data/images/maps/maps_0002.png,web,https://towardsdatascience.com/choropleth-maps-with-pandas-and-flourish-aea2ad9ec5e3/,,,na,tune,false
-maps_0003,maps,data/images/maps/maps_0003.png,web,https://datavizcatalogue.com/methods/choropleth.html,,,na,test,false
-maps_0004,maps,data/images/maps/maps_0004.png,web,https://populationeducation.org/what-is-a-choropleth-map-and-why-are-they-useful/,,,na,test,false
-maps_0005,maps,data/images/maps/maps_0005.png,web,https://towardsdatascience.com/simplest-way-of-creating-a-choropleth-map-by-u-s-states-in-python-f359ada7735e/,,,na,test,false
-maps_0006,maps,data/images/maps/maps_0006.png,web,https://www.clearlyandsimply.com/2014/06/drill-up-and-down-on-choropleth-maps-in-excel/,,,na,test,false
-maps_0007,maps,data/images/maps/maps_0007.png,web,https://r-graph-gallery.com/327-chloropleth-map-from-geojson-with-ggplot2.html,,,na,test,false
-maps_0008,maps,data/images/maps/maps_0008.png,web,https://www.printmag.com/information-design/a-visual-study-of-the-new-york-city-subway-map/,,,na,test,false
-maps_0009,maps,data/images/maps/maps_0009.png,web,https://broadwaygynecology.com/assets/images/mta-subway-map/,,,na,test,false
-maps_0010,maps,data/images/maps/maps_0010.png,web,https://ggwash.org/view/33340/what-if-the-nyc-subway-map-looked-like-the-dc-metros,,,na,test,false
-maps_0011,maps,data/images/maps/maps_0011.png,web,https://courses.ems.psu.edu/geog160/c3_p14.html,,,na,test,false
-maps_0012,maps,data/images/maps/maps_0012.png,web,https://courses.ems.psu.edu/geog160/c3_p14.html,,,na,test,false
-maps_0013,maps,data/images/maps/maps_0013.png,web,https://courses.ems.psu.edu/geog160/c3_p14.html,,,na,test,false
-maps_0014,maps,data/images/maps/maps_0014.png,web,https://www.tableau.com/blog/how-make-effective-bivariate-choropleth-maps-tableau-83121,,,na,tune,false
-maps_0015,maps,data/images/maps/maps_0015.png,web,https://tmap.geocompx.org/charts,,,na,tune,false
-maps_0016,maps,data/images/maps/maps_0016.png,web,https://socviz.co/07-maps.html,,,na,test,false
-maps_0017,maps,data/images/maps/maps_0017.png,web,https://magrit.cnrs.fr/en/functionalities/categorical-pictograms.html,,,na,test,false
-maps_0018,maps,data/images/maps/maps_0018.png,web,https://magrit.cnrs.fr/en/functionalities/choropleth.html,,,na,test,false
-maps_0019,maps,data/images/maps/maps_0019.png,web,https://www.weather.gov/mhx/ensoninoanomalies,,,na,test,false
-maps_0020,maps,data/images/maps/maps_0020.png,web,https://climateillinois.wordpress.com/2015/08/19/rainfall-and-temperatures-across-the-midwest-in-august/,,,na,test,false
-traffic_0001,traffic,data/images/traffic/traffic_0001.png,web,https://www.linkedin.com/pulse/design-traffic-signals-muhammad-bhatti-e60ue,,,na,tune,false
-traffic_0002,traffic,data/images/traffic/traffic_0002.png,web,https://www.fremont.gov/government/departments/transportation-engineering/traffic-signals,,,na,test,false
-traffic_0003,traffic,data/images/traffic/traffic_0003.png,web,https://www.michigan.gov/mdot/travel/safety/road-users/signals,,,na,test,false
-traffic_0004,traffic,data/images/traffic/traffic_0004.png,web,https://www.alphabetsigns.com/signs/signal-ahead-symbol-w33.html?gad_source=1&gad_campaignid=24267035269&gbraid=0AAAAAD_k5yQ0MtGoZQtHvVSjTLYDg3St2&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUUbq7tMwJj0F6aCJzgcLLDQfaLFkwJbHbzezD5LUCPT7AcS_MoHBs0aAmxZEALw_wcB,,,na,test,false
-traffic_0005,traffic,data/images/traffic/traffic_0005.png,web,https://www.signs.com/universal-traffic-signage-12-road-signs-you-will-see-in-every-us-state/?srsltid=AYCX9vIZ3jQ3aqxTH5SpbzGVpHcfSeqjPxrhRvZ4vR-7EExmFdgOLu12,,,na,test,false
-traffic_0006,traffic,data/images/traffic/traffic_0006.png,web,https://www.correctionenterprises.com/product/no-parking-restricted-parking-combined-sign/,,,na,test,false
-traffic_0007,traffic,data/images/traffic/traffic_0007.png,web,https://wjbq.com/friendly-reminder-to-everyone-who-forgot-this-simple-rule-at-traffic-lights-this-morning/,,,na,test,false
-traffic_0008,traffic,data/images/traffic/traffic_0008.png,web,https://driving-tests.org/road-signs/,,,na,test,false
-traffic_0009,traffic,data/images/traffic/traffic_0009.png,web,https://www.toyotaofnorthcharlotte.com/research/a-guide-on-common-road-signs/?srsltid=AYCX9vLIVo1NHdYdzUmy0nraac-kwmgUeT4XjaCX-E4j43WLuwvNXFQP,,,na,test,false
-traffic_0010,traffic,data/images/traffic/traffic_0010.png,web,https://www.linkedin.com/pulse/traffic-signals-troubling-truth-reggie-chandra,,,na,test,false
-traffic_0011,traffic,data/images/traffic/traffic_0011.png,web,https://www.seton.com/resource-center/trenchsafety/do-not-enter-traffic-signs-69137-ba/,,,na,test,false
-traffic_0012,traffic,data/images/traffic/traffic_0012.png,web,https://www.trafficsign.com/road-symbol-signs?srsltid=AYCX9vKEI4KaZ_OqXvc4omeoJslSTH-MUfWum6e68mMnoDI4rDA0uIsO,,,na,tune,false
-traffic_0013,traffic,data/images/traffic/traffic_0013.png,web,https://www.alphabetsigns.com/signs/stop-ahead-symbol-w31a.html?gad_source=1&gad_campaignid=24267035269&gbraid=0AAAAAD_k5yQ0MtGoZQtHvVSjTLYDg3St2&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUVY-ic1O2W1w3ld9gVckwnj5PU9f7b_X_ydq_DFMOZGxZWnjnbKf2saAredEALw_wcB,,,na,test,false
-traffic_0014,traffic,data/images/traffic/traffic_0014.png,web,https://www.trafficsafetywarehouse.com/Resources/traffic-sign-shapes-and-their-meanings.asp?srsltid=AYCX9vJPw5oUPVVRVkNUHOZ4yNDeieB-QXUO3q9eP7EibBUbXwPn-DWm,,,na,test,false
-traffic_0015,traffic,data/images/traffic/traffic_0015.png,web,https://www.toyotaofnorthcharlotte.com/research/a-guide-on-common-road-signs/?srsltid=AYCX9vJPLomtVXdKq6gw8AD32zF35Et4GydITgA4HPV-u4DoELrK1vqJ,,,na,tune,false
-traffic_0016,traffic,data/images/traffic/traffic_0016.png,web,https://www.trafficsign.com/?srsltid=AYCX9vKrDlyGUPPz9Pmbnja-cDrm03yRr3E_Xlw2KiMHLzUbBBvF4bVb,,,na,test,false
-traffic_0017,traffic,data/images/traffic/traffic_0017.png,web,https://www.trafficconesforless.com/roll-up-traffic-sign-slow.html?srsltid=AYCX9vIrFExNEVoibanSZkXGYnRgR23MatHopYG16hinvQVVWO1_BU8F,,,na,test,false
-traffic_0018,traffic,data/images/traffic/traffic_0018.png,web,https://www.trafficsign.com/mutcd-warning-signs?srsltid=AYCX9vITpOT-nvpFVSV3dD8yeP6B4k3RC22tn-S6qAzke40DNbuSLMFW,,,na,tune,false
-traffic_0019,traffic,data/images/traffic/traffic_0019.png,web,https://www.roadtrafficsigns.com/traffic-control-sign/cross-road-symbol-sign/sku-x-w2-1?srsltid=AYCX9vIN_nCVH14UwoK0YUg9DXBhZg7tAP0I4HarIs_X7oYyj5_vSq90,,,na,test,false
-traffic_0020,traffic,data/images/traffic/traffic_0020.png,web,https://emergencyresponderproducts.com/products/36-dot-orange-portable-traffic-signs,,,na,test,false
-traffic_0021,traffic,data/images/traffic/traffic_0021.png,web,https://zutobi.com/us/driver-guides/warning-signs,,,na,test,false
-traffic_0022,traffic,data/images/traffic/traffic_0022.png,web,https://www.trafficconesforless.com/official-mutcd-one-way-traffic-sign-right-arrow.html?srsltid=AYCX9vLV61A6NyrLuV6b2yDVJc2oBzRroNQFwSYHkNgFqAVi6AE7b6y3,,,na,test,false
-traffic_0023,traffic,data/images/traffic/traffic_0023.png,web,https://startcdl.com/signs/slippery-road-sign,,,na,test,false
-traffic_0024,traffic,data/images/traffic/traffic_0024.png,web,https://www.michigan.gov/mdot/travel/safety/road-users/signals,,,na,test,false
-traffic_0025,traffic,data/images/traffic/traffic_0025.png,web,https://www.toyotaofnorthcharlotte.com/research/a-guide-on-common-road-signs/?srsltid=AYCX9vJM5gYrm5MR_uuhG3P85iCYiGyaHFSnu6KpqPfDa7nzF5ImmTF9,,,na,test,false
-traffic_0026,traffic,data/images/traffic/traffic_0026.png,web,https://www.seton.com/reflective-warning-signs-divided-highway-symbol-vc1641.html,,,na,test,false
-traffic_0027,traffic,data/images/traffic/traffic_0027.png,web,https://www.emedco.com/road-closed-traffic-sign-rm238.html,,,na,test,false
-traffic_0028,traffic,data/images/traffic/traffic_0028.png,web,https://www.istockphoto.com/illustrations/school-traffic-signs,,,na,test,false
-traffic_0029,traffic,data/images/traffic/traffic_0029.png,web,https://www.rd.com/article/traffic-lights/,,,na,test,false
-traffic_0030,traffic,data/images/traffic/traffic_0030.png,web,https://www.vdot.virginia.gov/news-events/news/fredericksburg-district/fredericksburg-district-weekly-traffic-alert-oct-25-31-2026.php,,,na,test,false
-charts_0031,charts,data/images/charts/charts_0031.png,web,https://eazybi.com/blog/data-visualization-and-chart-types,,,na,tune,false
-charts_0032,charts,data/images/charts/charts_0032.png,web,https://blog.davingranroth.com/2024/12/better-year-over-year-line-graphs-using-time-as-a-visual-metaphor/,,,na,test,false
-charts_0033,charts,data/images/charts/charts_0033.png,web,https://guides.lib.berkeley.edu/data-visualization/type,,,na,test,false
-charts_0034,charts,data/images/charts/charts_0034.png,web,https://www.defteam.com/blogs/data-visualization-best-practices-part-1-choosing-the-right-colors-for-bar-charts,,,na,test,false
-charts_0035,charts,data/images/charts/charts_0035.png,web,https://www.anychart.com/blog/2017/05/04/data-distribution-chart-types/,,,na,test,false
-charts_0036,charts,data/images/charts/charts_0036.png,web,https://www.simplexnumerica.com/features/charts/,,,na,test,false
-charts_0037,charts,data/images/charts/charts_0037.png,web,https://blogs.sas.com/content/iml/2023/01/30/tips-colorblind-safe-graphs.html,,,na,test,false
-charts_0038,charts,data/images/charts/charts_0038.png,web,https://www.johnmyleswhite.com/notebook/2009/03/02/color-schemes-for-r-bar-plots/,,,na,test,false
-charts_0039,charts,data/images/charts/charts_0039.png,web,https://discourse.julialang.org/t/color-blind-friendly-color-sequence-palette-for-line-graphs/92551,,,na,test,false
-charts_0040,charts,data/images/charts/charts_0040.png,web,https://clauswilke.com/dataviz/color-pitfalls.html,,,na,test,false
-maps_0021,maps,data/images/maps/maps_0021.png,web,https://www.reddit.com/r/gis/comments/frl8fw/510_of_the_us_population_is_colorblind/,,,na,tune,false
-maps_0022,maps,data/images/maps/maps_0022.png,web,https://www.reddit.com/r/JackSucksAtGeography/comments/1lxmc2d/map_that_shows_which_us_states_are_more_or_less/,,,na,test,false
-maps_0023,maps,data/images/maps/maps_0023.png,web,https://i0.wp.com/transitmap.net/wp-content/uploads/2011/11/tumblr_lu9ygowAek1r54c4oo3_1280.jpg?ssl=1,,,na,test,false
-maps_0024,maps,data/images/maps/maps_0024.png,web,https://www.ebay.com/itm/146584732029,,,na,test,false
-maps_0025,maps,data/images/maps/maps_0025.png,web,https://www.color-blindness.com/2012/04/04/subway-maps-for-colorblind-people/,,,na,test,false
-maps_0026,maps,data/images/maps/maps_0026.png,web,https://ggwash.org/view/820/metro-proposes-new-brown-line,,,na,tune,false
-maps_0027,maps,data/images/maps/maps_0027.png,web,https://www.colourblindawareness.org/education/secondary-school-higher-education/,,,na,test,false
-maps_0028,maps,data/images/maps/maps_0028.png,web,https://www.reddit.com/r/MapPorn/comments/1ratfnu/color_blindness_prevalence_by_us_state/,,,na,test,false
-maps_0029,maps,data/images/maps/maps_0029.png,web,https://www.amazon.com/clp/B077MLRTZB?lv=shuf&channelId=500,,,na,test,false
-maps_0030,maps,data/images/maps/maps_0030.png,web,https://www.lifeingis.com/colour-blind-maps/,,,na,test,false
-food_0001,food,data/images/food/food_0001.png,team,,Team-created,Iris,na,test,false
-food_0002,food,data/images/food/food_0002.png,team,,Team-created,Iris,na,test,false
-food_0003,food,data/images/food/food_0003.png,team,,Team-created,Iris,na,test,false
-food_0004,food,data/images/food/food_0004.png,team,,Team-created,Iris,na,test,false
-food_0005,food,data/images/food/food_0005.png,web,https://commons.wikimedia.org/wiki/File:Red_and_green_apples_02.jpg,CC BY-SA 4.0,,na,test,false
-food_0006,food,data/images/food/food_0006.png,web,https://commons.wikimedia.org/wiki/File:Green_and_Red_Apples.jpg,CC BY 2.0,,na,test,false
-food_0007,food,data/images/food/food_0007.png,web,"https://commons.wikimedia.org/wiki/File:Solanum_lycopersicum_Cuor_di_Bue_(oxheart_tomato),_view_2_(SaatPilot).jpg",CC BY 4.0,,na,test,false
-food_0008,food,data/images/food/food_0008.png,web,"https://commons.wikimedia.org/wiki/File:Red,_Yellow,_and_Green_bell_peppers.jpg",CC0,,na,test,false
-food_0009,food,data/images/food/food_0009.png,web,https://commons.wikimedia.org/wiki/File:Bell_peppers_2020_G2.jpg,CC BY-SA 4.0,,na,tune,false
-food_0010,food,data/images/food/food_0010.png,web,https://commons.wikimedia.org/wiki/File:Green_yellow_bananas_dsc07775.jpg,CC BY-SA 3.0,,na,test,false
-food_0011,food,data/images/food/food_0011.png,web,"https://commons.wikimedia.org/wiki/File:Grapes,_Rostov-on-Don,_Russia.jpg",CC BY 4.0,,na,tune,false
-food_0012,food,data/images/food/food_0012.png,web,https://commons.wikimedia.org/wiki/File:2007-03-10_Fruit_galore_in_the_sink.jpg,CC BY-SA 3.0,,na,test,false
-food_0013,food,data/images/food/food_0013.png,web,https://commons.wikimedia.org/wiki/File:Assortment_of_fruit.jpg,Public domain,,na,test,false
-food_0014,food,data/images/food/food_0014.png,web,https://commons.wikimedia.org/wiki/File:Cherry_Stella444.jpg,CC BY-SA 3.0,,na,test,false
-food_0015,food,data/images/food/food_0015.png,web,"https://commons.wikimedia.org/wiki/File:Watermelon_slice,_May_2024.jpg",CC BY-SA 4.0,,na,test,false
-food_0016,food,data/images/food/food_0016.png,web,https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Kiwi_and_mandarin.jpg,CC BY-SA 4.0,,na,test,false
-food_0017,food,data/images/food/food_0017.png,web,https://commons.wikimedia.org/wiki/File:Kiwi_fruit_pastel.jpg,CC BY-SA 4.0,,na,test,false
-food_0018,food,data/images/food/food_0018.png,web,https://commons.wikimedia.org/wiki/File:VitorJubini_MercadoDaVilaRubim_Vitoria_ES_(39182859020)_(square_crop).jpg,Public domain,,na,test,false
-food_0019,food,data/images/food/food_0019.png,web,https://commons.wikimedia.org/wiki/File:Green_and_Red_Chili_Pepper_(28495251725).jpg,CC BY-SA 2.0,,na,test,false
-food_0020,food,data/images/food/food_0020.png,web,https://commons.wikimedia.org/wiki/File:Red_and_green_peppers_on_white_place_with_black_background.jpg,CC BY-SA 4.0,,na,test,false
-food_0021,food,data/images/food/food_0021.png,web,https://commons.wikimedia.org/wiki/File:Outdoor_market_fruit_and_vegetable_stall_Market_Place_Romford_London_01.jpg,CC BY-SA 4.0,,na,test,false
-food_0022,food,data/images/food/food_0022.png,web,https://commons.wikimedia.org/wiki/File:Vegetable_stall._Municipal_Market._-_G%C3%B6d%C3%B6ll%C5%91.JPG,CC BY-SA 3.0,,na,test,false
-food_0023,food,data/images/food/food_0023.png,web,https://commons.wikimedia.org/wiki/File:Colorful_Macarons_(Unsplash).jpg,CC0,,na,test,false
-food_0024,food,data/images/food/food_0024.png,web,https://commons.wikimedia.org/wiki/File:A_rainbow_of_macarons_(part_deux).jpg,CC BY-SA 2.0,,na,test,false
-food_0025,food,data/images/food/food_0025.png,web,https://commons.wikimedia.org/wiki/File:Colorful_Spices_and_Teas.jpg,CC BY 2.0,,na,test,false
-food_0026,food,data/images/food/food_0026.png,web,https://commons.wikimedia.org/wiki/File:Do_I_look_colorful_%3F_(Unsplash).jpg,CC0,,na,test,false
-food_0027,food,data/images/food/food_0027.png,web,https://commons.wikimedia.org/wiki/File:Picture_of_many_carrots.jpg,CC0,,na,test,false
-food_0028,food,data/images/food/food_0028.png,web,https://commons.wikimedia.org/wiki/File:Rainbow_food.jpg,CC BY-SA 4.0,,na,test,false
-food_0029,food,data/images/food/food_0029.png,web,https://commons.wikimedia.org/wiki/File:Low_hanging_ripe_and_unripe_Mango_fruits.jpg,CC BY-SA 4.0,,na,tune,false
-food_0030,food,data/images/food/food_0030.png,web,https://commons.wikimedia.org/wiki/File:Peaches_and_plums.jpg,CC BY-SA 4.0,,na,tune,false
-food_0031,food,data/images/food/food_0031.png,web,https://commons.wikimedia.org/wiki/File:Sweets_(5837143346).jpg,CC BY 2.0,,na,test,false
-food_0032,food,data/images/food/food_0032.png,web,https://commons.wikimedia.org/wiki/File:Colored_sweets.jpg,CC BY-SA 4.0,,na,test,false
-food_0033,food,data/images/food/food_0033.png,web,https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Mixed_fruit_platter.jpg,CC BY-SA 4.0,,na,test,false
-food_0034,food,data/images/food/food_0034.png,web,https://commons.wikimedia.org/wiki/File:Pizza_Margherita_01.jpg,CC BY-SA 4.0,,na,test,false
-food_0035,food,data/images/food/food_0035.png,web,"https://commons.wikimedia.org/wiki/File:Five_Lemons_on_lemon_tree,_Burj_Bhalaike.jpg",CC BY-SA 4.0,,na,test,false
-food_0036,food,data/images/food/food_0036.png,web,https://commons.wikimedia.org/wiki/File:Fig_cut_open.jpg,CC BY-SA 3.0,,na,test,false
-food_0037,food,data/images/food/food_0037.png,web,https://commons.wikimedia.org/wiki/File:Webysther_20150409032418_-_Pitaya.jpg,CC BY-SA 4.0,,na,test,false
-food_0038,food,data/images/food/food_0038.png,web,https://commons.wikimedia.org/wiki/File:Fresh_Cut_Papaya_With_Zillions_of_Seeds_(33812163615).jpg,CC BY 2.0,,na,tune,false
-food_0039,food,data/images/food/food_0039.png,web,https://commons.wikimedia.org/wiki/File:A_Bunch_of_Radishes.JPG,CC BY-SA 4.0,,na,tune,false
-food_0040,food,data/images/food/food_0040.png,web,https://commons.wikimedia.org/wiki/File:Gallery_1.JPG,CC BY-SA 3.0,,na,test,false
-natural_0001,natural,data/images/natural/natural_0001.png,team,,Team-created,Iris,na,test,false
-natural_0002,natural,data/images/natural/natural_0002.png,team,,Team-created,Iris,na,test,false
-natural_0003,natural,data/images/natural/natural_0003.png,team,,Team-created,Iris,na,tune,false
-natural_0004,natural,data/images/natural/natural_0004.png,team,,Team-created,Iris,na,test,false
-natural_0005,natural,data/images/natural/natural_0005.png,team,,Team-created,Iris,na,tune,false
-natural_0006,natural,data/images/natural/natural_0006.png,team,,Team-created,Iris,na,test,false
-natural_0007,natural,data/images/natural/natural_0007.png,team,,Team-created,Iris,na,test,false
-natural_0008,natural,data/images/natural/natural_0008.png,team,,Team-created,Iris,na,test,false
-natural_0009,natural,data/images/natural/natural_0009.png,team,,Team-created,Iris,na,test,false
-natural_0010,natural,data/images/natural/natural_0010.png,team,,Team-created,Iris,na,tune,false
-natural_0011,natural,data/images/natural/natural_0011.png,team,,Team-created,Iris,na,test,false
-natural_0012,natural,data/images/natural/natural_0012.png,team,,Team-created,Iris,na,test,false
-natural_0013,natural,data/images/natural/natural_0013.png,web,"https://commons.wikimedia.org/wiki/File:Red_oak_changing_color,_Field_Loop_Trail,_Plimpton_Community_Forest,_2025-10-18.jpg",CC0,,na,test,false
-natural_0014,natural,data/images/natural/natural_0014.png,web,https://commons.wikimedia.org/wiki/File:Red-fall-foliage_-_West_Virginia_-_ForestWander.jpg,CC BY-SA 3.0 us,,na,test,false
-natural_0015,natural,data/images/natural/natural_0015.png,web,"https://commons.wikimedia.org/wiki/File:Poppy_field,_Wendfeld.jpg",CC BY-SA 4.0,,na,test,false
-natural_0016,natural,data/images/natural/natural_0016.png,web,https://commons.wikimedia.org/wiki/File:Tulip_field_29-03-24.jpg,CC BY-SA 4.0,,na,test,false
-natural_0017,natural,data/images/natural/natural_0017.png,web,https://commons.wikimedia.org/wiki/File:Sunset_over_the_North_Sea_in_Ostend.jpg,CC BY-SA 4.0,,na,test,false
-natural_0018,natural,data/images/natural/natural_0018.png,web,"https://commons.wikimedia.org/wiki/File:Zagedan_Lakes,_Mountain_cirque,_Caucasus_Mountains.jpg",CC BY 4.0,,na,test,false
-natural_0019,natural,data/images/natural/natural_0019.png,web,"https://commons.wikimedia.org/wiki/File:Jokulsarlon_lake,_Iceland.jpg",CC BY 2.0,,na,test,false
-natural_0020,natural,data/images/natural/natural_0020.png,web,https://commons.wikimedia.org/wiki/File:Grand_Canyon_Hopi_Point_with_rainbow_2013.jpg,CC BY-SA 3.0,,na,tune,false
-natural_0021,natural,data/images/natural/natural_0021.png,web,https://commons.wikimedia.org/wiki/File:Northern_lights_-_green_glow_across_the_sky_(8586211047).jpg,CC BY 2.0,,na,test,false
-natural_0022,natural,data/images/natural/natural_0022.png,web,https://commons.wikimedia.org/wiki/File:Aerial_image_of_Grand_Prismatic_Spring_(view_from_the_south).jpg,CC BY-SA 4.0,,na,test,false
-natural_0023,natural,data/images/natural/natural_0023.png,web,"https://commons.wikimedia.org/wiki/File:Bali,_Rice_fields,_Rice_terraces_in_East_Bali,_Indonesia.jpg",CC BY 4.0,,na,test,false
-natural_0024,natural,data/images/natural/natural_0024.png,web,https://commons.wikimedia.org/wiki/File:006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg,CC BY-SA 4.0,,na,test,false
-natural_0025,natural,data/images/natural/natural_0025.png,web,"https://commons.wikimedia.org/wiki/File:Havelock_Island,_Mangrove_tree_on_the_beach,_Andaman_Islands.jpg",CC BY 4.0,,na,test,false
-natural_0026,natural,data/images/natural/natural_0026.png,web,"https://commons.wikimedia.org/wiki/File:Blue_icebergs_floating_in_Liefdefjord,_Svalbard.jpg",CC BY-SA 4.0,,na,test,false
-natural_0027,natural,data/images/natural/natural_0027.png,web,"https://commons.wikimedia.org/wiki/File:Beech_Forest_(AU),_Great_Otway_National_Park,_Beauchamp_Falls_--_2019_--_1271.jpg",CC BY-SA 4.0,,na,test,false
-natural_0028,natural,data/images/natural/natural_0028.png,web,https://commons.wikimedia.org/wiki/File:Pontypool_Park_Cherry_Trees.jpg,CC BY 4.0,,na,test,false
-natural_0029,natural,data/images/natural/natural_0029.png,web,https://commons.wikimedia.org/wiki/File:Lower_Antelope_Canyon_478.jpg,CC BY-SA 3.0,,na,test,false
-natural_0030,natural,data/images/natural/natural_0030.png,web,"https://commons.wikimedia.org/wiki/File:Mt._Forbes_in_Alpenglow,_from_Arctomys_Peak.jpg",CC BY-SA 4.0,,na,test,false
-coded_items_0001,coded_items,data/images/coded_items/coded_items_0001.png,web,https://commons.wikimedia.org/wiki/File:Bunte-kabel.jpg,Public domain,,na,test,false
-coded_items_0002,coded_items,data/images/coded_items/coded_items_0002.png,web,https://commons.wikimedia.org/wiki/File:Rainbow_Cable.jpg,CC BY-SA 4.0,,na,test,false
-coded_items_0003,coded_items,data/images/coded_items/coded_items_0003.png,web,https://commons.wikimedia.org/wiki/File:Yamaha_K-340_rainbow_cabling.jpg,CC0,,na,test,false
-coded_items_0004,coded_items,data/images/coded_items/coded_items_0004.png,web,"https://commons.wikimedia.org/wiki/File:V%C3%ADdeo_component_cable_(video_on_right_side_-_green,_blue,_and_red)_and_analog_stereo_(left_side,_red_and_white)_for_Sony_Playstation_2.jpg",CC BY 2.0,,na,test,false
-coded_items_0005,coded_items,data/images/coded_items/coded_items_0005.png,web,https://commons.wikimedia.org/wiki/File:Color-coded_recycling_bins_(17820971264).jpg,CC BY 2.0,,na,test,false
-coded_items_0006,coded_items,data/images/coded_items/coded_items_0006.png,web,https://commons.wikimedia.org/wiki/File:VariousPills.jpg,CC BY-SA 3.0,,na,test,false
-coded_items_0007,coded_items,data/images/coded_items/coded_items_0007.png,web,https://commons.wikimedia.org/wiki/File:Colored_pencils_chevre.jpg,CC BY-SA 3.0,,na,test,false
-coded_items_0008,coded_items,data/images/coded_items/coded_items_0008.png,web,https://commons.wikimedia.org/wiki/File:Colouring_pencils.jpg,CC BY-SA 3.0,,na,test,false
-coded_items_0009,coded_items,data/images/coded_items/coded_items_0009.png,web,https://commons.wikimedia.org/wiki/File:Crayons_box.jpg,CC0,,na,tune,false
-coded_items_0010,coded_items,data/images/coded_items/coded_items_0010.png,web,https://commons.wikimedia.org/wiki/File:Box_of_crayons_IMG_0009.jpg,CC BY 2.0,,na,test,false
-coded_items_0011,coded_items,data/images/coded_items/coded_items_0011.png,web,https://commons.wikimedia.org/wiki/File:Colorful_Connections.jpg,CC BY 4.0,,na,test,false
-coded_items_0012,coded_items,data/images/coded_items/coded_items_0012.png,web,https://commons.wikimedia.org/wiki/File:Lego_Color_Bricks.jpg,CC BY-SA 2.0,,na,tune,false
-coded_items_0013,coded_items,data/images/coded_items/coded_items_0013.png,web,https://commons.wikimedia.org/wiki/File:Lego_2014.JPG,CC0,,na,test,false
-coded_items_0014,coded_items,data/images/coded_items/coded_items_0014.png,web,https://commons.wikimedia.org/wiki/File:Rubiks_cube_by_keqs.jpg,CC BY-SA 3.0,,na,test,false
-coded_items_0015,coded_items,data/images/coded_items/coded_items_0015.png,web,"https://commons.wikimedia.org/wiki/File:Rubik%27s_cube,_CN_II.jpg",CC BY-SA 3.0,,na,test,false
-coded_items_0016,coded_items,data/images/coded_items/coded_items_0016.png,web,https://commons.wikimedia.org/wiki/File:Billiard_Rack.jpg,CC BY-SA 3.0,,na,test,false
-coded_items_0017,coded_items,data/images/coded_items/coded_items_0017.png,web,https://commons.wikimedia.org/wiki/File:Baseball_pool_balls_and_rack.png,CC BY-SA 3.0,,na,tune,false
-coded_items_0018,coded_items,data/images/coded_items/coded_items_0018.png,web,https://commons.wikimedia.org/wiki/File:Snooker_table_with_balls_in_storage.jpg,CC BY-SA 4.0,,na,test,false
-coded_items_0019,coded_items,data/images/coded_items/coded_items_0019.png,web,https://commons.wikimedia.org/wiki/File:Ludu_board.jpg,CC BY-SA 4.0,,na,test,false
-coded_items_0020,coded_items,data/images/coded_items/coded_items_0020.png,web,https://commons.wikimedia.org/wiki/File:Spielfiguren_--_2021_--_4713.jpg,CC BY-SA 4.0,,na,tune,false
-coded_items_0021,coded_items,data/images/coded_items/coded_items_0021.png,web,https://commons.wikimedia.org/wiki/File:Wooden_spools_of_sewing_thread_in_different_colors_6.jpg,CC BY-SA 4.0,,na,test,false
-coded_items_0022,coded_items,data/images/coded_items/coded_items_0022.png,web,"https://commons.wikimedia.org/wiki/File:Colorful_yarns._Punchneedle_workshops,_Lodz_Design_Festival_2024.jpg",Public domain,,na,test,false
-coded_items_0023,coded_items,data/images/coded_items/coded_items_0023.png,web,https://commons.wikimedia.org/wiki/File:CSIRO_ScienceImage_1853_Fabric_Swatches.jpg,CC BY 3.0,,na,test,false
-coded_items_0024,coded_items,data/images/coded_items/coded_items_0024.png,web,https://commons.wikimedia.org/wiki/File:Basic_gas_cylinder_color_codes_according_to_EN_1089-3.png,CC BY-SA 4.0,,na,test,false
-coded_items_0025,coded_items,data/images/coded_items/coded_items_0025.png,web,https://commons.wikimedia.org/wiki/File:Shipping_container_pattern_(Unsplash).jpg,CC0,,na,test,false
-coded_items_0026,coded_items,data/images/coded_items/coded_items_0026.png,web,"https://commons.wikimedia.org/wiki/File:Bruns_Monocord-6020_-_status_LEDs_red,_green,_yellow-0188.jpg",CC BY-SA 4.0,,na,test,false
-coded_items_0027,coded_items,data/images/coded_items/coded_items_0027.png,web,"https://commons.wikimedia.org/wiki/File:Surecom_EP-427_-_UTP-STP_media_coupler_-_board_-_status_LEDs_orange,_yellow,_red,_green-7601.jpg",CC BY-SA 4.0,,na,test,false
-coded_items_0028,coded_items,data/images/coded_items/coded_items_0028.png,web,https://commons.wikimedia.org/wiki/File:Bins_of_assorted_color_LEDs_(17174139098).jpg,CC BY 2.0,,na,test,false
-coded_items_0029,coded_items,data/images/coded_items/coded_items_0029.png,web,https://commons.wikimedia.org/wiki/File:LEDs.jpg,CC BY-SA 2.0,,na,test,false
-coded_items_0030,coded_items,data/images/coded_items/coded_items_0030.png,web,https://commons.wikimedia.org/wiki/File:Balloons_Colorful_Shooting_Gallery_Folk_Festival.jpg,CC0,,na,tune,false
+charts_0001,charts,data/images/charts/charts_0001.png,web,https://community.plotly.com/t/setting-color-scheme-on-bar-chart-grouped-by-two-columns/34801/7,,,na,test,0
+charts_0002,charts,data/images/charts/charts_0002.png,web,https://blogs.sas.com/content/iml/2024/02/28/group-colors-bar-chart.html,,,na,test,0
+charts_0003,charts,data/images/charts/charts_0003.png,web,https://michaeltoth.me/detailed-guide-to-the-bar-chart-in-r-with-ggplot.html,,,na,test,0
+charts_0004,charts,data/images/charts/charts_0004.png,web,https://daydreamingnumbers.com/what-are-heatmaps-and-what-is-a-good-way-to-use-one/,,,na,test,0
+charts_0005,charts,data/images/charts/charts_0005.png,web,https://www.displayr.com/how-to-create-a-heatmap-in-displayr/,,,na,tune,0
+charts_0006,charts,data/images/charts/charts_0006.png,web,https://apexcharts.com/angular-chart-demos/heatmap-charts/,,,na,tune,0
+charts_0007,charts,data/images/charts/charts_0007.png,web,https://blogs.sas.com/content/iml/2019/07/15/create-discrete-heat-map-sgplot.html,,,na,test,0
+charts_0008,charts,data/images/charts/charts_0008.png,web,https://python.plainenglish.io/heat-map-data-visualization-using-python-plotly-a-hands-on-example-92b5b7e0a9e7,,,na,tune,0
+charts_0009,charts,data/images/charts/charts_0009.png,web,https://fr.mathworks.com/help/matlab/ref/scatter.html,,,na,test,0
+charts_0010,charts,data/images/charts/charts_0010.png,web,https://www.researchgate.net/figure/Scatter-plot-with-points-color-coded-by-composer_fig5_364690185,,,na,test,0
+charts_0011,charts,data/images/charts/charts_0011.png,web,https://r-charts.com/correlation/scatter-plot-group/,,,na,test,0
+charts_0012,charts,data/images/charts/charts_0012.png,web,https://intoli.com/blog/resizing-matplotlib-legend-markers/,,,na,tune,0
+charts_0013,charts,data/images/charts/charts_0013.png,web,https://python-charts.com/matplotlib/markers/,,,na,test,0
+charts_0014,charts,data/images/charts/charts_0014.png,web,https://python-charts.com/correlation/scatter-plot-pandas/,,,na,test,0
+charts_0015,charts,data/images/charts/charts_0015.png,web,https://discourse.bokeh.org/t/how-to-make-scatter-plots-with-log-scale-on-both-axes/6745/#post-9,,,na,test,0
+charts_0016,charts,data/images/charts/charts_0016.png,web,https://towardsdatascience.com/matplotlib-vs-ggplot2-c86dd35a9378/,,,na,test,0
+charts_0017,charts,data/images/charts/charts_0017.png,web,https://towardsdatascience.com/matplotlib-vs-ggplot2-c86dd35a9378/,,,na,test,0
+charts_0018,charts,data/images/charts/charts_0018.png,web,https://r-charts.com/evolution/line-graph-multiple-lines-ggplot2/,,,na,test,0
+charts_0019,charts,data/images/charts/charts_0019.png,web,https://www.datarevelations.com/how-many-lines-are-too-many-lines/,,,na,test,0
+charts_0020,charts,data/images/charts/charts_0020.png,web,https://www.heap.io/blog/line-graph-redesign,,,na,tune,0
+charts_0021,charts,data/images/charts/charts_0021.png,web,https://forum.posit.co/t/creating-a-line-graph-with-multiple-lines/175611,,,na,test,0
+charts_0022,charts,data/images/charts/charts_0022.png,web,https://stephanieevergreen.com/ways-to-show-change-over-time/,,,na,test,0
+charts_0023,charts,data/images/charts/charts_0023.png,web,https://www.pythoncharts.com/pandas/multiple-columns-line-chart-pandas/,,,na,test,0
+charts_0024,charts,data/images/charts/charts_0024.png,web,https://www.amcharts.com/demos/v4/100-stacked-column-chart/,,,na,test,0
+charts_0025,charts,data/images/charts/charts_0025.png,web,https://www.cdc.gov/cove/data-visualization-types/stacked-bar-chart.html,,,na,test,0
+charts_0026,charts,data/images/charts/charts_0026.png,web,https://www.goldensoftware.com/stacked-bar-chart/,,,na,test,0
+charts_0027,charts,data/images/charts/charts_0027.png,web,https://datavizcatalogue.com/methods/stacked_bar_graph.html,,,na,test,0
+charts_0028,charts,data/images/charts/charts_0028.png,web,https://viz-ggplot2.rsquaredacademy.com/ggplot2-bar-plot,,,na,test,0
+charts_0029,charts,data/images/charts/charts_0029.png,web,https://datavizproject.com/data-type/stacked-bar-chart/,,,na,test,0
+charts_0030,charts,data/images/charts/charts_0030.png,web,https://www.anychart.com/ar/products/anychart/gallery/Bar_Charts/100_Percent_Stacked_Bar_Chart.php,,,na,test,0
+maps_0001,maps,data/images/maps/maps_0001.png,web,https://www.clearlyandsimply.com/2009/06/multicolored-choropleth-maps-with-excel/,,,na,test,0
+maps_0002,maps,data/images/maps/maps_0002.png,web,https://towardsdatascience.com/choropleth-maps-with-pandas-and-flourish-aea2ad9ec5e3/,,,na,tune,0
+maps_0003,maps,data/images/maps/maps_0003.png,web,https://datavizcatalogue.com/methods/choropleth.html,,,na,test,0
+maps_0004,maps,data/images/maps/maps_0004.png,web,https://populationeducation.org/what-is-a-choropleth-map-and-why-are-they-useful/,,,na,test,0
+maps_0005,maps,data/images/maps/maps_0005.png,web,https://towardsdatascience.com/simplest-way-of-creating-a-choropleth-map-by-u-s-states-in-python-f359ada7735e/,,,na,test,0
+maps_0006,maps,data/images/maps/maps_0006.png,web,https://www.clearlyandsimply.com/2014/06/drill-up-and-down-on-choropleth-maps-in-excel/,,,na,test,0
+maps_0007,maps,data/images/maps/maps_0007.png,web,https://r-graph-gallery.com/327-chloropleth-map-from-geojson-with-ggplot2.html,,,na,test,0
+maps_0008,maps,data/images/maps/maps_0008.png,web,https://www.printmag.com/information-design/a-visual-study-of-the-new-york-city-subway-map/,,,na,test,0
+maps_0009,maps,data/images/maps/maps_0009.png,web,https://broadwaygynecology.com/assets/images/mta-subway-map/,,,na,test,0
+maps_0010,maps,data/images/maps/maps_0010.png,web,https://ggwash.org/view/33340/what-if-the-nyc-subway-map-looked-like-the-dc-metros,,,na,test,0
+maps_0011,maps,data/images/maps/maps_0011.png,web,https://courses.ems.psu.edu/geog160/c3_p14.html,,,na,test,0
+maps_0012,maps,data/images/maps/maps_0012.png,web,https://courses.ems.psu.edu/geog160/c3_p14.html,,,na,test,0
+maps_0013,maps,data/images/maps/maps_0013.png,web,https://courses.ems.psu.edu/geog160/c3_p14.html,,,na,test,0
+maps_0014,maps,data/images/maps/maps_0014.png,web,https://www.tableau.com/blog/how-make-effective-bivariate-choropleth-maps-tableau-83121,,,na,tune,0
+maps_0015,maps,data/images/maps/maps_0015.png,web,https://tmap.geocompx.org/charts,,,na,tune,0
+maps_0016,maps,data/images/maps/maps_0016.png,web,https://socviz.co/07-maps.html,,,na,test,0
+maps_0017,maps,data/images/maps/maps_0017.png,web,https://magrit.cnrs.fr/en/functionalities/categorical-pictograms.html,,,na,test,0
+maps_0018,maps,data/images/maps/maps_0018.png,web,https://magrit.cnrs.fr/en/functionalities/choropleth.html,,,na,test,0
+maps_0019,maps,data/images/maps/maps_0019.png,web,https://www.weather.gov/mhx/ensoninoanomalies,,,na,test,0
+maps_0020,maps,data/images/maps/maps_0020.png,web,https://climateillinois.wordpress.com/2015/08/19/rainfall-and-temperatures-across-the-midwest-in-august/,,,na,test,0
+traffic_0001,traffic,data/images/traffic/traffic_0001.png,web,https://www.linkedin.com/pulse/design-traffic-signals-muhammad-bhatti-e60ue,,,na,tune,0
+traffic_0002,traffic,data/images/traffic/traffic_0002.png,web,https://www.fremont.gov/government/departments/transportation-engineering/traffic-signals,,,na,test,0
+traffic_0003,traffic,data/images/traffic/traffic_0003.png,web,https://www.michigan.gov/mdot/travel/safety/road-users/signals,,,na,test,0
+traffic_0004,traffic,data/images/traffic/traffic_0004.png,web,https://www.alphabetsigns.com/signs/signal-ahead-symbol-w33.html?gad_source=1&gad_campaignid=24267035269&gbraid=0AAAAAD_k5yQ0MtGoZQtHvVSjTLYDg3St2&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUUbq7tMwJj0F6aCJzgcLLDQfaLFkwJbHbzezD5LUCPT7AcS_MoHBs0aAmxZEALw_wcB,,,na,test,0
+traffic_0005,traffic,data/images/traffic/traffic_0005.png,web,https://www.signs.com/universal-traffic-signage-12-road-signs-you-will-see-in-every-us-state/?srsltid=AYCX9vIZ3jQ3aqxTH5SpbzGVpHcfSeqjPxrhRvZ4vR-7EExmFdgOLu12,,,na,test,0
+traffic_0006,traffic,data/images/traffic/traffic_0006.png,web,https://www.correctionenterprises.com/product/no-parking-restricted-parking-combined-sign/,,,na,test,0
+traffic_0007,traffic,data/images/traffic/traffic_0007.png,web,https://wjbq.com/friendly-reminder-to-everyone-who-forgot-this-simple-rule-at-traffic-lights-this-morning/,,,na,test,0
+traffic_0008,traffic,data/images/traffic/traffic_0008.png,web,https://driving-tests.org/road-signs/,,,na,test,0
+traffic_0009,traffic,data/images/traffic/traffic_0009.png,web,https://www.toyotaofnorthcharlotte.com/research/a-guide-on-common-road-signs/?srsltid=AYCX9vLIVo1NHdYdzUmy0nraac-kwmgUeT4XjaCX-E4j43WLuwvNXFQP,,,na,test,0
+traffic_0010,traffic,data/images/traffic/traffic_0010.png,web,https://www.linkedin.com/pulse/traffic-signals-troubling-truth-reggie-chandra,,,na,test,0
+traffic_0011,traffic,data/images/traffic/traffic_0011.png,web,https://www.seton.com/resource-center/trenchsafety/do-not-enter-traffic-signs-69137-ba/,,,na,test,0
+traffic_0012,traffic,data/images/traffic/traffic_0012.png,web,https://www.trafficsign.com/road-symbol-signs?srsltid=AYCX9vKEI4KaZ_OqXvc4omeoJslSTH-MUfWum6e68mMnoDI4rDA0uIsO,,,na,tune,0
+traffic_0013,traffic,data/images/traffic/traffic_0013.png,web,https://www.alphabetsigns.com/signs/stop-ahead-symbol-w31a.html?gad_source=1&gad_campaignid=24267035269&gbraid=0AAAAAD_k5yQ0MtGoZQtHvVSjTLYDg3St2&gclid=Cj0KCQiA_P_XBhDvARIsALHjSUVY-ic1O2W1w3ld9gVckwnj5PU9f7b_X_ydq_DFMOZGxZWnjnbKf2saAredEALw_wcB,,,na,test,0
+traffic_0014,traffic,data/images/traffic/traffic_0014.png,web,https://www.trafficsafetywarehouse.com/Resources/traffic-sign-shapes-and-their-meanings.asp?srsltid=AYCX9vJPw5oUPVVRVkNUHOZ4yNDeieB-QXUO3q9eP7EibBUbXwPn-DWm,,,na,test,0
+traffic_0015,traffic,data/images/traffic/traffic_0015.png,web,https://www.toyotaofnorthcharlotte.com/research/a-guide-on-common-road-signs/?srsltid=AYCX9vJPLomtVXdKq6gw8AD32zF35Et4GydITgA4HPV-u4DoELrK1vqJ,,,na,tune,0
+traffic_0016,traffic,data/images/traffic/traffic_0016.png,web,https://www.trafficsign.com/?srsltid=AYCX9vKrDlyGUPPz9Pmbnja-cDrm03yRr3E_Xlw2KiMHLzUbBBvF4bVb,,,na,test,0
+traffic_0017,traffic,data/images/traffic/traffic_0017.png,web,https://www.trafficconesforless.com/roll-up-traffic-sign-slow.html?srsltid=AYCX9vIrFExNEVoibanSZkXGYnRgR23MatHopYG16hinvQVVWO1_BU8F,,,na,test,0
+traffic_0018,traffic,data/images/traffic/traffic_0018.png,web,https://www.trafficsign.com/mutcd-warning-signs?srsltid=AYCX9vITpOT-nvpFVSV3dD8yeP6B4k3RC22tn-S6qAzke40DNbuSLMFW,,,na,tune,0
+traffic_0019,traffic,data/images/traffic/traffic_0019.png,web,https://www.roadtrafficsigns.com/traffic-control-sign/cross-road-symbol-sign/sku-x-w2-1?srsltid=AYCX9vIN_nCVH14UwoK0YUg9DXBhZg7tAP0I4HarIs_X7oYyj5_vSq90,,,na,test,0
+traffic_0020,traffic,data/images/traffic/traffic_0020.png,web,https://emergencyresponderproducts.com/products/36-dot-orange-portable-traffic-signs,,,na,test,0
+traffic_0021,traffic,data/images/traffic/traffic_0021.png,web,https://zutobi.com/us/driver-guides/warning-signs,,,na,test,0
+traffic_0022,traffic,data/images/traffic/traffic_0022.png,web,https://www.trafficconesforless.com/official-mutcd-one-way-traffic-sign-right-arrow.html?srsltid=AYCX9vLV61A6NyrLuV6b2yDVJc2oBzRroNQFwSYHkNgFqAVi6AE7b6y3,,,na,test,0
+traffic_0023,traffic,data/images/traffic/traffic_0023.png,web,https://startcdl.com/signs/slippery-road-sign,,,na,test,0
+traffic_0024,traffic,data/images/traffic/traffic_0024.png,web,https://www.michigan.gov/mdot/travel/safety/road-users/signals,,,na,test,0
+traffic_0025,traffic,data/images/traffic/traffic_0025.png,web,https://www.toyotaofnorthcharlotte.com/research/a-guide-on-common-road-signs/?srsltid=AYCX9vJM5gYrm5MR_uuhG3P85iCYiGyaHFSnu6KpqPfDa7nzF5ImmTF9,,,na,test,0
+traffic_0026,traffic,data/images/traffic/traffic_0026.png,web,https://www.seton.com/reflective-warning-signs-divided-highway-symbol-vc1641.html,,,na,test,0
+traffic_0027,traffic,data/images/traffic/traffic_0027.png,web,https://www.emedco.com/road-closed-traffic-sign-rm238.html,,,na,test,0
+traffic_0028,traffic,data/images/traffic/traffic_0028.png,web,https://www.istockphoto.com/illustrations/school-traffic-signs,,,na,test,0
+traffic_0029,traffic,data/images/traffic/traffic_0029.png,web,https://www.rd.com/article/traffic-lights/,,,na,test,0
+traffic_0030,traffic,data/images/traffic/traffic_0030.png,web,https://www.vdot.virginia.gov/news-events/news/fredericksburg-district/fredericksburg-district-weekly-traffic-alert-oct-25-31-2026.php,,,na,test,0
+charts_0031,charts,data/images/charts/charts_0031.png,web,https://eazybi.com/blog/data-visualization-and-chart-types,,,na,tune,0
+charts_0032,charts,data/images/charts/charts_0032.png,web,https://blog.davingranroth.com/2024/12/better-year-over-year-line-graphs-using-time-as-a-visual-metaphor/,,,na,test,0
+charts_0033,charts,data/images/charts/charts_0033.png,web,https://guides.lib.berkeley.edu/data-visualization/type,,,na,test,0
+charts_0034,charts,data/images/charts/charts_0034.png,web,https://www.defteam.com/blogs/data-visualization-best-practices-part-1-choosing-the-right-colors-for-bar-charts,,,na,test,0
+charts_0035,charts,data/images/charts/charts_0035.png,web,https://www.anychart.com/blog/2017/05/04/data-distribution-chart-types/,,,na,test,0
+charts_0036,charts,data/images/charts/charts_0036.png,web,https://www.simplexnumerica.com/features/charts/,,,na,test,0
+charts_0037,charts,data/images/charts/charts_0037.png,web,https://blogs.sas.com/content/iml/2023/01/30/tips-colorblind-safe-graphs.html,,,na,test,0
+charts_0038,charts,data/images/charts/charts_0038.png,web,https://www.johnmyleswhite.com/notebook/2009/03/02/color-schemes-for-r-bar-plots/,,,na,test,0
+charts_0039,charts,data/images/charts/charts_0039.png,web,https://discourse.julialang.org/t/color-blind-friendly-color-sequence-palette-for-line-graphs/92551,,,na,test,0
+charts_0040,charts,data/images/charts/charts_0040.png,web,https://clauswilke.com/dataviz/color-pitfalls.html,,,na,test,0
+maps_0021,maps,data/images/maps/maps_0021.png,web,https://www.reddit.com/r/gis/comments/frl8fw/510_of_the_us_population_is_colorblind/,,,na,tune,0
+maps_0022,maps,data/images/maps/maps_0022.png,web,https://www.reddit.com/r/JackSucksAtGeography/comments/1lxmc2d/map_that_shows_which_us_states_are_more_or_less/,,,na,test,0
+maps_0023,maps,data/images/maps/maps_0023.png,web,https://i0.wp.com/transitmap.net/wp-content/uploads/2011/11/tumblr_lu9ygowAek1r54c4oo3_1280.jpg?ssl=1,,,na,test,0
+maps_0024,maps,data/images/maps/maps_0024.png,web,https://www.ebay.com/itm/146584732029,,,na,test,0
+maps_0025,maps,data/images/maps/maps_0025.png,web,https://www.color-blindness.com/2012/04/04/subway-maps-for-colorblind-people/,,,na,test,0
+maps_0026,maps,data/images/maps/maps_0026.png,web,https://ggwash.org/view/820/metro-proposes-new-brown-line,,,na,tune,0
+maps_0027,maps,data/images/maps/maps_0027.png,web,https://www.colourblindawareness.org/education/secondary-school-higher-education/,,,na,test,0
+maps_0028,maps,data/images/maps/maps_0028.png,web,https://www.reddit.com/r/MapPorn/comments/1ratfnu/color_blindness_prevalence_by_us_state/,,,na,test,0
+maps_0029,maps,data/images/maps/maps_0029.png,web,https://www.amazon.com/clp/B077MLRTZB?lv=shuf&channelId=500,,,na,test,0
+maps_0030,maps,data/images/maps/maps_0030.png,web,https://www.lifeingis.com/colour-blind-maps/,,,na,test,0
+food_0001,food,data/images/food/food_0001.png,team,,Team-created,Iris,na,test,0
+food_0002,food,data/images/food/food_0002.png,team,,Team-created,Iris,na,test,0
+food_0003,food,data/images/food/food_0003.png,team,,Team-created,Iris,na,test,0
+food_0004,food,data/images/food/food_0004.png,team,,Team-created,Iris,na,test,0
+food_0005,food,data/images/food/food_0005.png,web,https://commons.wikimedia.org/wiki/File:Red_and_green_apples_02.jpg,CC BY-SA 4.0,,na,test,0
+food_0006,food,data/images/food/food_0006.png,web,https://commons.wikimedia.org/wiki/File:Green_and_Red_Apples.jpg,CC BY 2.0,,na,test,0
+food_0007,food,data/images/food/food_0007.png,web,"https://commons.wikimedia.org/wiki/File:Solanum_lycopersicum_Cuor_di_Bue_(oxheart_tomato),_view_2_(SaatPilot).jpg",CC BY 4.0,,na,test,0
+food_0008,food,data/images/food/food_0008.png,web,"https://commons.wikimedia.org/wiki/File:Red,_Yellow,_and_Green_bell_peppers.jpg",CC0,,na,test,0
+food_0009,food,data/images/food/food_0009.png,web,https://commons.wikimedia.org/wiki/File:Bell_peppers_2020_G2.jpg,CC BY-SA 4.0,,na,tune,0
+food_0010,food,data/images/food/food_0010.png,web,https://commons.wikimedia.org/wiki/File:Green_yellow_bananas_dsc07775.jpg,CC BY-SA 3.0,,na,test,0
+food_0011,food,data/images/food/food_0011.png,web,"https://commons.wikimedia.org/wiki/File:Grapes,_Rostov-on-Don,_Russia.jpg",CC BY 4.0,,na,tune,0
+food_0012,food,data/images/food/food_0012.png,web,https://commons.wikimedia.org/wiki/File:2007-03-10_Fruit_galore_in_the_sink.jpg,CC BY-SA 3.0,,na,test,0
+food_0013,food,data/images/food/food_0013.png,web,https://commons.wikimedia.org/wiki/File:Assortment_of_fruit.jpg,Public domain,,na,test,0
+food_0014,food,data/images/food/food_0014.png,web,https://commons.wikimedia.org/wiki/File:Cherry_Stella444.jpg,CC BY-SA 3.0,,na,test,0
+food_0015,food,data/images/food/food_0015.png,web,"https://commons.wikimedia.org/wiki/File:Watermelon_slice,_May_2024.jpg",CC BY-SA 4.0,,na,test,0
+food_0016,food,data/images/food/food_0016.png,web,https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Kiwi_and_mandarin.jpg,CC BY-SA 4.0,,na,test,0
+food_0017,food,data/images/food/food_0017.png,web,https://commons.wikimedia.org/wiki/File:Kiwi_fruit_pastel.jpg,CC BY-SA 4.0,,na,test,0
+food_0018,food,data/images/food/food_0018.png,web,https://commons.wikimedia.org/wiki/File:VitorJubini_MercadoDaVilaRubim_Vitoria_ES_(39182859020)_(square_crop).jpg,Public domain,,na,test,0
+food_0019,food,data/images/food/food_0019.png,web,https://commons.wikimedia.org/wiki/File:Green_and_Red_Chili_Pepper_(28495251725).jpg,CC BY-SA 2.0,,na,test,0
+food_0020,food,data/images/food/food_0020.png,web,https://commons.wikimedia.org/wiki/File:Red_and_green_peppers_on_white_place_with_black_background.jpg,CC BY-SA 4.0,,na,test,0
+food_0021,food,data/images/food/food_0021.png,web,https://commons.wikimedia.org/wiki/File:Outdoor_market_fruit_and_vegetable_stall_Market_Place_Romford_London_01.jpg,CC BY-SA 4.0,,na,test,0
+food_0022,food,data/images/food/food_0022.png,web,https://commons.wikimedia.org/wiki/File:Vegetable_stall._Municipal_Market._-_G%C3%B6d%C3%B6ll%C5%91.JPG,CC BY-SA 3.0,,na,test,0
+food_0023,food,data/images/food/food_0023.png,web,https://commons.wikimedia.org/wiki/File:Colorful_Macarons_(Unsplash).jpg,CC0,,na,test,0
+food_0024,food,data/images/food/food_0024.png,web,https://commons.wikimedia.org/wiki/File:A_rainbow_of_macarons_(part_deux).jpg,CC BY-SA 2.0,,na,test,0
+food_0025,food,data/images/food/food_0025.png,web,https://commons.wikimedia.org/wiki/File:Colorful_Spices_and_Teas.jpg,CC BY 2.0,,na,test,0
+food_0026,food,data/images/food/food_0026.png,web,https://commons.wikimedia.org/wiki/File:Do_I_look_colorful_%3F_(Unsplash).jpg,CC0,,na,test,0
+food_0027,food,data/images/food/food_0027.png,web,https://commons.wikimedia.org/wiki/File:Picture_of_many_carrots.jpg,CC0,,na,test,0
+food_0028,food,data/images/food/food_0028.png,web,https://commons.wikimedia.org/wiki/File:Rainbow_food.jpg,CC BY-SA 4.0,,na,test,0
+food_0029,food,data/images/food/food_0029.png,web,https://commons.wikimedia.org/wiki/File:Low_hanging_ripe_and_unripe_Mango_fruits.jpg,CC BY-SA 4.0,,na,tune,0
+food_0030,food,data/images/food/food_0030.png,web,https://commons.wikimedia.org/wiki/File:Peaches_and_plums.jpg,CC BY-SA 4.0,,na,tune,0
+food_0031,food,data/images/food/food_0031.png,web,https://commons.wikimedia.org/wiki/File:Sweets_(5837143346).jpg,CC BY 2.0,,na,test,0
+food_0032,food,data/images/food/food_0032.png,web,https://commons.wikimedia.org/wiki/File:Colored_sweets.jpg,CC BY-SA 4.0,,na,test,0
+food_0033,food,data/images/food/food_0033.png,web,https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Mixed_fruit_platter.jpg,CC BY-SA 4.0,,na,test,0
+food_0034,food,data/images/food/food_0034.png,web,https://commons.wikimedia.org/wiki/File:Pizza_Margherita_01.jpg,CC BY-SA 4.0,,na,test,0
+food_0035,food,data/images/food/food_0035.png,web,"https://commons.wikimedia.org/wiki/File:Five_Lemons_on_lemon_tree,_Burj_Bhalaike.jpg",CC BY-SA 4.0,,na,test,0
+food_0036,food,data/images/food/food_0036.png,web,https://commons.wikimedia.org/wiki/File:Fig_cut_open.jpg,CC BY-SA 3.0,,na,test,0
+food_0037,food,data/images/food/food_0037.png,web,https://commons.wikimedia.org/wiki/File:Webysther_20150409032418_-_Pitaya.jpg,CC BY-SA 4.0,,na,test,0
+food_0038,food,data/images/food/food_0038.png,web,https://commons.wikimedia.org/wiki/File:Fresh_Cut_Papaya_With_Zillions_of_Seeds_(33812163615).jpg,CC BY 2.0,,na,tune,0
+food_0039,food,data/images/food/food_0039.png,web,https://commons.wikimedia.org/wiki/File:A_Bunch_of_Radishes.JPG,CC BY-SA 4.0,,na,tune,0
+food_0040,food,data/images/food/food_0040.png,web,https://commons.wikimedia.org/wiki/File:Gallery_1.JPG,CC BY-SA 3.0,,na,test,0
+natural_0001,natural,data/images/natural/natural_0001.png,team,,Team-created,Iris,na,test,0
+natural_0002,natural,data/images/natural/natural_0002.png,team,,Team-created,Iris,na,test,0
+natural_0003,natural,data/images/natural/natural_0003.png,team,,Team-created,Iris,na,tune,0
+natural_0004,natural,data/images/natural/natural_0004.png,team,,Team-created,Iris,na,test,0
+natural_0005,natural,data/images/natural/natural_0005.png,team,,Team-created,Iris,na,tune,0
+natural_0006,natural,data/images/natural/natural_0006.png,team,,Team-created,Iris,na,test,0
+natural_0007,natural,data/images/natural/natural_0007.png,team,,Team-created,Iris,na,test,0
+natural_0008,natural,data/images/natural/natural_0008.png,team,,Team-created,Iris,na,test,0
+natural_0009,natural,data/images/natural/natural_0009.png,team,,Team-created,Iris,na,test,0
+natural_0010,natural,data/images/natural/natural_0010.png,team,,Team-created,Iris,na,tune,0
+natural_0011,natural,data/images/natural/natural_0011.png,team,,Team-created,Iris,na,test,0
+natural_0012,natural,data/images/natural/natural_0012.png,team,,Team-created,Iris,na,test,0
+natural_0013,natural,data/images/natural/natural_0013.png,web,"https://commons.wikimedia.org/wiki/File:Red_oak_changing_color,_Field_Loop_Trail,_Plimpton_Community_Forest,_2025-10-18.jpg",CC0,,na,test,0
+natural_0014,natural,data/images/natural/natural_0014.png,web,https://commons.wikimedia.org/wiki/File:Red-fall-foliage_-_West_Virginia_-_ForestWander.jpg,CC BY-SA 3.0 us,,na,test,0
+natural_0015,natural,data/images/natural/natural_0015.png,web,"https://commons.wikimedia.org/wiki/File:Poppy_field,_Wendfeld.jpg",CC BY-SA 4.0,,na,test,0
+natural_0016,natural,data/images/natural/natural_0016.png,web,https://commons.wikimedia.org/wiki/File:Tulip_field_29-03-24.jpg,CC BY-SA 4.0,,na,test,0
+natural_0017,natural,data/images/natural/natural_0017.png,web,https://commons.wikimedia.org/wiki/File:Sunset_over_the_North_Sea_in_Ostend.jpg,CC BY-SA 4.0,,na,test,0
+natural_0018,natural,data/images/natural/natural_0018.png,web,"https://commons.wikimedia.org/wiki/File:Zagedan_Lakes,_Mountain_cirque,_Caucasus_Mountains.jpg",CC BY 4.0,,na,test,0
+natural_0019,natural,data/images/natural/natural_0019.png,web,"https://commons.wikimedia.org/wiki/File:Jokulsarlon_lake,_Iceland.jpg",CC BY 2.0,,na,test,0
+natural_0020,natural,data/images/natural/natural_0020.png,web,https://commons.wikimedia.org/wiki/File:Grand_Canyon_Hopi_Point_with_rainbow_2013.jpg,CC BY-SA 3.0,,na,tune,0
+natural_0021,natural,data/images/natural/natural_0021.png,web,https://commons.wikimedia.org/wiki/File:Northern_lights_-_green_glow_across_the_sky_(8586211047).jpg,CC BY 2.0,,na,test,0
+natural_0022,natural,data/images/natural/natural_0022.png,web,https://commons.wikimedia.org/wiki/File:Aerial_image_of_Grand_Prismatic_Spring_(view_from_the_south).jpg,CC BY-SA 4.0,,na,test,0
+natural_0023,natural,data/images/natural/natural_0023.png,web,"https://commons.wikimedia.org/wiki/File:Bali,_Rice_fields,_Rice_terraces_in_East_Bali,_Indonesia.jpg",CC BY 4.0,,na,test,0
+natural_0024,natural,data/images/natural/natural_0024.png,web,https://commons.wikimedia.org/wiki/File:006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg,CC BY-SA 4.0,,na,test,0
+natural_0025,natural,data/images/natural/natural_0025.png,web,"https://commons.wikimedia.org/wiki/File:Havelock_Island,_Mangrove_tree_on_the_beach,_Andaman_Islands.jpg",CC BY 4.0,,na,test,0
+natural_0026,natural,data/images/natural/natural_0026.png,web,"https://commons.wikimedia.org/wiki/File:Blue_icebergs_floating_in_Liefdefjord,_Svalbard.jpg",CC BY-SA 4.0,,na,test,0
+natural_0027,natural,data/images/natural/natural_0027.png,web,"https://commons.wikimedia.org/wiki/File:Beech_Forest_(AU),_Great_Otway_National_Park,_Beauchamp_Falls_--_2019_--_1271.jpg",CC BY-SA 4.0,,na,test,0
+natural_0028,natural,data/images/natural/natural_0028.png,web,https://commons.wikimedia.org/wiki/File:Pontypool_Park_Cherry_Trees.jpg,CC BY 4.0,,na,test,0
+natural_0029,natural,data/images/natural/natural_0029.png,web,https://commons.wikimedia.org/wiki/File:Lower_Antelope_Canyon_478.jpg,CC BY-SA 3.0,,na,test,0
+natural_0030,natural,data/images/natural/natural_0030.png,web,"https://commons.wikimedia.org/wiki/File:Mt._Forbes_in_Alpenglow,_from_Arctomys_Peak.jpg",CC BY-SA 4.0,,na,test,0
+coded_items_0001,coded_items,data/images/coded_items/coded_items_0001.png,web,https://commons.wikimedia.org/wiki/File:Bunte-kabel.jpg,Public domain,,na,test,0
+coded_items_0002,coded_items,data/images/coded_items/coded_items_0002.png,web,https://commons.wikimedia.org/wiki/File:Rainbow_Cable.jpg,CC BY-SA 4.0,,na,test,0
+coded_items_0003,coded_items,data/images/coded_items/coded_items_0003.png,web,https://commons.wikimedia.org/wiki/File:Yamaha_K-340_rainbow_cabling.jpg,CC0,,na,test,0
+coded_items_0004,coded_items,data/images/coded_items/coded_items_0004.png,web,"https://commons.wikimedia.org/wiki/File:V%C3%ADdeo_component_cable_(video_on_right_side_-_green,_blue,_and_red)_and_analog_stereo_(left_side,_red_and_white)_for_Sony_Playstation_2.jpg",CC BY 2.0,,na,test,0
+coded_items_0005,coded_items,data/images/coded_items/coded_items_0005.png,web,https://commons.wikimedia.org/wiki/File:Color-coded_recycling_bins_(17820971264).jpg,CC BY 2.0,,na,test,0
+coded_items_0006,coded_items,data/images/coded_items/coded_items_0006.png,web,https://commons.wikimedia.org/wiki/File:VariousPills.jpg,CC BY-SA 3.0,,na,test,0
+coded_items_0007,coded_items,data/images/coded_items/coded_items_0007.png,web,https://commons.wikimedia.org/wiki/File:Colored_pencils_chevre.jpg,CC BY-SA 3.0,,na,test,0
+coded_items_0008,coded_items,data/images/coded_items/coded_items_0008.png,web,https://commons.wikimedia.org/wiki/File:Colouring_pencils.jpg,CC BY-SA 3.0,,na,test,0
+coded_items_0009,coded_items,data/images/coded_items/coded_items_0009.png,web,https://commons.wikimedia.org/wiki/File:Crayons_box.jpg,CC0,,na,tune,0
+coded_items_0010,coded_items,data/images/coded_items/coded_items_0010.png,web,https://commons.wikimedia.org/wiki/File:Box_of_crayons_IMG_0009.jpg,CC BY 2.0,,na,test,0
+coded_items_0011,coded_items,data/images/coded_items/coded_items_0011.png,web,https://commons.wikimedia.org/wiki/File:Colorful_Connections.jpg,CC BY 4.0,,na,test,0
+coded_items_0012,coded_items,data/images/coded_items/coded_items_0012.png,web,https://commons.wikimedia.org/wiki/File:Lego_Color_Bricks.jpg,CC BY-SA 2.0,,na,tune,0
+coded_items_0013,coded_items,data/images/coded_items/coded_items_0013.png,web,https://commons.wikimedia.org/wiki/File:Lego_2014.JPG,CC0,,na,test,0
+coded_items_0014,coded_items,data/images/coded_items/coded_items_0014.png,web,https://commons.wikimedia.org/wiki/File:Rubiks_cube_by_keqs.jpg,CC BY-SA 3.0,,na,test,0
+coded_items_0015,coded_items,data/images/coded_items/coded_items_0015.png,web,"https://commons.wikimedia.org/wiki/File:Rubik%27s_cube,_CN_II.jpg",CC BY-SA 3.0,,na,test,0
+coded_items_0016,coded_items,data/images/coded_items/coded_items_0016.png,web,https://commons.wikimedia.org/wiki/File:Billiard_Rack.jpg,CC BY-SA 3.0,,na,test,0
+coded_items_0017,coded_items,data/images/coded_items/coded_items_0017.png,web,https://commons.wikimedia.org/wiki/File:Baseball_pool_balls_and_rack.png,CC BY-SA 3.0,,na,tune,0
+coded_items_0018,coded_items,data/images/coded_items/coded_items_0018.png,web,https://commons.wikimedia.org/wiki/File:Snooker_table_with_balls_in_storage.jpg,CC BY-SA 4.0,,na,test,0
+coded_items_0019,coded_items,data/images/coded_items/coded_items_0019.png,web,https://commons.wikimedia.org/wiki/File:Ludu_board.jpg,CC BY-SA 4.0,,na,test,0
+coded_items_0020,coded_items,data/images/coded_items/coded_items_0020.png,web,https://commons.wikimedia.org/wiki/File:Spielfiguren_--_2021_--_4713.jpg,CC BY-SA 4.0,,na,tune,0
+coded_items_0021,coded_items,data/images/coded_items/coded_items_0021.png,web,https://commons.wikimedia.org/wiki/File:Wooden_spools_of_sewing_thread_in_different_colors_6.jpg,CC BY-SA 4.0,,na,test,0
+coded_items_0022,coded_items,data/images/coded_items/coded_items_0022.png,web,"https://commons.wikimedia.org/wiki/File:Colorful_yarns._Punchneedle_workshops,_Lodz_Design_Festival_2024.jpg",Public domain,,na,test,0
+coded_items_0023,coded_items,data/images/coded_items/coded_items_0023.png,web,https://commons.wikimedia.org/wiki/File:CSIRO_ScienceImage_1853_Fabric_Swatches.jpg,CC BY 3.0,,na,test,0
+coded_items_0024,coded_items,data/images/coded_items/coded_items_0024.png,web,https://commons.wikimedia.org/wiki/File:Basic_gas_cylinder_color_codes_according_to_EN_1089-3.png,CC BY-SA 4.0,,na,test,0
+coded_items_0025,coded_items,data/images/coded_items/coded_items_0025.png,web,https://commons.wikimedia.org/wiki/File:Shipping_container_pattern_(Unsplash).jpg,CC0,,na,test,0
+coded_items_0026,coded_items,data/images/coded_items/coded_items_0026.png,web,"https://commons.wikimedia.org/wiki/File:Bruns_Monocord-6020_-_status_LEDs_red,_green,_yellow-0188.jpg",CC BY-SA 4.0,,na,test,0
+coded_items_0027,coded_items,data/images/coded_items/coded_items_0027.png,web,"https://commons.wikimedia.org/wiki/File:Surecom_EP-427_-_UTP-STP_media_coupler_-_board_-_status_LEDs_orange,_yellow,_red,_green-7601.jpg",CC BY-SA 4.0,,na,test,0
+coded_items_0028,coded_items,data/images/coded_items/coded_items_0028.png,web,https://commons.wikimedia.org/wiki/File:Bins_of_assorted_color_LEDs_(17174139098).jpg,CC BY 2.0,,na,test,0
+coded_items_0029,coded_items,data/images/coded_items/coded_items_0029.png,web,https://commons.wikimedia.org/wiki/File:LEDs.jpg,CC BY-SA 2.0,,na,test,0
+coded_items_0030,coded_items,data/images/coded_items/coded_items_0030.png,web,https://commons.wikimedia.org/wiki/File:Balloons_Colorful_Shooting_Gallery_Folk_Festival.jpg,CC0,,na,tune,0

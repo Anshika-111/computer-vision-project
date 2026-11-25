@@ -1,4 +1,4 @@
-"""Plot aggregate evaluation metrics from actual recolor_metrics.csv rows."""
+"""Plot per-method means from results/recolor_metrics.csv. Author: Aliza."""
 
 from __future__ import annotations
 
@@ -6,6 +6,8 @@ import argparse
 import csv
 from collections import defaultdict
 from pathlib import Path
+
+from chromafix.constants import METHODS
 
 
 def plot(input_csv: Path, out_dir: Path) -> int:
@@ -21,15 +23,18 @@ def plot(input_csv: Path, out_dir: Path) -> int:
         return 0
     out_dir.mkdir(parents=True, exist_ok=True)
     for metric, label in (
-        ("mean_de00", "Mean distinguishability (ΔE00)"),
-        ("fraction_below_jnd", "Fraction below JND"),
-        ("naturalness_de00", "Mean naturalness change (ΔE00)"),
+        ("pair_de00_mean", "Mean pair distinguishability (ΔE00)"),
+        ("pairs_below_jnd", "Fraction of pairs below JND"),
+        ("naturalness", "Mean naturalness change (ΔE00)"),
     ):
         # Aggregate by method across available test images, CVD types and severities.
         grouped = defaultdict(list)
         for row in rows:
-            grouped[row["method"]].append(float(row[metric]))
-        names = sorted(grouped)
+            if row[metric] != "":  # pair columns are blank for unannotated images
+                grouped[row["method"]].append(float(row[metric]))
+        if not grouped:
+            continue
+        names = [m for m in METHODS if m in grouped]
         values = [sum(grouped[n]) / len(grouped[n]) for n in names]
         fig, ax = plt.subplots(figsize=(7, 4))
         ax.bar(names, values)

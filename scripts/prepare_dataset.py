@@ -1,4 +1,4 @@
-"""Convert downloaded images to standardized PNGs and build a reproducible manifest.
+"""Convert downloaded images to standardized PNGs and build the manifest. Author: Aliza.
 
 Reads a TSV/CSV export of the shared source tracker. This script does NOT
 silently invent missing images, sources, licenses or annotations.
@@ -222,7 +222,7 @@ def prepare(
                 ),
                 lighting="na",
                 split=("tune" if image_id in tune_ids else "test"),
-                has_pairs="false",
+                has_pairs="0",
             )
         )
 

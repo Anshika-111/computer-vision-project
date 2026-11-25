@@ -1,9 +1,9 @@
-
 """Convert downloaded images to standardized PNGs and build a reproducible manifest.
 
 Reads a TSV/CSV export of the shared source tracker. This script does NOT
 silently invent missing images, sources, licenses or annotations.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -15,7 +15,6 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 from chromafix.constants import SEED
-
 
 CATEGORIES = {
     "charts",
@@ -79,11 +78,7 @@ def prepare(
         raise ValueError("Invalid max_side or tune_count")
 
     with tracker.open(encoding="utf-8-sig", newline="") as f:
-        dialect = (
-            csv.excel_tab
-            if tracker.suffix.lower() == ".tsv"
-            else csv.excel
-        )
+        dialect = csv.excel_tab if tracker.suffix.lower() == ".tsv" else csv.excel
         records = list(csv.DictReader(f, dialect=dialect))
 
     if not records:
@@ -93,35 +88,22 @@ def prepare(
     seen = set()
 
     for row in records:
-        filename = (
-            row.get("Filename")
-            or row.get("filename")
-            or ""
-        ).strip()
+        filename = (row.get("Filename") or row.get("filename") or "").strip()
 
         if not filename:
             continue
 
-        if (
-            Path(filename).name != filename
-            or not filename.lower().endswith(
-                (".png", ".jpg", ".jpeg", ".webp", ".svg")
-            )
+        if Path(filename).name != filename or not filename.lower().endswith(
+            (".png", ".jpg", ".jpeg", ".webp", ".svg")
         ):
             raise ValueError(f"Invalid filename: {filename}")
 
-        category_label = (
-            row.get("Category")
-            or row.get("category")
-            or ""
-        ).strip().lower()
+        category_label = (row.get("Category") or row.get("category") or "").strip().lower()
 
         category = ALIASES.get(category_label)
 
         if category not in CATEGORIES:
-            raise ValueError(
-                f"Unknown category for {filename}: {category_label}"
-            )
+            raise ValueError(f"Unknown category for {filename}: {category_label}")
 
         original_id = Path(filename).stem
         match = re.fullmatch(r"(.+?)_(\d+)", original_id)
@@ -139,9 +121,7 @@ def prepare(
         matches = [
             source_root / filename,
             source_root / category / filename,
-            source_root
-            / f"{category_label} ({CATEGORY_COUNTS[category]})"
-            / filename,
+            source_root / f"{category_label} ({CATEGORY_COUNTS[category]})" / filename,
         ]
 
         src = next(
@@ -157,9 +137,7 @@ def prepare(
                 src = found[0]
 
         if src is None:
-            raise FileNotFoundError(
-                f"Missing {filename} under {source_root}"
-            )
+            raise FileNotFoundError(f"Missing {filename} under {source_root}")
 
         parsed.append((row, category, image_id, src))
 
@@ -167,32 +145,17 @@ def prepare(
         raise ValueError("No filenames found in tracker")
 
     if tune_count > len(parsed):
-        raise ValueError(
-            "Tune count exceeds available images"
-        )
+        raise ValueError("Tune count exceeds available images")
 
     rng = random.Random(seed)
 
     # Proportional stratification by category,
     # using largest remainders.
-    groups = {
-        c: [
-            p[2]
-            for p in parsed
-            if p[1] == c
-        ]
-        for c in sorted(CATEGORIES)
-    }
+    groups = {c: [p[2] for p in parsed if p[1] == c] for c in sorted(CATEGORIES)}
 
-    quotas = {
-        c: tune_count * len(ids) / len(parsed)
-        for c, ids in groups.items()
-    }
+    quotas = {c: tune_count * len(ids) / len(parsed) for c, ids in groups.items()}
 
-    allocations = {
-        c: int(quotas[c])
-        for c in groups
-    }
+    allocations = {c: int(quotas[c]) for c in groups}
 
     remainder = tune_count - sum(allocations.values())
 
@@ -208,9 +171,7 @@ def prepare(
     tune_ids = set()
 
     for c, ids in groups.items():
-        tune_ids.update(
-            rng.sample(sorted(ids), allocations[c])
-        )
+        tune_ids.update(rng.sample(sorted(ids), allocations[c]))
 
     rows = []
 
@@ -226,9 +187,7 @@ def prepare(
             try:
                 import cairosvg
             except ImportError as exc:
-                raise RuntimeError(
-                    "SVG requires cairosvg: pip install cairosvg"
-                ) from exc
+                raise RuntimeError("SVG requires cairosvg: pip install cairosvg") from exc
 
             import io
 
@@ -245,16 +204,10 @@ def prepare(
             )
             im.save(dest, format="PNG")
 
-        source_type = (
-            row.get("Source Type")
-            or row.get("source")
-            or "web"
-        ).strip().lower()
+        source_type = (row.get("Source Type") or row.get("source") or "web").strip().lower()
 
         if source_type not in ("web", "team", "coco"):
-            raise ValueError(
-                f"Unknown source type: {source_type}"
-            )
+            raise ValueError(f"Unknown source type: {source_type}")
 
         rows.append(
             dict(
@@ -262,23 +215,13 @@ def prepare(
                 category=category,
                 file=dest.as_posix(),
                 source=source_type,
-                source_url=(
-                    row.get("Source URL") or ""
-                ).strip(),
-                license=(
-                    row.get("License") or ""
-                ).strip(),
+                source_url=(row.get("Source URL") or "").strip(),
+                license=(row.get("License") or "").strip(),
                 photographer=(
-                    (row.get("Collected By") or "").strip()
-                    if source_type == "team"
-                    else ""
+                    (row.get("Collected By") or "").strip() if source_type == "team" else ""
                 ),
                 lighting="na",
-                split=(
-                    "tune"
-                    if image_id in tune_ids
-                    else "test"
-                ),
+                split=("tune" if image_id in tune_ids else "test"),
                 has_pairs="false",
             )
         )
@@ -304,9 +247,7 @@ def prepare(
 
 
 def main():
-    ap = argparse.ArgumentParser(
-        description=__doc__
-    )
+    ap = argparse.ArgumentParser(description=__doc__)
 
     ap.add_argument(
         "--tracker",
@@ -357,9 +298,7 @@ def main():
         args.max_side,
     )
 
-    print(
-        f"Prepared {count} images -> {args.manifest}"
-    )
+    print(f"Prepared {count} images -> {args.manifest}")
 
 
 if __name__ == "__main__":

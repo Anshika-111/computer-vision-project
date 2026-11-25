@@ -1,4 +1,3 @@
-
 """Evaluation metrics for ChromaFix color accessibility."""
 
 import numpy as np

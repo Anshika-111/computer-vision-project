@@ -1,4 +1,3 @@
-
 """Tests for ChromaFix evaluation metrics. Author: Aliza."""
 
 import numpy as np

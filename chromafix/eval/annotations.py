@@ -3,10 +3,12 @@
 Coordinates are pixel coordinates on the *standardized* PNG image, with origin
 at its top-left corner. A pair contains polygons named ``a`` and ``b``.
 """
+
 from __future__ import annotations
 
 import json
 from pathlib import Path
+
 import numpy as np
 from PIL import Image, ImageDraw
 

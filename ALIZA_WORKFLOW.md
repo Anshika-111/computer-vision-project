@@ -56,7 +56,7 @@ python -m scripts.annotate_pairs preview             # overlays in results/annot
 
 Left-click adds a vertex, right-click removes the last one. Regions a and b must not overlap.
 
-**Annotate all 30 `tune` images as well as ~50 `test` images.** Anshika tunes personalized
+**Annotate all 30 `tune` images as well as ~50 `test` images** (done: see Data provenance). Anshika tunes personalized
 daltonization by maximizing pair distinguishability on the tune split, so tune images without
 pairs give her nothing to optimize. Run `check` before every commit; CI fails if `has_pairs`
 and `pairs.json` disagree.
@@ -89,6 +89,31 @@ Higher `pair_de00_mean` and lower `pairs_below_jnd` = easier to tell apart after
 Lower `naturalness` = closer to the original. `JND_DE00` in `chromafix/constants.py` is still a
 placeholder (1.0) and needs a cited source.
 
+## Data provenance (for the report)
+
+**Pair annotations** (`data/annotations/pairs.json`): 200 pairs on 80 images: all 30 tune
+images except `charts_0031` (its 2 px bump-chart lines are too thin for a region), plus 51 test
+images chosen across all six categories for color-coded content. They were **drafted with AI
+assistance (Claude) and reviewed by Aliza**. Method: scikit-image Felzenszwalb segmentation
+proposed uniform-color regions, each reduced to its largest inscribed rectangle; for thin
+lines, small lamps and scatter clusters, a seeded color flood-fill (or a manual box) was used.
+A human-readable choice of which two regions form a pair (e.g. "red pepper vs green pepper")
+was made per image, and every pair was checked automatically: regions non-overlapping and
+inside the image, CIEDE2000 between the two regions >= 5 for normal vision, and overlays
+inspected. Spot-check overlays with `python -m scripts.annotate_pairs preview`.
+
+**Licenses** (`license` column + `data/license_review.csv`): 100 rows were blank. 8 now have a
+verified open license or public-domain status (CDC, NWS, Penn State GEOG 160, UC Berkeley
+Library, Wilke's and the tmap books). The other 92 are `unknown`: no license is stated
+(blogs, vendors, forums, Reddit, eBay, Amazon, iStock), so they are all-rights-reserved by
+default. 20 of them were opened and checked; the rest are noted as not individually verified.
+Use these images for internal evaluation only and do not redistribute them; consider
+replacing `traffic_0028` (iStock), `maps_0024` (eBay) and `maps_0029` (Amazon). Two
+CC BY-NC-ND images (`charts_0040`, `maps_0015`) must not be redistributed in recolored form.
+
+**Lighting** for the 16 team photos was labeled from the photos themselves (daylight / indoor /
+low); confirm with Iris, who took them.
+
 ## 4. Study logs
 
 ```bash
@@ -106,8 +131,8 @@ pytest && ruff check . && ruff format --check .   # what CI runs
 
 ## Remaining tasks needing external data or teammates
 
-1. Import the final images and source tracker; check source rights and confirm lighting metadata if needed.
-2. Annotate the 30 tune images and ~50 test images; run `annotate_pairs check`.
+1. Confirm lighting labels with Iris; decide whether to replace the iStock/eBay/Amazon images.
+2. Review the AI-drafted pair annotations (overlays via `annotate_pairs preview`).
 3. Set `JND_DE00` with a cited source (file is Avneet's; coordinate with him).
 4. Run experiments, summarize across categories/types/severities, generate report-ready plots and findings.
 5. Import Iris's study logs and interpret study results.

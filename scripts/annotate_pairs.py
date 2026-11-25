@@ -67,7 +67,7 @@ def check(manifest: Path, pairs_path: Path, root: Path, write: bool = True) -> l
         for r in rows:
             r["has_pairs"] = "1" if pairs_by_image.get(r["image_id"]) else "0"
         with manifest.open("w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=MANIFEST_FIELDS)
+            w = csv.DictWriter(f, fieldnames=MANIFEST_FIELDS, lineterminator="\n")
             w.writeheader()
             w.writerows(rows)
     return problems

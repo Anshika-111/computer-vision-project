@@ -239,6 +239,7 @@ def prepare(
         writer = csv.DictWriter(
             f,
             fieldnames=FIELDS,
+            lineterminator="\n",
         )
         writer.writeheader()
         writer.writerows(rows)

@@ -73,7 +73,7 @@ def select_plates(
     Args:
         plates: Validated plates.
         n: Total plates to return.
-        n_controls: How many of them are control plates.
+        n_controls: How many of them are control plates (at most n).
         seed: Random seed for which plates are chosen and their order.
 
     Returns:
@@ -87,7 +87,7 @@ def select_plates(
             cells.setdefault((p.target_type, p.difficulty), []).append(p)
     for group in cells.values():
         rng.shuffle(group)
-    picks = rng.permutation(len(controls))[: min(n_controls, len(controls))]
+    picks = rng.permutation(len(controls))[: min(n_controls, n, len(controls))]
     chosen = [controls[j] for j in picks]
     keys = sorted(cells, key=lambda k: (k[1], k[0]))  # rotate types first, then levels
     i = 0

@@ -69,3 +69,10 @@ def test_select_plates_is_balanced(plates):
     assert len({p.plate_id for p in chosen}) == 24
     per_type = {t: sum(p.target_type == t for p in chosen) for t in CVD_TYPES}
     assert all(n == 7 for n in per_type.values())
+
+
+@pytest.mark.parametrize("n", [1, 2])
+def test_select_plates_never_returns_more_than_n(plates, n):
+    chosen = select_plates(plates, n=n, n_controls=3, seed=0)
+    assert len(chosen) == n
+    assert all(p.is_control for p in chosen)

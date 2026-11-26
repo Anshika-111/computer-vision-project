@@ -1,0 +1,14 @@
+[
+  {"image_id": "charts_0002", "pair_id": "charts_0002_p0", "prompt": "Which bar is red?", "correct": "b"},
+  {"image_id": "charts_0034", "pair_id": "charts_0034_p0", "prompt": "Which bar is green?", "correct": "a"},
+  {"image_id": "coded_items_0002", "pair_id": "coded_items_0002_p0", "prompt": "Which wire is red?", "correct": "a"},
+  {"image_id": "coded_items_0004", "pair_id": "coded_items_0004_p0", "prompt": "Which plug is green?", "correct": "b"},
+  {"image_id": "coded_items_0013", "pair_id": "coded_items_0013_p0", "prompt": "Which bricks are red?", "correct": "b"},
+  {"image_id": "food_0005", "pair_id": "food_0005_p0", "prompt": "Which apple is red?", "correct": "a"},
+  {"image_id": "food_0008", "pair_id": "food_0008_p0", "prompt": "Which pepper is green?", "correct": "b"},
+  {"image_id": "food_0010", "pair_id": "food_0010_p0", "prompt": "Which bananas are ripe (yellow)?", "correct": "b"},
+  {"image_id": "maps_0022", "pair_id": "maps_0022_p0", "prompt": "Which region is red?", "correct": "a"},
+  {"image_id": "maps_0027", "pair_id": "maps_0027_p2", "prompt": "Which area is green?", "correct": "a"},
+  {"image_id": "traffic_0004", "pair_id": "traffic_0004_p0", "prompt": "Which lamp is red?", "correct": "a"},
+  {"image_id": "traffic_0006", "pair_id": "traffic_0006_p0", "prompt": "Which arrow is green?", "correct": "b"}
+]

@@ -1,0 +1,42 @@
+% ChromaFix final report (CS 4391, Group 6). Built from the CVPR author kit:
+% https://github.com/cvpr-org/author-kit  (cvpr.sty, ieeenat_fullname.bst, preamble.tex unchanged)
+% Compiled by Aliza; each section file names its owner. Build: see README.md.
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage[pagenumbers]{cvpr}   % camera-ready layout with page numbers, no anonymization
+\input{preamble}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\graphicspath{{../results/report/figures/}}
+
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+\def\confName{CS 4391}
+\def\confYear{2026}
+
+% Every number quoted in the text comes from these generated files (never typed by hand).
+\input{../results/report/numbers}
+\input{../results/report/study_numbers}
+
+\title{ChromaFix: Screening, Simulation, and Personalized Recoloring\\for Color Vision Deficiency}
+
+\author{Anshika \qquad Avneet Kaur \qquad Aliza Karachiwalla \qquad Iris Le\\
+CS 4391 Computer Vision, Group 6}
+
+\begin{document}
+\maketitle
+\input{sec/0_abstract}
+\input{sec/1_intro}
+\input{sec/2_simulation_screening}
+\input{sec/3_recoloring}
+\input{sec/4_app}
+\input{sec/5_data}
+\input{sec/6_evaluation}
+\input{sec/7_conclusion}
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{refs}
+}
+\end{document}

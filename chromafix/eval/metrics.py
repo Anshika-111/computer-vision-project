@@ -1,94 +1,98 @@
+"""CIEDE2000 evaluation metrics: distinguishability, naturalness, JND share. Author: Aliza.
 
-"""Evaluation metrics for ChromaFix color accessibility."""
+Signatures follow CLAUDE.md Section 6. Every color difference is CIEDE2000 via
+``chromafix.color.delta_e00``; anything tuned or reported must import these functions.
+"""
+
+from __future__ import annotations
 
 import numpy as np
 
 from chromafix.color import delta_e00, linear_to_lab
 from chromafix.constants import JND_DE00
+from chromafix.eval.annotations import pair_masks
+from chromafix.simulate import simulate
 
 
-def naturalness(original: np.ndarray, recolored: np.ndarray) -> float:
-    """Mean per-pixel CIEDE2000 difference. Lower is better."""
-    if original.shape != recolored.shape:
-        raise ValueError("Images must have the same shape.")
-
-    original_lab = linear_to_lab(original)
-    recolored_lab = linear_to_lab(recolored)
-
-    differences = delta_e00(original_lab, recolored_lab)
-    return float(np.mean(differences))
+def _check_image(img: np.ndarray, name: str = "img") -> np.ndarray:
+    img = np.asarray(img)
+    if img.ndim != 3 or img.shape[-1] != 3:
+        raise ValueError(f"{name} must have shape (H, W, 3), got {img.shape}")
+    return img
 
 
 def pair_distinguishability(
-    image: np.ndarray,
-    region_a: np.ndarray,
-    region_b: np.ndarray,
-) -> float:
-    """CIEDE2000 distance between two annotated image regions.
+    img: np.ndarray, pairs: list[dict], cvd_type: str, severity: float
+) -> np.ndarray:
+    """How different each annotated region pair looks to a simulated CVD viewer.
+
+    Simulates ``img`` for ``cvd_type`` at ``severity``, converts every pixel to CIELAB,
+    averages the Lab values inside region ``a`` and inside region ``b``, and returns the
+    CIEDE2000 difference between the two means.
 
     Args:
-        image: Linear RGB image, shape (H, W, 3).
-        region_a: Boolean mask, shape (H, W).
-        region_b: Boolean mask, shape (H, W).
+        img: Linear RGB, shape (H, W, 3), values in [0, 1]. Pass the *unsimulated* image
+            (original or recolored); simulation happens here.
+        pairs: Pair dicts with ``a`` and ``b`` polygons in ``[x, y]`` pixel coordinates, as
+            stored in ``data/annotations/pairs.json``.
+        cvd_type: "normal", "protan", "deutan", or "tritan".
+        severity: In [0, 1]; ignored for "normal".
 
     Returns:
-        CIEDE2000 difference between mean region colors.
-        Higher is better.
+        CIEDE2000 per pair, float64, shape (len(pairs),). Higher is better.
+
+    Raises:
+        ValueError: Bad image shape, or a polygon that is invalid for this image.
     """
-    image = np.asarray(image)
-    region_a = np.asarray(region_a)
-    region_b = np.asarray(region_b)
-
-    if image.ndim != 3 or image.shape[-1] != 3:
-        raise ValueError("Image must have shape (H, W, 3).")
-
-    if region_a.shape != image.shape[:2]:
-        raise ValueError("Region A mask has incorrect shape.")
-
-    if region_b.shape != image.shape[:2]:
-        raise ValueError("Region B mask has incorrect shape.")
-
-    if region_a.dtype != np.bool_ or region_b.dtype != np.bool_:
-        raise ValueError("Region masks must be boolean.")
-
-    if not region_a.any() or not region_b.any():
-        raise ValueError("Region masks cannot be empty.")
-
-    mean_a = np.mean(image[region_a], axis=0)
-    mean_b = np.mean(image[region_b], axis=0)
-
-    lab_a = linear_to_lab(mean_a)
-    lab_b = linear_to_lab(mean_b)
-
-    return float(delta_e00(lab_a, lab_b))
+    img = _check_image(img)
+    if not pairs:
+        return np.zeros(0, dtype=np.float64)
+    lab = linear_to_lab(simulate(img, cvd_type, severity))
+    out = np.empty(len(pairs), dtype=np.float64)
+    for i, pair in enumerate(pairs):
+        mask_a, mask_b = pair_masks(pair, img.shape[:2])
+        out[i] = delta_e00(lab[mask_a].mean(axis=0), lab[mask_b].mean(axis=0))
+    return out
 
 
-def pairs_below_jnd(
-    differences: np.ndarray,
-    threshold: float = JND_DE00,
-) -> float:
-    """Fraction of annotated pairs below the JND threshold.
+def naturalness(original: np.ndarray, recolored: np.ndarray) -> float:
+    """Mean per-pixel CIEDE2000 between two images, seen with normal vision.
 
     Args:
-        differences: CIEDE2000 distances for annotated pairs.
-        threshold: Just-noticeable-difference threshold.
+        original: Linear RGB, shape (H, W, 3), values in [0, 1].
+        recolored: Linear RGB, same shape.
 
     Returns:
-        Fraction of pairs below threshold, between 0 and 1.
-        Lower is better.
+        Mean CIEDE2000 over all pixels. 0.0 for identical images; lower is better.
+
+    Raises:
+        ValueError: The shapes differ or are not (H, W, 3).
     """
-    differences = np.asarray(differences, dtype=np.float64)
+    original = _check_image(original, "original")
+    recolored = _check_image(recolored, "recolored")
+    if original.shape != recolored.shape:
+        raise ValueError(f"Shapes differ: {original.shape} vs {recolored.shape}")
+    return float(np.mean(delta_e00(linear_to_lab(original), linear_to_lab(recolored))))
 
-    if differences.size == 0:
-        raise ValueError("At least one color pair is required.")
 
-    if not np.all(np.isfinite(differences)):
-        raise ValueError("Differences must be finite.")
+def pairs_below_jnd(distances: np.ndarray, threshold: float = JND_DE00) -> float:
+    """Fraction of pairs whose CIEDE2000 distance is below the just-noticeable difference.
 
-    if np.any(differences < 0):
-        raise ValueError("Differences cannot be negative.")
+    Args:
+        distances: CIEDE2000 per pair, e.g. from ``pair_distinguishability``.
+        threshold: JND in CIEDE2000 units; defaults to ``constants.JND_DE00``.
 
+    Returns:
+        Fraction in [0, 1]. Lower is better.
+
+    Raises:
+        ValueError: Empty, non-finite, or negative distances, or a bad threshold.
+    """
+    distances = np.asarray(distances, dtype=np.float64)
+    if distances.size == 0:
+        raise ValueError("At least one pair distance is required")
+    if not np.all(np.isfinite(distances)) or np.any(distances < 0):
+        raise ValueError("Distances must be finite and nonnegative")
     if not np.isfinite(threshold) or threshold < 0:
-        raise ValueError("Threshold must be finite and nonnegative.")
-
-    return float(np.mean(differences < threshold))
+        raise ValueError("Threshold must be finite and nonnegative")
+    return float(np.mean(distances < threshold))

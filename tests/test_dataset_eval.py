@@ -17,7 +17,6 @@ from chromafix.eval.annotations import (
     polygon_mask,
 )
 from chromafix.eval.dataset import MANIFEST_FIELDS, load_split, read_manifest, split_ids
-from scripts.analyze_study import analyze
 from scripts.annotate_pairs import check, coverage, preview
 from scripts.prepare_dataset import prepare
 from scripts.run_eval import FIELDS, evaluate, write_rows
@@ -249,6 +248,13 @@ def test_prepare_dataset(tmp_path):
     assert rows[0]["file"].endswith("charts_0000.png")
 
 
-def test_study_no_logs(tmp_path):
-    assert analyze(tmp_path / "logs", tmp_path / "summary.csv", tmp_path / "paired.csv") == (0, 0)
-    assert (tmp_path / "summary.csv").exists()
+def test_run_eval_shards_cover_test_split_once(tmp_path):
+    manifest, pairs = make_dataset(tmp_path, {})
+    seen = []
+    for k in range(2):
+        rows = evaluate(manifest, pairs, tmp_path, methods=["none"], cvd_types=["deutan"],
+                        severities=[1.0], log=lambda m: None, shard=(k, 2))  # fmt: skip
+        seen += [r["image_id"] for r in rows]
+    assert sorted(seen) == ["charts_0001", "charts_0002"]
+    with pytest.raises(ValueError):
+        evaluate(manifest, pairs, tmp_path, shard=(2, 2))

@@ -24,7 +24,7 @@ from pathlib import Path
 import numpy as np
 
 from chromafix.constants import CVD_TYPES, EVAL_SEVERITIES, METHODS
-from chromafix.eval.dataset import load_split
+from chromafix.eval.dataset import load_split, read_manifest, split_ids
 from chromafix.eval.metrics import naturalness, pair_distinguishability, pairs_below_jnd
 from chromafix.profile import CVDProfile
 from chromafix.recolor import NeuralModelUnavailable, recolor
@@ -50,6 +50,7 @@ def evaluate(
     severities: Iterable[float] = EVAL_SEVERITIES,
     annotated_only: bool = False,
     log=print,
+    shard: tuple[int, int] = (0, 1),
 ) -> list[dict]:
     """Run the evaluation grid on the test split.
 
@@ -62,6 +63,8 @@ def evaluate(
         severities: Severities to evaluate.
         annotated_only: Skip test images that have no pairs.
         log: Where progress and skip messages go.
+        shard: ``(k, n)``: only every n-th test image starting at k, so a long run can be
+            split across processes and the CSVs concatenated.
 
     Returns:
         One dict per row, keys = FIELDS. Unavailable methods produce no rows.
@@ -69,7 +72,12 @@ def evaluate(
     methods = list(methods)
     unavailable: dict[str, str] = {}
     rows: list[dict] = []
-    for item in load_split("test", manifest, pairs, root, annotated_only=annotated_only):
+    k, n = shard
+    if not 0 <= k < n:
+        raise ValueError(f"shard must satisfy 0 <= k < n, got {k}/{n}")
+    ids = split_ids(read_manifest(manifest), "test")[k::n]
+    items = load_split("test", manifest, pairs, root, annotated_only=annotated_only, image_ids=ids)
+    for item in items:
         natural_cache: dict[bytes, float] = {}
         for cvd_type in cvd_types:
             for severity in severities:
@@ -128,7 +136,9 @@ def main() -> None:
     ap.add_argument(
         "--annotated-only", action="store_true", help="only test images with pairs (faster)"
     )
+    ap.add_argument("--shard", default="0/1", help="K/N: run every N-th test image from K")
     args = ap.parse_args()
+    k, n = (int(v) for v in args.shard.split("/"))
     rows = evaluate(
         args.manifest,
         args.pairs,
@@ -137,6 +147,7 @@ def main() -> None:
         args.types,
         args.severities,
         args.annotated_only,
+        shard=(k, n),
     )
     write_rows(rows, args.out)
     print(f"Wrote {len(rows)} rows to {args.out}")

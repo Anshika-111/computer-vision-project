@@ -6,6 +6,7 @@ __pycache__/
 data/images/
 data/plates/
 data/clips/
+data/simulated/
 
 # Large model files
 models/

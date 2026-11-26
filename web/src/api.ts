@@ -35,15 +35,23 @@ export interface PlateAnswer {
   answer: string;
 }
 
+/** Which outlined region a game answer refers to. */
+export type GameSide = "a" | "b";
+
 /**
- * One mini-game trial. The trial shape is not defined in CLAUDE.md yet
- * (pending a [contract] PR), so only the fields the log format implies are typed.
+ * One mini-game trial from GET /api/games/{game}/trials. Shape proposed in the
+ * games [contract] PR: pick the outlined region (a or b) that answers the prompt.
  */
 export interface GameTrial {
   trial_id: number;
   image_id: string;
+  pair_id: string;
+  prompt: string;
+  options: GameSide[];
+  correct_answer: GameSide;
   condition: Method;
-  [key: string]: unknown;
+  /** Polygons in pixel coordinates of the 1024 px dataset image. */
+  polygons: Record<GameSide, [number, number][]>;
 }
 
 /** One study-log object (CLAUDE.md Section 7). */
@@ -178,6 +186,11 @@ export function getMethods(): Promise<Method[]> {
 export function getGameTrials(game: string, participantId: string): Promise<GameTrial[]> {
   const query = new URLSearchParams({ participant_id: participantId });
   return getJSON(`/games/${encodeURIComponent(game)}/trials?${query}`);
+}
+
+/** The original dataset image for a game trial (sRGB PNG). */
+export async function getGameImage(imageId: string): Promise<Blob> {
+  return (await request(`/games/images/${encodeURIComponent(imageId)}.png`)).blob();
 }
 
 export async function postLog(log: StudyLog): Promise<void> {

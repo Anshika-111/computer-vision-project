@@ -1,42 +1,59 @@
 // App shell: header with nav and profile chip, shared CVD profile, one page per route. Author: Iris.
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import type { CVDProfile } from "./api";
 import { GamesView } from "./games/GamesView";
+import { HomePage } from "./home/HomePage";
 import { ImageView } from "./images/ImageView";
 import { LiveMode } from "./live/LiveMode";
-import { ProfileControls } from "./profile/ProfileControls";
+import { ProfilePage } from "./profile/ProfilePage";
+import { profileLabel, useProfileStore } from "./profile/profileStore";
 import { routeHref, useRoute, type Route } from "./router";
 import { ScreeningView } from "./screening/ScreeningView";
+import { WelcomePage } from "./welcome/WelcomePage";
 
-const NAV: { route: Route; label: string; title: string }[] = [
-  { route: "screening", label: "Screening", title: "Screening" },
-  { route: "images", label: "Image", title: "Recolor an image" },
-  { route: "live", label: "Live", title: "Live webcam" },
-  { route: "games", label: "Study", title: "Study games" },
+const NAV: { route: Route; label: string }[] = [
+  { route: "screening", label: "Screening" },
+  { route: "images", label: "Image" },
+  { route: "live", label: "Live" },
+  { route: "games", label: "Study" },
 ];
 
-const DEFAULT_PROFILE: CVDProfile = { type: "deutan", severity: 1, confidence: 1 };
-
-function profileLabel(profile: CVDProfile): string {
-  if (profile.type === "normal") return "Normal vision";
-  const type = profile.type.charAt(0).toUpperCase() + profile.type.slice(1);
-  return `${type} · ${profile.severity.toFixed(1)}`;
-}
+const TITLES: Record<Route, string> = {
+  welcome: "ChromaFix",
+  home: "Home · ChromaFix",
+  screening: "Screening · ChromaFix",
+  profile: "Your profile · ChromaFix",
+  images: "Recolor an image · ChromaFix",
+  live: "Live webcam · ChromaFix",
+  games: "Study games · ChromaFix",
+};
 
 export function App() {
   const route = useRoute();
-  const [profile, setProfile] = useState<CVDProfile>(DEFAULT_PROFILE);
+  const [state, setState] = useProfileStore();
+  const { profile, source } = state;
 
-  const page = NAV.find((n) => n.route === route);
   useEffect(() => {
-    document.title = page ? `${page.title} · ChromaFix` : "ChromaFix";
-  }, [page]);
+    document.title = TITLES[route];
+  }, [route]);
+
+  const onScored = useCallback(
+    (scored: CVDProfile) => {
+      setState({ profile: scored, source: "screening" });
+      window.location.hash = routeHref("profile");
+    },
+    [setState],
+  );
+
+  if (route === "welcome") return <WelcomePage />;
+
+  const chip = source === "example" ? "No profile yet" : profileLabel(profile);
 
   return (
     <div className="app">
       <header className="app-header">
-        <a className="wordmark" href={routeHref("screening")}>
+        <a className="wordmark" href={routeHref("home")}>
           ChromaFix
         </a>
         <nav className="app-nav" aria-label="Sections">
@@ -50,16 +67,25 @@ export function App() {
             </a>
           ))}
         </nav>
-        <span className="profile-chip" aria-label={`Your profile: ${profileLabel(profile)}`}>
-          {profileLabel(profile)}
-        </span>
+        <a
+          className="profile-chip"
+          data-empty={source === "example" || undefined}
+          href={routeHref("profile")}
+          aria-current={route === "profile" ? "page" : undefined}
+          aria-label={`Your profile: ${chip}`}
+        >
+          {chip}
+        </a>
       </header>
       <main className="app-main">
-        <ProfileControls profile={profile} onChange={setProfile} />
-        {route === "screening" && <ScreeningView onScored={setProfile} />}
+        {route === "home" && <HomePage profile={profile} source={source} />}
+        {route === "screening" && <ScreeningView onScored={onScored} />}
+        {route === "profile" && <ProfilePage state={state} onChange={setState} />}
         {route === "images" && <ImageView profile={profile} />}
         {route === "live" && <LiveMode profile={profile} />}
-        {route === "games" && <GamesView profile={profile} />}
+        {route === "games" && (
+          <GamesView profile={profile} profileIsExample={source === "example"} />
+        )}
       </main>
     </div>
   );

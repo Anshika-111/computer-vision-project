@@ -9,6 +9,18 @@ interface LiveViewProps {
   matrix: Mat3;
 }
 
+/** Plain-language reason the camera could not start. */
+function cameraError(cause: unknown): string {
+  const name = cause instanceof DOMException ? cause.name : "";
+  if (name === "NotAllowedError" || name === "SecurityError")
+    return "Camera access was blocked. Allow the camera for this site in your browser settings, then turn it on again.";
+  if (name === "NotFoundError" || name === "OverconstrainedError")
+    return "No camera was found. Connect one, then turn it on again.";
+  if (name === "NotReadableError")
+    return "The camera is in use by another app. Close that app, then turn it on again.";
+  return `The camera couldn't start: ${cause instanceof Error ? cause.message : String(cause)}`;
+}
+
 export function LiveView({ matrix }: LiveViewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // The render loop reads the latest matrix without restarting the camera.
@@ -16,6 +28,7 @@ export function LiveView({ matrix }: LiveViewProps) {
   matrixRef.current = matrix;
   const [error, setError] = useState<string | null>(null);
   const [fps, setFps] = useState<number | null>(null);
+  const [starting, setStarting] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -59,10 +72,12 @@ export function LiveView({ matrix }: LiveViewProps) {
         stream = media;
         video.srcObject = media;
         await video.play();
+        if (!cancelled) setStarting(false);
         frameRequest = requestAnimationFrame(render);
       } catch (cause) {
         if (!cancelled) {
-          setError(cause instanceof Error ? cause.message : String(cause));
+          setError(cameraError(cause));
+          setStarting(false);
         }
       }
     };
@@ -78,10 +93,15 @@ export function LiveView({ matrix }: LiveViewProps) {
   }, []);
 
   return (
-    <div className="live-view">
+    <div className="live-view" data-idle={starting || error ? true : undefined}>
       <canvas ref={canvasRef} />
-      {fps !== null && <span className="fps">{fps} fps</span>}
-      {error && <p role="alert">Camera unavailable: {error}</p>}
+      {fps !== null && !error && <span className="fps">{fps} fps</span>}
+      {starting && <p className="live-view-msg">Starting camera…</p>}
+      {error && (
+        <p className="live-view-msg" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

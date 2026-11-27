@@ -725,29 +725,119 @@ progress::-moz-progress-bar {
 
 /* ---------- Images ---------- */
 
-.panels {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
-  gap: var(--space-4);
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.panels figure {
-  margin: 0;
+.image-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 360px;
+  padding: var(--space-7) var(--space-5);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.dropzone[data-dragging] {
+  border: 2px solid var(--ink);
+  background: var(--surface-strong);
+}
+
+.dropzone-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.image-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-4) var(--space-5);
+}
+
+.field {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.panels figcaption {
+.field-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.image-sim {
+  min-height: var(--control-h);
+}
+
+.image-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+.image-status {
+  min-height: 1.5em;
+  margin: calc(-1 * var(--space-3)) 0;
   font-size: var(--text-md);
   font-weight: 600;
 }
 
-.panels img {
+.image-status:empty {
+  visibility: hidden;
+}
+
+/* Images are shown as returned by the server: no filters, opacity or blending. */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-4);
+}
+
+.compare figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.compare figcaption {
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+
+.compare img {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--line);
+  max-height: 70vh;
+  object-fit: contain;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+@media (max-width: 640px) {
+  .image-actions {
+    margin-left: 0;
+  }
 }
 
 /* ---------- Games ---------- */

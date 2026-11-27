@@ -1,6 +1,99 @@
 % Owner: Iris (web app, live mode, mini-games, study logging).
 \section{Application and User Study Design}
 \label{sec:app}
-\TODO{Iris: the web app (screening, image, live WebGL mode), the color-match mini-game,
-counterbalancing of conditions across participants, recruitment, consent, and the session
-script. The analysis of the logs is in \cref{sec:study}.}
+
+ChromaFix is delivered as a web application so that a user can be screened, see how their
+vision is modelled, and use the recoloring on their own images and camera without installing
+anything. A FastAPI server wraps the \texttt{chromafix} Python package, and a React and
+TypeScript front end talks to it through a single typed API client. All color math runs in
+Python through the shared conversion functions of \cref{sec:simulation}, with one exception, the live
+camera shader described below. The server processes uploaded images in memory and never
+writes them to disk.
+
+\paragraph{Screening and profile.}
+The screening page shows 24 plates from \cref{sec:simulation}: three control plates that every
+observer should read, and the rest spread evenly over the three deficiency types and the
+difficulty levels. For each plate the user types the digit they see or selects ``I don't see a
+number''. The answers are scored on the server into a profile $(t, s, c)$ (type, severity,
+confidence). That profile is kept in the app's state and sent with every later request, so the
+image, live and game pages all adapt to the same viewer. A control bar lets the user, or a
+demonstrator, override the type and severity by hand.
+
+\paragraph{Image mode.}
+The user uploads an image and sees four panels side by side: the original, the original as
+simulated for their profile, the recolored image, and the recolored image as simulated for
+their profile, \ie $S\,R\,\mathbf{x}$ with recoloring applied first. The last panel is the one
+that matters for a viewer with CVD; the second and fourth together let a viewer with normal
+vision see what the recoloring changes. The recoloring method is chosen from the methods the
+server reports as available, so methods that are not ready (the neural model, or personalized
+parameters that have not been tuned yet) are hidden rather than failing.
+
+\paragraph{Live mode.}
+Live mode applies a method to webcam video in real time. Because simulation and the
+matrix-based recoloring methods are each a single $3{\times}3$ matrix on linear RGB, a frame
+can be processed entirely on the GPU. A WebGL~1 fragment shader decodes each sRGB pixel to
+linear RGB with the IEC~61966-2-1 curve, multiplies it by the matrix, clamps the result to
+$[0,1]$, and encodes it back to sRGB. The matrices come from the server, so the live view uses
+exactly the same values as the Python pipeline. The server returns them row-major while GLSL
+expects column-major and WebGL~1 does not allow the transpose flag, so the client transposes
+before upload. For the ``recolored, as you see it'' view the client composes $S\,R$ into one
+matrix. This clamps once instead of after each step, so it can differ slightly from the image
+pipeline for pixels that recoloring pushes out of gamut. The page shows the achieved frame rate;
+on our laptop it held 120~fps in every view, so the per-pixel matrix adds no visible cost.
+Neural recoloring has no matrix form and is therefore not offered in live mode.
+
+\paragraph{Color-match game.}
+To measure whether recoloring helps people in practice, and not only in CIEDE2000, we built a
+short game on the annotated test images (\cref{sec:data}). Each of its 12 rounds shows one
+image with the two regions of an annotated pair outlined and labelled A and B, together with a
+question that only color can answer, such as ``which wire is red?'' or ``which bananas are
+ripe?''. The player clicks A or B as quickly as they can. The rounds cover charts, color-coded
+items, food, maps and traffic signals, mostly red--green distinctions. The correct answer is A
+in six rounds and B in six. Only test-split images are used, because the personalized method
+was tuned on the tune split; the server rejects any game entry that points to a tune image or
+to an unannotated pair. The image is recolored with the round's condition and, by default,
+also simulated for the player's profile. With the profile set to a deficiency, players with
+normal vision then perform the task under simulated CVD, while players with CVD can switch the
+simulation off and use their own vision. Response time is measured from the moment the image
+has loaded until the click.
+
+\paragraph{Counterbalancing.}
+Let $C$ be the list of conditions and $p$ the participant number. Round $k$ of the answer key is
+shown under condition $C[(k + p) \bmod |C|]$, so each image rotates through all conditions
+across consecutive participants, and every participant sees every condition about equally
+often. The order of the rounds is then shuffled with a seed derived from the project seed and
+$p$. The same participant therefore always receives the same sequence, which makes sessions
+reproducible, while different participants see the rounds in different orders. $C$ contains
+every matrix-based method the server can run; at the time of writing these are \emph{none}
+and \emph{fixed}. The personalized method is added automatically once its
+parameters are available. The neural method is excluded because it is slow on a laptop CPU.
+
+\paragraph{Logging and privacy.}
+Each answer is posted to the server and appended as one JSON line to a per-session log. A line
+holds the session and participant IDs, the profile used, the game, round, image and condition,
+the answer, whether it was correct, the response time in milliseconds, and a timestamp. These
+logs are the input to the analysis in \cref{sec:study}. Participant IDs are anonymous codes of
+the form \texttt{P07}. The server rejects any log line with fields outside this schema, so
+names, e-mail addresses or photographs cannot enter the logs by accident, and it stores no
+uploaded images.
+
+\paragraph{Sessions.}
+Because of the project timeline, the game is run in short demonstration sessions rather than
+a formally recruited study. Each session runs on one laptop in a desktop browser. Before
+playing, the participant is told that the session is anonymous, that only their answers and
+response times are recorded under a code instead of their name, and that they may stop at any
+time. A session consists of an optional screening, the 12 game rounds, and the per-condition
+summary the game shows at the end. For participants with normal vision the profile is set to
+deutan at severity 1.0, the most common deficiency~\cite{birch2012}, which matches the mostly
+red--green rounds; participants whose screening finds a CVD keep their own profile.
+% Participant counts come from the real logs via results/report/study_numbers.tex
+% (scripts/analyze_study.py); never type them by hand.
+\ifnum\StudyParticipants>0
+\StudyParticipants{} people took part in \StudySessions{} sessions. Because the log records
+the profile that was applied rather than the screening result, players with a simulated
+deficiency cannot be told apart from players with a real one in the logs.
+\else
+No sessions had been logged at the time of writing.
+\fi
+With this few participants the results in \cref{sec:study} are indicative only, and a
+recruited study that includes more participants with CVD is left to future work.

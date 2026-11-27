@@ -9,6 +9,7 @@ import {
   type PlateAnswer,
   type PlateMeta,
 } from "../api";
+import { useFocusMode } from "../focusMode";
 import { routeHref } from "../router";
 
 const PLATE_COUNT = 24;
@@ -105,6 +106,9 @@ export function ScreeningView({ onScored }: ScreeningViewProps) {
     if (plateIndex >= 0) headingRef.current?.focus();
   }, [plateIndex]);
 
+  // On phones, hide the nav while plates are showing: more room, and no stray taps away.
+  useFocusMode(phase.kind === "answering");
+
   const restart = () => setAttempt((n) => n + 1);
 
   switch (phase.kind) {
@@ -183,8 +187,10 @@ export function ScreeningView({ onScored }: ScreeningViewProps) {
                 I don't see a number
               </button>
               <p className="muted">
-                You can also press a number key, or N for no number. Answer with your first
-                impression. There is no going back to earlier plates.
+                <span className="hint-keys">
+                  You can also press a number key, or N for no number.{" "}
+                </span>
+                Answer with your first impression. There is no going back to earlier plates.
               </p>
             </div>
           </div>

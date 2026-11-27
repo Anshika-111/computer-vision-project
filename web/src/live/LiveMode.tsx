@@ -13,7 +13,7 @@ import {
   type MatrixMethod,
 } from "../api";
 import { typeLabel } from "../profile/profileStore";
-import { LiveView } from "./LiveView";
+import { LiveView, type Facing } from "./LiveView";
 import { IDENTITY, simulateAfterRecolor } from "./matrix";
 
 type View = "original" | "simulated" | "recolored" | "recolored-seen";
@@ -85,6 +85,8 @@ export function LiveMode({ profile }: LiveModeProps) {
   const [method, setMethod] = useState<MatrixMethod>("fixed");
   const [matrix, setMatrix] = useState<Mat3>(IDENTITY);
   const [error, setError] = useState<string | null>(null);
+  const [facing, setFacing] = useState<Facing>("environment");
+  const [cameraCount, setCameraCount] = useState(0);
 
   const mine = fromProfile(profile);
   const isMine = mine.type === settings.type && mine.severity === settings.severity;
@@ -135,14 +137,24 @@ export function LiveMode({ profile }: LiveModeProps) {
         <div className="live-stage-head">
           <h1>{caption(view, settings, method)}</h1>
           {cameraOn && (
-            <button type="button" onClick={() => setCameraOn(false)}>
-              Turn off camera
-            </button>
+            <div className="live-stage-actions">
+              {cameraCount > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setFacing((f) => (f === "environment" ? "user" : "environment"))}
+                >
+                  {facing === "environment" ? "Use front camera" : "Use back camera"}
+                </button>
+              )}
+              <button type="button" onClick={() => setCameraOn(false)}>
+                Turn off camera
+              </button>
+            </div>
           )}
         </div>
 
         {cameraOn ? (
-          <LiveView matrix={matrix} />
+          <LiveView matrix={matrix} facing={facing} onCameraCount={setCameraCount} />
         ) : (
           <div className="live-off">
             <p className="live-off-title">See your surroundings through the selected view.</p>

@@ -1,4 +1,5 @@
-// Recolor an uploaded image and compare it with the original, side by side. Author: Iris.
+// Recolor an uploaded image and compare it with the original (side by side, or toggled on phones).
+// Author: Iris.
 import { useEffect, useId, useRef, useState, type DragEvent } from "react";
 
 import {
@@ -58,6 +59,8 @@ export function ImageView({ profile }: ImageViewProps) {
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  // Which image a phone shows (desktop shows both side by side).
+  const [showRecolored, setShowRecolored] = useState(true);
 
   const isNormal = profile.type === "normal";
   const showSimulated = simulated && !isNormal;
@@ -169,7 +172,10 @@ export function ImageView({ profile }: ImageViewProps) {
           onDrop={onDrop}
         >
           {fileInput}
-          <p className="dropzone-title">Drop an image here, or choose one from your device.</p>
+          <p className="dropzone-title">
+            <span className="hint-keys">Drop an image here, or choose one from your device.</span>
+            <span className="hint-touch">Choose a photo from your phone, or take a new one.</span>
+          </p>
           <button
             type="button"
             className="primary button-lg"
@@ -206,7 +212,7 @@ export function ImageView({ profile }: ImageViewProps) {
                   checked={simulated}
                   onChange={(e) => setSimulated(e.target.checked)}
                 />
-                Show both as a {profileText} viewer would see them
+                Show the images as a {profileText} viewer would see them
               </label>
             )}
             <div className="image-actions">
@@ -238,7 +244,25 @@ export function ImageView({ profile }: ImageViewProps) {
           )}
 
           {result && (
-            <div className="compare">
+            <div className="compare-block">
+            {/* Phones show one image at a time, full width; this switches which one. */}
+            <div className="segmented compare-toggle" role="group" aria-label="Show">
+              <button
+                type="button"
+                aria-pressed={!showRecolored}
+                onClick={() => setShowRecolored(false)}
+              >
+                Original
+              </button>
+              <button
+                type="button"
+                aria-pressed={showRecolored}
+                onClick={() => setShowRecolored(true)}
+              >
+                Recolored
+              </button>
+            </div>
+            <div className="compare" data-show={showRecolored ? "recolored" : "original"}>
               <figure>
                 <figcaption>{showSimulated ? `Original${seenBy}` : "Original"}</figcaption>
                 <img src={result.original} alt={`${file.name}, original`} />
@@ -250,6 +274,7 @@ export function ImageView({ profile }: ImageViewProps) {
                 </figcaption>
                 <img src={result.recolored} alt={`${file.name}, ${recoloredCaption.toLowerCase()}`} />
               </figure>
+            </div>
             </div>
           )}
         </>

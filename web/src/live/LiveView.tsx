@@ -4,9 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import type { Mat3 } from "../api";
 import { createRenderer } from "./renderer";
 
+/** Which camera to ask for. Phones default to the back camera; laptops get their only one. */
+export type Facing = "environment" | "user";
+
 interface LiveViewProps {
   /** Row-major matrix on linear RGB, as returned by /api/matrix. */
   matrix: Mat3;
+  facing: Facing;
+  /** Called once the camera runs, with how many cameras the device has. */
+  onCameraCount?: (count: number) => void;
 }
 
 /** Plain-language reason the camera could not start. */
@@ -21,7 +27,7 @@ function cameraError(cause: unknown): string {
   return `The camera couldn't start: ${cause instanceof Error ? cause.message : String(cause)}`;
 }
 
-export function LiveView({ matrix }: LiveViewProps) {
+export function LiveView({ matrix, facing, onCameraCount }: LiveViewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // The render loop reads the latest matrix without restarting the camera.
   const matrixRef = useRef(matrix);
@@ -29,6 +35,8 @@ export function LiveView({ matrix }: LiveViewProps) {
   const [error, setError] = useState<string | null>(null);
   const [fps, setFps] = useState<number | null>(null);
   const [starting, setStarting] = useState(true);
+  const countRef = useRef(onCameraCount);
+  countRef.current = onCameraCount;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -37,6 +45,8 @@ export function LiveView({ matrix }: LiveViewProps) {
     }
 
     let cancelled = false;
+    setStarting(true);
+    setError(null);
     let frameRequest = 0;
     let stream: MediaStream | null = null;
     let renderer: ReturnType<typeof createRenderer> | null = null;
@@ -64,7 +74,11 @@ export function LiveView({ matrix }: LiveViewProps) {
     const start = async () => {
       try {
         renderer = createRenderer(canvas);
-        const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        const media = await navigator.mediaDevices.getUserMedia({
+          // "ideal", not "exact": a laptop with one camera still gets that camera.
+          video: { facingMode: { ideal: facing } },
+          audio: false,
+        });
         if (cancelled) {
           media.getTracks().forEach((track) => track.stop());
           return;
@@ -74,6 +88,9 @@ export function LiveView({ matrix }: LiveViewProps) {
         await video.play();
         if (!cancelled) setStarting(false);
         frameRequest = requestAnimationFrame(render);
+        // Device labels and counts are only reliable after permission is granted.
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        if (!cancelled) countRef.current?.(devices.filter((d) => d.kind === "videoinput").length);
       } catch (cause) {
         if (!cancelled) {
           setError(cameraError(cause));
@@ -90,7 +107,7 @@ export function LiveView({ matrix }: LiveViewProps) {
       video.srcObject = null;
       renderer?.dispose();
     };
-  }, []);
+  }, [facing]);
 
   return (
     <div className="live-view" data-idle={starting || error ? true : undefined}>

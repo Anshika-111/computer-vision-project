@@ -43,6 +43,8 @@
   --content-w: 1216px;
 
   color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   font-family: var(--font-body);
   font-size: 100%;
   line-height: 1.5;
@@ -563,6 +565,7 @@ output {
 }
 
 .confidence-value {
+  white-space: nowrap;
   font-family: var(--font-display);
   font-size: 1.375rem;
   font-variant-numeric: tabular-nums;
@@ -892,6 +895,7 @@ output {
 }
 
 .screening-progress-text a {
+  white-space: nowrap;
   font-weight: 400;
 }
 
@@ -1513,5 +1517,299 @@ progress::-moz-progress-bar {
 @media (prefers-reduced-motion: reduce) {
   .demo-map path {
     transition: none;
+  }
+}
+
+/* ---------- Touch and phone ----------
+   Mockups: the "Mobile" page of the design canvas. Desktop rules above stay as they are;
+   everything here only narrows them. Nothing here touches plates, images or video pixels:
+   they are only sized, never filtered. */
+
+.compare-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Desktop shows both images side by side, so the phone's toggle is hidden there. */
+.compare-toggle {
+  display: none;
+}
+
+.live-stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Keyboard hints on a mouse-and-keyboard device, tap hints on a touch screen. */
+.hint-touch {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .hint-touch {
+    display: inline;
+  }
+
+  .hint-keys {
+    display: none;
+  }
+
+  /* iOS zooms into any field under 16px when it gets focus. */
+  select,
+  input:not([type]),
+  input[type="text"],
+  input[type="number"] {
+    font-size: var(--text-base);
+  }
+}
+
+button,
+.button {
+  /* No double-tap zoom on buttons, so fast taps on the number pad all count. */
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  /* Shell: wordmark and profile chip on one row, the four sections as equal tabs below. */
+  .app-header {
+    justify-content: space-between;
+    row-gap: 0;
+    padding: var(--space-1) var(--space-4) 0;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-h);
+  }
+
+  .app-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    margin: 0 calc(-1 * var(--space-2));
+  }
+
+  .app-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 var(--space-1);
+  }
+
+  /* Focus mode (a plate or a study round is showing): no nav, more room, no stray taps. */
+  :root[data-focus] .app-header {
+    display: none;
+  }
+
+  :root[data-focus] .app-main {
+    padding-top: var(--space-4);
+  }
+
+  /* Main actions go full width, one per row. */
+  .toolbar > .button-lg,
+  .toolbar > .profile-retake,
+  .welcome-actions > *,
+  .game-choice > * {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .demo-head .segmented,
+  .compare-toggle {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  /* Home and profile */
+  .home {
+    gap: var(--space-6);
+    padding: var(--space-2) 0;
+  }
+
+  .home-steps li {
+    gap: 14px;
+    padding: var(--space-4);
+  }
+
+  .home-steps li[data-state="next"] {
+    padding: 15px;
+  }
+
+  .profile-page {
+    gap: var(--space-6);
+    padding-top: 0;
+  }
+
+  .type-option {
+    padding: 14px var(--space-4);
+  }
+
+  .type-option[data-selected] {
+    padding: 13px 15px;
+  }
+
+  /* Screening: the plate shrinks only as far as it must so the number pad stays on screen
+     (100svh is the viewport with the browser bars showing). */
+  .screening,
+  .screening-body {
+    gap: var(--space-4);
+  }
+
+  .screening .plate {
+    width: min(512px, 100%, calc(100svh - 340px));
+    min-width: 240px;
+  }
+
+  .screening-answer {
+    flex-basis: 100%;
+    max-width: none;
+    gap: var(--space-3);
+  }
+
+  .screening-answer h1 {
+    font-size: 1.375rem;
+    text-align: center;
+  }
+
+  .screening-answer .muted {
+    text-align: center;
+  }
+
+  /* Image: one image at a time with an Original / Recolored toggle, above the controls. */
+  .image-page > h1 {
+    order: -2;
+  }
+
+  .image-page > .image-status,
+  .image-page > [role="alert"],
+  .compare-block {
+    order: -1;
+  }
+
+  .image-status {
+    margin: 0;
+  }
+
+  .image-status:empty {
+    display: none;
+  }
+
+  .image-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .image-toolbar .segmented {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    border: 0;
+    overflow: visible;
+  }
+
+  .image-toolbar .segmented button,
+  .image-toolbar .segmented button + button {
+    min-height: 48px;
+    border: var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .image-toolbar .segmented button[aria-pressed="true"] {
+    background: var(--ink);
+  }
+
+  .image-actions > * {
+    flex: 1 1 100%;
+    min-height: 52px;
+  }
+
+  .compare[data-show="original"] figure:last-child,
+  .compare[data-show="recolored"] figure:first-child {
+    display: none;
+  }
+
+  .dropzone {
+    min-height: 260px;
+  }
+
+  /* Live: while the camera runs, the video stays pinned at the top as the settings scroll. */
+  .live-stage:has(.live-view) {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-4)) 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .live-off,
+  .live-view[data-idle] {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* A portrait phone camera would fill the screen; letterbox it instead (no cropping). */
+  .live-view canvas {
+    max-height: 45svh;
+    object-fit: contain;
+  }
+
+  .live-panel {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .live-views {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .live-views label {
+    position: relative;
+    justify-content: center;
+    min-height: 52px;
+    padding: 6px 10px;
+    border: var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .live-views label[data-selected] {
+    background: var(--ink);
+    color: var(--surface-strong);
+  }
+
+  .live-views input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .live-views label:has(input:focus-visible) {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  /* Study round: prompt, image and both answers fit on one screen. */
+  .game-stage img {
+    max-height: max(220px, calc(100svh - 300px));
+  }
+
+  .answer-buttons {
+    max-width: none;
+  }
+
+  .answer-buttons button {
+    min-height: 72px;
   }
 }

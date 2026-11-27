@@ -61,11 +61,25 @@ def test_no_logs_writes_placeholder(tmp_path):
     assert "\\StudyParticipants}{0}" in (tmp_path / "rep/study_numbers.tex").read_text()
 
 
+def write_screening(log_dir: Path, rows: list[tuple[str, str, float]]) -> None:
+    log_dir.mkdir(parents=True, exist_ok=True)
+    lines = ["participant_id,type,severity"] + [f"{p},{t},{s}" for p, t, s in rows]
+    (log_dir / "screening.csv").write_text("\n".join(lines) + "\n")
+
+
 def test_paired_analysis(tmp_path):
     write_logs(tmp_path / "logs", synthetic_study())
+    # Screening: P01-P05 normal, P06-P08 deutan. (The logs say deutan for P03-P08.)
+    write_screening(
+        tmp_path / "logs",
+        [
+            (f"P{i:02d}", "normal" if i <= 5 else "deutan", 0.0 if i <= 5 else 0.7)
+            for i in range(1, 9)
+        ],
+    )  # noqa: E501
     n_trials, n_comps = analyze(tmp_path / "logs", tmp_path / "res", tmp_path / "rep")
     assert n_trials == 64
-    assert n_comps == 4  # none vs fixed x {accuracy, rt} x {all, cvd}
+    assert n_comps == 4  # none vs fixed x {accuracy, rt} x {all, screened_cvd}
     with (tmp_path / "res/study_comparisons.csv").open() as f:
         comps = {(r["group"], r["metric"]): r for r in csv.DictReader(f)}
     acc = comps[("all", "accuracy")]
@@ -76,12 +90,38 @@ def test_paired_analysis(tmp_path):
     assert float(acc["wilcoxon_p"]) < 0.05
     rt = comps[("all", "median_rt_ms")]
     assert float(rt["mean_difference"]) < 0 and float(rt["rank_biserial"]) == -1.0
-    assert int(comps[("cvd", "accuracy")]["n_participants"]) == 6  # P01, P02 screened normal
+    assert int(comps[("screened_cvd", "accuracy")]["n_participants"]) == 3  # screening, not logs
+    numbers = (tmp_path / "rep/study_numbers.tex").read_text()
+    assert "\\StudyCvdParticipants}{3}" in numbers
+    assert "\\StudySimulatedParticipants}{3}" in numbers  # P03-P05: deutan profile, normal vision
     with (tmp_path / "res/study_conditions.csv").open() as f:
         summ = {(r["group"], r["condition"]): r for r in csv.DictReader(f)}
     assert float(summ[("all", "none")]["accuracy_mean"]) == 0.5
     table = (tmp_path / "rep/tables/study.tex").read_text()
     assert "Fixed & 8 &" in table and "None & 8 & 50.0" in table
+
+
+def test_applied_profile_is_not_a_diagnosis(tmp_path):
+    """Demo players with normal vision get a deutan game profile: never count them as CVD."""
+    trials = [trial(f"P{i:02d}", c, k, True, 1500, cvd="deutan")
+              for i in (1, 2, 3) for k, c in enumerate(["none", "fixed"])]  # fmt: skip
+    write_logs(tmp_path / "logs", trials)
+    n_trials, n_comps = analyze(tmp_path / "logs", tmp_path / "res", tmp_path / "rep")
+    assert n_comps == 2  # only the "all" group: no screening file, so no CVD group
+    with (tmp_path / "res/study_participants.csv").open() as f:
+        rows = list(csv.DictReader(f))
+    assert {r["applied_type"] for r in rows} == {"deutan"}
+    assert {r["screened_type"] for r in rows} == {""}
+    numbers = (tmp_path / "rep/study_numbers.tex").read_text()
+    assert "\\StudyCvdParticipants}{0}" in numbers
+    assert "\\StudySimulatedParticipants}{3}" in numbers
+
+
+def test_screening_file_validated(tmp_path):
+    write_logs(tmp_path / "logs", [trial("P01", "none", 0, True, 1000)])
+    write_screening(tmp_path / "logs", [("P01", "colorblind", 1.0)])
+    with pytest.raises(ValueError, match="unknown type"):
+        analyze(tmp_path / "logs", tmp_path / "res", tmp_path / "rep")
 
 
 def test_duplicate_trials_counted_once(tmp_path):

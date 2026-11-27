@@ -141,8 +141,14 @@ apple is red?''. Each image appears under one recoloring condition per participa
 across participants. For every participant and condition we compute accuracy and the median
 response time of correct trials, then compare conditions with paired Wilcoxon signed-rank
 tests~\cite{wilcoxon1945}, Holm-corrected~\cite{holm1979}, reporting the matched-pairs
-rank-biserial correlation $r$~\cite{kerby2014} as effect size. The analysis is repeated for
-participants whose screening found a CVD.
+rank-biserial correlation $r$~\cite{kerby2014} as effect size.
+
+Each log records the CVD profile \emph{applied in the game}, not a diagnosis: normal-vision
+players are given a simulated deutan profile (\cref{sec:app}), so they see the recolored image
+through the deutan simulation. Their results therefore describe recoloring as seen through
+simulated deutan vision, not by people with CVD. We report a separate subgroup only for
+participants whose screening found a CVD, taken from the screening results rather than from
+the logs.
 
 \begin{table}[t]
   \centering
@@ -154,8 +160,10 @@ participants whose screening found a CVD.
 \end{table}
 
 \ifnum\StudyParticipants>0
-\Cref{tab:study} summarizes \StudyTrials{} trials from \StudyParticipants{} participants
-(\StudyCvdParticipants{} screened with a CVD).
+\Cref{tab:study} summarizes \StudyTrials{} trials from \StudyParticipants{} participants.
+\StudySimulatedParticipants{} of them played with a simulated CVD profile and
+\StudyCvdParticipants{} were found to have a CVD by screening\ifnum\StudyCvdParticipants=0{},
+so no result here describes observers with CVD\fi.
 \TODO{Aliza: interpret the comparisons in results/study\_comparisons.csv.}
 \else
 \TODO{Study sessions have not been run yet; \cref{tab:study} fills in automatically from the

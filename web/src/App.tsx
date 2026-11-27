@@ -58,7 +58,7 @@ export function App() {
         </span>
       </header>
       <main className="app-main">
-        <ProfileControls profile={profile} onChange={setProfile} />
+        {route !== "screening" && <ProfileControls profile={profile} onChange={setProfile} />}
         {route === "screening" && <ScreeningView onScored={setProfile} />}
         {route === "images" && <ImageView profile={profile} />}
         {route === "live" && <LiveMode profile={profile} />}

@@ -368,25 +368,123 @@ output {
 .screening {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-7);
 }
 
+.screening-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.screening-progress-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-size: var(--text-md);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.screening-progress-text a {
+  font-weight: 400;
+}
+
+progress {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--line);
+}
+
+progress::-webkit-progress-value {
+  background: var(--ink);
+}
+
+progress::-moz-progress-bar {
+  background: var(--ink);
+}
+
+.screening-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+}
+
+/* Native size; the plate's pixels must reach the screen unaltered. */
 .screening .plate {
   display: block;
+  flex: 0 1 auto;
+  width: 512px;
   max-width: 100%;
   height: auto;
 }
 
-.choices {
+.screening-answer {
+  flex: 1 1 340px;
+  max-width: 420px;
+  min-width: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.screening-answer h1 {
+  outline: none;
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-2);
 }
 
-.choices button {
-  min-width: var(--control-h);
+.numpad button {
+  min-height: 64px;
+  padding: 0;
+  background: var(--surface);
   font-family: var(--font-display);
-  font-size: var(--text-lg);
+  font-size: 1.625rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.no-number {
+  min-height: 56px;
+  border-style: dashed;
+  font-size: 1.0625rem;
+}
+
+.screening-status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 640px;
+  padding: var(--space-7) 0;
+}
+
+@media (max-width: 640px) {
+  .screening {
+    gap: var(--space-5);
+  }
+
+  .screening-body {
+    gap: var(--space-5);
+  }
+
+  .numpad button {
+    min-height: 56px;
+  }
 }
 
 /* ---------- Images ---------- */

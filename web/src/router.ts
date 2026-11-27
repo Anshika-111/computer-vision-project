@@ -2,10 +2,10 @@
 // Hash routing needs no server config and no extra dependency.
 import { useEffect, useState } from "react";
 
-export const ROUTES = ["screening", "images", "live", "games"] as const;
+export const ROUTES = ["welcome", "screening", "images", "live", "games"] as const;
 export type Route = (typeof ROUTES)[number];
 
-export const DEFAULT_ROUTE: Route = "screening";
+export const DEFAULT_ROUTE: Route = "welcome";
 
 /** Map a location hash like "#live" to a known route, or the default. */
 export function parseRoute(hash: string): Route {

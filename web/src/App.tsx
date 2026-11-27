@@ -8,6 +8,7 @@ import { LiveMode } from "./live/LiveMode";
 import { ProfileControls } from "./profile/ProfileControls";
 import { routeHref, useRoute, type Route } from "./router";
 import { ScreeningView } from "./screening/ScreeningView";
+import { WelcomePage } from "./welcome/WelcomePage";
 
 const NAV: { route: Route; label: string; title: string }[] = [
   { route: "screening", label: "Screening", title: "Screening" },
@@ -33,10 +34,12 @@ export function App() {
     document.title = page ? `${page.title} · ChromaFix` : "ChromaFix";
   }, [page]);
 
+  if (route === "welcome") return <WelcomePage />;
+
   return (
     <div className="app">
       <header className="app-header">
-        <a className="wordmark" href={routeHref("screening")}>
+        <a className="wordmark" href={routeHref("welcome")}>
           ChromaFix
         </a>
         <nav className="app-nav" aria-label="Sections">

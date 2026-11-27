@@ -576,8 +576,95 @@ output {
 
 /* ---------- Live ---------- */
 
+.live-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.live-stage {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.live-stage-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--control-h);
+}
+
+.live-stage-head h1 {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.live-off,
+.live-view[data-idle] {
+  aspect-ratio: 16 / 9;
+}
+
+.live-off {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.live-off-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
 .live-view {
   position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000000;
+}
+
+/* The canvas shows the shader output as-is: no CSS filters or blending on top. */
+.live-view canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.live-view[data-idle] canvas {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  visibility: hidden;
+}
+
+.live-view-msg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: none;
+  margin: 0;
+  padding: var(--space-6);
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
 }
 
 .fps {
@@ -592,11 +679,72 @@ output {
   font-variant-numeric: tabular-nums;
 }
 
-.live-view canvas {
-  display: block;
+.live-panel {
+  flex: 1 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.live-views {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.live-views legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+}
+
+.live-views label {
+  min-height: var(--control-h);
+  gap: 10px;
+}
+
+.live-views label[data-selected] {
+  font-weight: 700;
+}
+
+.live-panel select,
+.live-panel input[type="range"] {
   width: 100%;
-  height: auto;
-  background: #000000;
+}
+
+.live-sev-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.live-sev-row output {
+  font-size: var(--text-xl);
+}
+
+.segmented-fill {
+  display: flex;
+}
+
+.segmented-fill button {
+  flex: 1;
+}
+
+.segmented button:disabled {
+  border-style: solid;
+  color: var(--ink-3);
+}
+
+.segmented button[aria-pressed="true"]:disabled {
+  background: var(--ink-3);
+  color: var(--surface-strong);
 }
 
 /* ---------- Screening ---------- */

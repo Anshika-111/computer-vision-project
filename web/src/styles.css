@@ -1901,3 +1901,139 @@ button,
 :root[data-standalone] .live-stage:has(.live-view) {
   top: env(safe-area-inset-top);
 }
+
+/* ---------- Install prompt (phone browsers only, see install/install.ts) ----------
+   Docked over the bottom of Welcome, Home or Profile; none of them show plates, images or
+   video under it. No scrim: the page stays usable and gets matching bottom padding. */
+
+body {
+  padding-bottom: var(--install-sheet-h, 0px);
+}
+
+.install-sheet {
+  position: fixed;
+  z-index: 10;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--space-4);
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  box-shadow: 0 10px 28px rgb(22 22 22 / 18%);
+}
+
+.install-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.install-head h2 {
+  font-size: var(--text-xl);
+  line-height: 1.2;
+}
+
+.install-icon {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.install-benefits {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--text-md);
+  color: var(--ink-2);
+}
+
+.install-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.install-check {
+  flex: 0 0 auto;
+  color: var(--ink);
+}
+
+.install-steps {
+  margin: 0;
+  padding: var(--space-3);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: var(--text-md);
+  line-height: 1.6;
+}
+
+.install-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.install-step-n {
+  flex: 0 0 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--surface-strong);
+  font: 700 0.8125rem var(--font-display);
+}
+
+.install-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 26px;
+  vertical-align: -7px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+
+.install-key svg {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.install-key circle {
+  fill: var(--ink);
+  stroke: none;
+}
+
+.install-not-now {
+  min-height: 48px;
+}
+
+.install-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.install-actions button {
+  min-height: 52px;
+}

@@ -255,7 +255,22 @@ export function GamesView({ profile }: GamesViewProps) {
           </button>
         ))}
       </div>
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <div>
+          <p role="alert">{error}</p>
+          {!imageUrl && (
+            <button
+              onClick={() => {
+                // Not logged: the player never saw this round.
+                setError(null);
+                setIndex((i) => i + 1);
+              }}
+            >
+              Skip this round
+            </button>
+          )}
+        </div>
+      )}
     </section>
   );
 }

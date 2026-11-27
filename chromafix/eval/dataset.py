@@ -8,7 +8,7 @@ The tune split (30 images) is the only data allowed for tuning or model selectio
 from __future__ import annotations
 
 import csv
-from collections.abc import Iterator
+from collections.abc import Collection, Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -89,6 +89,7 @@ def load_split(
     pairs: str | Path = "data/annotations/pairs.json",
     root: str | Path = ".",
     annotated_only: bool = False,
+    image_ids: Collection[str] | None = None,
 ) -> Iterator[DatasetImage]:
     """Yield the images of one split, loaded as linear RGB, with their pairs.
 
@@ -98,6 +99,7 @@ def load_split(
         pairs: Path to ``data/annotations/pairs.json``.
         root: Repo root that manifest ``file`` paths are relative to.
         annotated_only: Skip images that have no pairs.
+        image_ids: If given, only these images (still restricted to ``split``).
 
     Yields:
         ``DatasetImage`` per image, in manifest order.
@@ -112,6 +114,8 @@ def load_split(
     for image_id in split_ids(rows, split):
         image_pairs = pairs_by_image.get(image_id, [])
         if annotated_only and not image_pairs:
+            continue
+        if image_ids is not None and image_id not in image_ids:
             continue
         row = by_id[image_id]
         path = Path(root) / row["file"]

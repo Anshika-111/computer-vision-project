@@ -114,13 +114,31 @@ CC BY-NC-ND images (`charts_0040`, `maps_0015`) must not be redistributed in rec
 **Lighting** for the 16 team photos was labeled from the photos themselves (daylight / indoor /
 low); confirm with Iris, who took them.
 
+## Phase 3: evaluation, study analysis, report
+
+```bash
+python -m scripts.run_eval --root .         # -> results/recolor_metrics.csv (~8 min)
+python -m scripts.report_assets --root .    # -> results/report/{tables,figures,numbers.tex}
+python -m scripts.analyze_study            # -> results/study_*.csv, results/report/tables/study.tex
+cd report && latexmk -pdf main.tex          # -> report/main.pdf
+```
+
+- `run_eval` currently covers `none` and `fixed`; `personalized` and `neural` are skipped until
+  Anshika's code lands, then appear on the next run. `--shard K/N` splits the run.
+- `report_assets` derives every table, figure, and quoted number; the report text uses its
+  macros, so re-running updates the paper.
+- `analyze_study` reduces each participant to one accuracy and one median correct-trial RT per
+  condition, then runs paired two-sided Wilcoxon signed-rank tests with Holm correction and the
+  rank-biserial r, for all participants and for those screened with a CVD. With no logs it writes
+  an explicit "no sessions yet" table.
+
 ## 4. Study logs
 
 ```bash
 python -m scripts.analyze_study
 ```
 
-When Iris's `results/study/*.jsonl` files are present, this generates `results/study_summary.csv` and `results/study_comparisons.csv`. Comparisons use participant-level means and are exploratory; ensure matched study conditions and trial difficulty before drawing causal conclusions. No fake results are produced.
+When Iris's `results/study/*.jsonl` files are present, this writes `results/study_participants.csv`, `results/study_conditions.csv`, `results/study_comparisons.csv`, and the report table. See Phase 3 above for the method. No fake results are produced.
 
 ## 5. Tests
 
@@ -131,18 +149,9 @@ pytest && ruff check . && ruff format --check .   # what CI runs
 
 ## Remaining tasks needing external data or teammates
 
-1. Confirm lighting labels with Iris; decide whether to replace the iStock/eBay/Amazon images.
-2. Review the AI-drafted pair annotations (overlays via `annotate_pairs preview`).
-3. Set `JND_DE00` with a cited source (file is Avneet's; coordinate with him).
-4. Run experiments, summarize across categories/types/severities, generate report-ready plots and findings.
-5. Import Iris's study logs and interpret study results.
-
-## 6. Generate plots from observed evaluation results
-
-After evaluation produces nonempty CSV data:
-
-```bash
-python -m scripts.plot_eval
-```
-
-Creates three PNG plots under `results/plots/`. Requires `matplotlib`. These are preliminary method-level summaries; report conclusions should also examine type, severity and category, and account for differences in annotation count per image.
+1. When Anshika's personalized (and neural) recoloring lands: re-run `run_eval`, `report_assets`,
+   and rebuild the report; then write the one interpretive sentence marked TODO in section 6.
+2. When Iris's study sessions are done: copy `results/study/*.jsonl`, run `analyze_study`,
+   rebuild, and interpret the comparisons (TODO in the user-study subsection).
+3. Collect teammates' sections into `report/sec/` and write the abstract, intro, and
+   conclusion together.

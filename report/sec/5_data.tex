@@ -1,0 +1,55 @@
+% Owner: Aliza (dataset, annotations). Numbers come from results/report/numbers.tex.
+\section{Dataset}
+\label{sec:data}
+
+\paragraph{Images.}
+We collected \NumImages{} images in six categories where color carries meaning for people
+with color vision deficiency (\cref{tab:dataset}): charts and graphs, maps, traffic signals
+and road signs, ripe versus unripe food, color-coded items such as wires, bins, and LEDs, and
+natural scenes. \NumWebImages{} images come from public web pages and \NumTeamPhotos{} are
+photographs taken by the team. Every image is stored as an sRGB PNG whose longest side is at
+most 1024~px; smaller source images are kept at their native size rather than upsampled.
+Following the project's color conventions, images are decoded to linear RGB in $[0,1]$ before
+any simulation, recoloring, or measurement, and every color difference is CIEDE2000
+\cite{luo2001,sharma2005} computed in CIELAB under D65.
+
+\paragraph{Splits.}
+A tuning split of \NumTune{} images was drawn once, stratified by category with largest-remainder
+allocation and a fixed seed. It is the only data used to tune the personalized method or to
+make any modelling choice; the remaining \NumTest{} images form the test split on which every
+number in \cref{sec:evaluation} is computed.
+
+\begin{table}[t]
+  \centering
+  \small
+  \input{../results/report/tables/dataset}
+  \caption{Dataset composition. \emph{Annot.\ test}: test images with region-pair
+  annotations. In addition, \NumAnnotTune{} tune images carry \NumPairsTune{} pairs, used
+  only for tuning.}
+  \label{tab:dataset}
+\end{table}
+
+\paragraph{Region-pair annotations.}
+For an image to be useful to a viewer with CVD, specific regions must stay distinguishable:
+the red and green bars of a chart, a lit signal lamp and an unlit one, a ripe and an unripe
+fruit. We annotate such \emph{region pairs} $(A, B)$ as non-overlapping polygons in pixel
+coordinates, each with a short note (\eg ``red pepper vs green pepper''). The test split has
+\NumPairsTest{} pairs on \NumAnnotTest{} images, spread over all six categories, and the tune
+split has \NumPairsTune{} pairs on \NumAnnotTune{} images.
+
+Annotations were drafted with AI assistance and then reviewed by a team member. Candidate
+regions came from graph-based segmentation~\cite{felzenszwalb2004}, each reduced to the largest
+axis-aligned rectangle inside a single-color segment; thin structures (lines, small lamps)
+used a seeded color flood fill, and scatter-plot clusters used a manual box. For each image a
+person chose which two regions form a meaningful pair. Every pair was checked automatically
+(regions inside the image, no overlap, and a normal-vision difference of at least
+5~$\Delta E_{00}$) and visually on an overlay of the polygons. Because pairs were chosen to be
+clearly different for normal vision, the dataset measures how much of that difference survives
+CVD simulation, not near-threshold discrimination.
+
+\paragraph{Metadata and licensing.}
+The manifest records source, source URL, license, photographer, lighting, split, and whether
+an image is annotated. Lighting was labelled for the team photographs (daylight, indoor, or
+low light). Of the \NumWebImages{} web images, \NumOpenLicense{} have an open license (mostly Creative
+Commons via Wikimedia Commons) or are public domain, and \NumNoLicense{} state no license. We therefore use the images for evaluation only and do
+not redistribute them; the qualitative figure in this report uses a team photograph.

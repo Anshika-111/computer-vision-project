@@ -1168,6 +1168,12 @@ progress::-moz-progress-bar {
   font-weight: 600;
 }
 
+.game-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 .game-sim {
   color: var(--ink-2);
 }

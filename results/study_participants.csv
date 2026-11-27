@@ -1,1 +1,1 @@
-participant_id,cvd_type,severity,condition,trials,accuracy,median_rt_ms
+participant_id,applied_type,applied_severity,screened_type,condition,trials,accuracy,median_rt_ms

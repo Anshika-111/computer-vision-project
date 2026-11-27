@@ -9,9 +9,15 @@ Method (small-sample, within-participant):
      paired per-participant values; p-values are Holm-adjusted within each metric and group.
      Effect size is the matched-pairs rank-biserial correlation r (-1..1; positive = the
      second condition is higher).
-  3. Everything is repeated for "all" participants and for "cvd" (screened as non-normal).
+  3. Everything is repeated for "screened_cvd": participants whose *screening* found a CVD,
+     read from results/study/screening.csv. The profile stored in each log line is the
+     profile *applied in the game*, not a diagnosis (in demos, normal-vision players get a
+     simulated deutan profile), so it is never used to decide who has a CVD. Without
+     screening.csv there is no screened_cvd group.
 
 Outputs:
+  results/study/screening.csv      (input, optional) participant_id,type,severity from the
+                                   screening plates; no names
   results/study_participants.csv   participant x condition values
   results/study_conditions.csv     per-condition summary across participants
   results/study_comparisons.csv    paired tests
@@ -32,11 +38,12 @@ from pathlib import Path
 
 import numpy as np
 
-from chromafix.constants import METHODS
+from chromafix.constants import ALL_TYPES, METHODS
 
 REQUIRED = ("session_id", "participant_id", "profile", "condition", "correct", "rt_ms", "trial_id")
 LABEL = {"none": "None", "fixed": "Fixed", "personalized": "Personalized", "neural": "Neural"}
-GROUPS = ("all", "cvd")
+GROUPS = ("all", "screened_cvd")
+SCREENING_FIELDS = ("participant_id", "type", "severity")
 
 
 def load_trials(log_dir: Path) -> list[dict]:
@@ -63,8 +70,37 @@ def load_trials(log_dir: Path) -> list[dict]:
     return trials
 
 
-def participant_values(trials: list[dict]) -> list[dict]:
-    """One row per participant x condition: n, accuracy, median RT of correct trials."""
+def load_screening(path: Path) -> dict[str, dict]:
+    """participant_id -> {"type", "severity"} from the screening plates, or {} if no file.
+
+    Raises:
+        ValueError: Wrong header, an unknown CVD type, or a participant listed twice.
+    """
+    if not path.exists():
+        return {}
+    with path.open(newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        if tuple(reader.fieldnames or ()) != SCREENING_FIELDS:
+            raise ValueError(f"{path.name} header must be {','.join(SCREENING_FIELDS)}")
+        out = {}
+        for r in reader:
+            if r["type"] not in ALL_TYPES:
+                raise ValueError(
+                    f"{path.name}: unknown type {r['type']!r} for {r['participant_id']}"
+                )
+            if r["participant_id"] in out:
+                raise ValueError(f"{path.name}: {r['participant_id']} listed twice")
+            out[r["participant_id"]] = {"type": r["type"], "severity": float(r["severity"] or 0)}
+    return out
+
+
+def participant_values(trials: list[dict], screening: dict[str, dict] | None = None) -> list[dict]:
+    """One row per participant x condition: n, accuracy, median RT of correct trials.
+
+    ``applied_type`` is the profile the game used; ``screened_type`` is the screening result
+    ("" if the participant is not in screening.csv).
+    """
+    screening = screening or {}
     groups = defaultdict(list)
     profile = {}
     for t in trials:
@@ -76,8 +112,9 @@ def participant_values(trials: list[dict]) -> list[dict]:
         rows.append(
             dict(
                 participant_id=pid,
-                cvd_type=profile[pid]["type"],
-                severity=profile[pid].get("severity", 0.0),
+                applied_type=profile[pid]["type"],
+                applied_severity=profile[pid].get("severity", 0.0),
+                screened_type=screening.get(pid, {}).get("type", ""),
                 condition=cond,
                 trials=len(ts),
                 accuracy=float(np.mean([bool(t["correct"]) for t in ts])),
@@ -88,7 +125,8 @@ def participant_values(trials: list[dict]) -> list[dict]:
 
 
 def in_group(row: dict, group: str) -> bool:
-    return group == "all" or row["cvd_type"] != "normal"
+    """'all', or 'screened_cvd': screening found a CVD (never the applied game profile)."""
+    return group == "all" or row["screened_type"] not in ("", "normal")
 
 
 def condition_summary(rows: list[dict]) -> list[dict]:
@@ -199,12 +237,19 @@ def study_table(summary: list[dict], comps: list[dict]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def study_macros(trials: list[dict], summary: list[dict], comps: list[dict]) -> dict:
+def study_macros(trials: list[dict], screening: dict[str, dict], comps: list[dict]) -> dict:
     participants = {t["participant_id"] for t in trials}
-    cvd = {t["participant_id"] for t in trials if t["profile"]["type"] != "normal"}
+    cvd = {p for p in participants if screening.get(p, {}).get("type", "normal") != "normal"}
+    simulated = {
+        t["participant_id"]
+        for t in trials
+        if t["profile"]["type"] != "normal" and t["participant_id"] not in cvd
+    }
     m = {
         "StudyParticipants": len(participants),
+        "StudyScreenedParticipants": len(participants & screening.keys()),
         "StudyCvdParticipants": len(cvd),
+        "StudySimulatedParticipants": len(simulated),
         "StudyTrials": len(trials),
         "StudySessions": len({t["session_id"] for t in trials}),
     }
@@ -224,14 +269,21 @@ def study_macros(trials: list[dict], summary: list[dict], comps: list[dict]) -> 
     return m
 
 
-def analyze(log_dir: Path, results: Path, report: Path) -> tuple[int, int]:
-    """Run the full analysis. Returns (number of trials, number of paired comparisons)."""
+def analyze(
+    log_dir: Path, results: Path, report: Path, screening_csv: Path | None = None
+) -> tuple[int, int]:
+    """Run the full analysis. Returns (number of trials, number of paired comparisons).
+
+    ``screening_csv`` defaults to ``log_dir / "screening.csv"``.
+    """
     trials = load_trials(log_dir)
-    rows = participant_values(trials)
+    screening = load_screening(screening_csv or log_dir / "screening.csv")
+    rows = participant_values(trials, screening)
     summary = condition_summary(rows)
     comps = comparisons(rows)
     write_csv(results / "study_participants.csv", rows,
-              ["participant_id", "cvd_type", "severity", "condition", "trials",
+              ["participant_id", "applied_type", "applied_severity", "screened_type",
+               "condition", "trials",
                "accuracy", "median_rt_ms"])  # fmt: skip
     write_csv(results / "study_conditions.csv", summary,
               ["group", "condition", "participants", "trials", "accuracy_mean",
@@ -241,7 +293,7 @@ def analyze(log_dir: Path, results: Path, report: Path) -> tuple[int, int]:
                "mean_difference", "rank_biserial", "wilcoxon_p", "p_holm"])  # fmt: skip
     (report / "tables").mkdir(parents=True, exist_ok=True)
     (report / "tables" / "study.tex").write_text(study_table(summary, comps), "utf-8")
-    macros = study_macros(trials, summary, comps)
+    macros = study_macros(trials, screening, comps)
     body = "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in sorted(macros.items()))
     (report / "study_numbers.tex").write_text(
         "% Generated by scripts/analyze_study.py. Do not edit.\n" + body, "utf-8"

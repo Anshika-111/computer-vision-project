@@ -129,8 +129,12 @@ cd report && latexmk -pdf main.tex          # -> report/main.pdf
   macros, so re-running updates the paper.
 - `analyze_study` reduces each participant to one accuracy and one median correct-trial RT per
   condition, then runs paired two-sided Wilcoxon signed-rank tests with Holm correction and the
-  rank-biserial r, for all participants and for those screened with a CVD. With no logs it writes
+  rank-biserial r, for all participants and for those *screened* with a CVD. With no logs it writes
   an explicit "no sessions yet" table.
+- The profile in each log line is the one applied in the game (normal-vision demo players get a
+  simulated deutan profile), not a diagnosis. The CVD subgroup comes only from
+  `results/study/screening.csv` (`participant_id,type,severity`, screening result, no names);
+  without it there is no CVD group. Ask Iris to record each participant's screening result.
 
 ## 4. Study logs
 

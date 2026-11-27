@@ -1,4 +1,5 @@
-// Recolor an uploaded image and compare it with the original, side by side. Author: Iris.
+// Recolor an uploaded image and compare it with the original (side by side, or toggled on phones).
+// Author: Iris.
 import { useEffect, useId, useRef, useState, type DragEvent } from "react";
 
 import {
@@ -9,6 +10,7 @@ import {
   type CVDProfile,
   type Method,
 } from "../api";
+import { isStandalone } from "../displayMode";
 import { typeLabel } from "../profile/profileStore";
 import { routeHref } from "../router";
 
@@ -58,6 +60,8 @@ export function ImageView({ profile }: ImageViewProps) {
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  // Which image a phone shows (desktop shows both side by side).
+  const [showRecolored, setShowRecolored] = useState(true);
 
   const isNormal = profile.type === "normal";
   const showSimulated = simulated && !isNormal;
@@ -147,6 +151,27 @@ export function ImageView({ profile }: ImageViewProps) {
     />
   );
 
+  // Installed iPhone apps ignore download links, so there the share sheet saves the image.
+  const canShare = isStandalone() && typeof navigator.canShare === "function";
+
+  const share = async () => {
+    if (!downloadUrl || !file) return;
+    const blob = await (await fetch(downloadUrl)).blob();
+    const png = new File([blob], downloadName(file), { type: "image/png" });
+    if (!navigator.canShare({ files: [png] })) {
+      setError("This device can't share images. Open ChromaFix in the browser to download it.");
+      return;
+    }
+    try {
+      await navigator.share({ files: [png] });
+    } catch (cause) {
+      // Closing the share sheet is not an error.
+      if (!(cause instanceof DOMException && cause.name === "AbortError")) {
+        setError(`Couldn't share the image: ${cause instanceof Error ? cause.message : cause}`);
+      }
+    }
+  };
+
   const profileText = describe(profile);
   const recoloredCaption =
     method === "none" ? "Not recolored" : `Recolored · ${METHOD_LABELS[method].toLowerCase()}`;
@@ -169,7 +194,10 @@ export function ImageView({ profile }: ImageViewProps) {
           onDrop={onDrop}
         >
           {fileInput}
-          <p className="dropzone-title">Drop an image here, or choose one from your device.</p>
+          <p className="dropzone-title">
+            <span className="hint-keys">Drop an image here, or choose one from your device.</span>
+            <span className="hint-touch">Choose a photo from your phone, or take a new one.</span>
+          </p>
           <button
             type="button"
             className="primary button-lg"
@@ -206,7 +234,7 @@ export function ImageView({ profile }: ImageViewProps) {
                   checked={simulated}
                   onChange={(e) => setSimulated(e.target.checked)}
                 />
-                Show both as a {profileText} viewer would see them
+                Show the images as a {profileText} viewer would see them
               </label>
             )}
             <div className="image-actions">
@@ -214,7 +242,11 @@ export function ImageView({ profile }: ImageViewProps) {
               <button type="button" onClick={() => inputRef.current?.click()}>
                 Choose another image
               </button>
-              {downloadUrl && !busy ? (
+              {downloadUrl && !busy && canShare ? (
+                <button type="button" className="primary" onClick={() => void share()}>
+                  Save or share
+                </button>
+              ) : downloadUrl && !busy ? (
                 <a className="button primary" href={downloadUrl} download={downloadName(file)}>
                   Download recolored PNG
                 </a>
@@ -238,7 +270,25 @@ export function ImageView({ profile }: ImageViewProps) {
           )}
 
           {result && (
-            <div className="compare">
+            <div className="compare-block">
+            {/* Phones show one image at a time, full width; this switches which one. */}
+            <div className="segmented compare-toggle" role="group" aria-label="Show">
+              <button
+                type="button"
+                aria-pressed={!showRecolored}
+                onClick={() => setShowRecolored(false)}
+              >
+                Original
+              </button>
+              <button
+                type="button"
+                aria-pressed={showRecolored}
+                onClick={() => setShowRecolored(true)}
+              >
+                Recolored
+              </button>
+            </div>
+            <div className="compare" data-show={showRecolored ? "recolored" : "original"}>
               <figure>
                 <figcaption>{showSimulated ? `Original${seenBy}` : "Original"}</figcaption>
                 <img src={result.original} alt={`${file.name}, original`} />
@@ -250,6 +300,7 @@ export function ImageView({ profile }: ImageViewProps) {
                 </figcaption>
                 <img src={result.recolored} alt={`${file.name}, ${recoloredCaption.toLowerCase()}`} />
               </figure>
+            </div>
             </div>
           )}
         </>

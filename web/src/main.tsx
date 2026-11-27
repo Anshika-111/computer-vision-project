@@ -3,7 +3,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { App } from "./App";
+import { trackDisplayMode } from "./displayMode";
 import "./styles.css";
+
+trackDisplayMode();
 
 const root = document.getElementById("root");
 if (!root) {

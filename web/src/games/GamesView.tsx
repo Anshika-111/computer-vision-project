@@ -13,6 +13,7 @@ import {
   type GameTrial,
   type Method,
 } from "../api";
+import { useFocusMode } from "../focusMode";
 import { profileLabel } from "../profile/profileStore";
 import { routeHref } from "../router";
 
@@ -125,6 +126,9 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
   const participantValid = /^P\d{1,4}$/.test(participantId);
   const done = session !== null && index >= session.trials.length;
   const trial = session && !done ? session.trials[index] : null;
+
+  // On phones, hide the nav during a round so prompt, image and A/B fit on one screen.
+  useFocusMode(trial !== null && !between);
 
   const start = async (first: Game["id"]) => {
     setStarting(true);
@@ -272,8 +276,13 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
               <li>Each round shows one image with two outlined regions, labeled A and B.</li>
               <li>Read the question above the image.</li>
               <li>
-                Click <strong>A</strong> or <strong>B</strong>, or press the A or B key. Answer as
-                quickly as you can while staying accurate.
+                <span className="hint-keys">
+                  Click <strong>A</strong> or <strong>B</strong>, or press the A or B key.
+                </span>
+                <span className="hint-touch">
+                  Tap <strong>A</strong> or <strong>B</strong>.
+                </span>{" "}
+                Answer as quickly as you can while staying accurate.
               </li>
             </ol>
             <p className="muted">
@@ -465,7 +474,10 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
           </button>
         ))}
       </div>
-      <p className="muted game-hint">Click A or B, or press the A or B key.</p>
+      <p className="muted game-hint">
+        <span className="hint-keys">Click A or B, or press the A or B key.</span>
+        <span className="hint-touch">Tap A or B.</span>
+      </p>
 
       {error && (
         <div className="toolbar">

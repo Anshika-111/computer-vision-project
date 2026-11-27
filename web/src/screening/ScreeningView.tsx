@@ -24,15 +24,10 @@ type Phase =
   | { kind: "loading" }
   | { kind: "error"; message: string }
   | { kind: "answering"; plates: PlateMeta[]; answers: PlateAnswer[] }
-  | { kind: "scoring" }
-  | { kind: "done"; profile: CVDProfile };
+  | { kind: "scoring" };
 
 function message(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
-}
-
-function typeName(profile: CVDProfile): string {
-  return profile.type.charAt(0).toUpperCase() + profile.type.slice(1);
 }
 
 /** Map a key press to an answer: digits, or N for "no number". */
@@ -82,9 +77,8 @@ export function ScreeningView({ onScored }: ScreeningViewProps) {
       }
       setPhase({ kind: "scoring" });
       try {
-        const profile = await scoreScreening(next);
-        setPhase({ kind: "done", profile });
-        onScored(profile);
+        // The parent saves the profile and opens the profile page.
+        onScored(await scoreScreening(next));
       } catch (error) {
         setPhase({ kind: "error", message: message(error) });
       }
@@ -135,7 +129,7 @@ export function ScreeningView({ onScored }: ScreeningViewProps) {
           <p role="alert">Screening is unavailable: {phase.message}</p>
           <p className="muted">
             Check that the ChromaFix server is running, then try again. You can also set your
-            color vision by hand on the <a href={routeHref("images")}>Image</a> page.
+            color vision by hand on your <a href={routeHref("profile")}>profile</a> page.
           </p>
           <div className="toolbar">
             <button type="button" className="primary" onClick={restart}>
@@ -144,37 +138,6 @@ export function ScreeningView({ onScored }: ScreeningViewProps) {
           </div>
         </section>
       );
-    case "done": {
-      const { profile } = phase;
-      return (
-        <section className="screening-status">
-          <h1>
-            {profile.type === "normal"
-              ? "No color vision deficiency found"
-              : `${typeName(profile)}, severity ${profile.severity.toFixed(1)}`}
-          </h1>
-          <p>
-            Confidence in this estimate: {profile.confidence.toFixed(1)} of 1. Your profile is
-            saved for the image and live views.
-          </p>
-          <div className="toolbar">
-            <a className="button primary" href={routeHref("images")}>
-              Recolor an image
-            </a>
-            <a className="button" href={routeHref("live")}>
-              Open live webcam
-            </a>
-            <button type="button" onClick={restart}>
-              Retake screening
-            </button>
-          </div>
-          <p className="muted">
-            This is an estimate, not a medical diagnosis. An eye-care professional can give you a
-            clinical test.
-          </p>
-        </section>
-      );
-    }
     case "answering": {
       const { plates, answers } = phase;
       const plate = plates[answers.length];

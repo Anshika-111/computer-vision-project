@@ -291,7 +291,11 @@ output {
 }
 
 .profile-chip {
-  padding: var(--space-2) var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-h);
+  padding: 0 var(--space-3);
+  text-decoration: none;
   border: var(--border);
   border-radius: var(--radius);
   font-size: var(--text-sm);
@@ -331,11 +335,243 @@ output {
   align-items: center;
 }
 
-.profile-controls {
+
+.profile-chip:hover,
+.profile-chip[aria-current="page"] {
+  background: var(--surface-strong);
+}
+
+.profile-chip[data-empty] {
+  border: 1px dashed var(--line-strong);
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+/* ---------- Profile ---------- */
+
+.profile-page {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4) var(--space-5);
+  gap: 56px;
+  align-items: flex-start;
+  padding-top: var(--space-5);
+}
+
+.profile-result {
+  flex: 1 1 460px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.profile-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.profile-heading h1 {
+  font-size: clamp(2.75rem, 4vw + 1rem, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.profile-explain {
+  max-width: 32em;
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.profile-notice {
+  max-width: 520px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: var(--text-md);
+}
+
+.severity {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 520px;
+}
+
+.severity-row,
+.confidence {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-weight: 600;
+}
+
+.severity-value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.severity-bar {
+  height: 12px;
+  border-radius: 6px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.severity-bar > div {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--ink);
+}
+
+.severity-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+}
+
+.confidence {
+  max-width: 520px;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.confidence-value {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.profile-retake {
+  display: inline-flex;
   align-items: center;
+  min-height: 56px;
+  padding: 0 var(--space-3);
+}
+
+.profile-manual {
+  flex: 1 1 340px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.profile-manual h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.type-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.type-options legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.type-option {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.type-option:hover {
+  border-color: var(--line-strong);
+}
+
+.type-option[data-selected] {
+  border: 2px solid var(--ink);
+  padding: 17px 19px;
+  background: var(--surface-strong);
+}
+
+/* The real radio stays in the tab order but is drawn by .type-mark. */
+.type-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.type-option:has(input:focus-visible) {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.type-mark {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  color: var(--ink);
+}
+
+.type-mark.empty {
+  border: 1.5px solid var(--line-strong);
+  border-radius: 50%;
+}
+
+.type-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.type-name {
+  font-size: var(--text-base);
+}
+
+.type-option[data-selected] .type-name {
+  font-weight: 700;
+}
+
+.type-short {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.manual-severity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 2.5em;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-1) 0;
+  font-weight: 600;
+}
+
+.manual-severity input {
+  width: 100%;
+}
+
+.manual-severity input:disabled {
+  opacity: 0.45;
+}
+
+.manual-severity output {
+  font-size: var(--text-lg);
+  text-align: right;
 }
 
 /* ---------- Live ---------- */

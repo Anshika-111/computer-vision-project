@@ -35,7 +35,7 @@ interface TrialResult {
 interface Session {
   sessionId: string;
   participantId: string;
-  /** Locked when the session starts, so changing the profile bar mid-game has no effect. */
+  /** Locked when the session starts, so changing the profile mid-game has no effect. */
   profile: CVDProfile;
   simulateView: boolean;
   trials: GameTrial[];
@@ -170,7 +170,7 @@ export function GamesView({ profile }: GamesViewProps) {
         {profile.type === "normal" && (
           <p role="alert">
             Your profile is normal vision, so every method shows the same image. Pick a CVD type
-            in the profile bar for the demo.
+            on your <a href="#profile">profile</a> page for the demo.
           </p>
         )}
         <div className="toolbar">

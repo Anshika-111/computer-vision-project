@@ -2,7 +2,15 @@
 // Hash routing needs no server config and no extra dependency.
 import { useEffect, useState } from "react";
 
-export const ROUTES = ["welcome", "screening", "profile", "images", "live", "games"] as const;
+export const ROUTES = [
+  "welcome",
+  "home",
+  "screening",
+  "profile",
+  "images",
+  "live",
+  "games",
+] as const;
 export type Route = (typeof ROUTES)[number];
 
 export const DEFAULT_ROUTE: Route = "welcome";

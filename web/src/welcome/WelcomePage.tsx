@@ -108,7 +108,7 @@ export function WelcomePage() {
     <div className="app welcome">
       <header className="app-header welcome-header">
         <span className="wordmark">ChromaFix</span>
-        <a className="welcome-skip" href={routeHref("images")}>
+        <a className="welcome-skip" href={routeHref("home")}>
           Skip to the tools
         </a>
       </header>

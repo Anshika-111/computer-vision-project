@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 
 import type { CVDProfile } from "./api";
 import { GamesView } from "./games/GamesView";
+import { HomePage } from "./home/HomePage";
 import { ImageView } from "./images/ImageView";
 import { LiveMode } from "./live/LiveMode";
 import { ProfilePage } from "./profile/ProfilePage";
@@ -20,6 +21,7 @@ const NAV: { route: Route; label: string }[] = [
 
 const TITLES: Record<Route, string> = {
   welcome: "ChromaFix",
+  home: "Home · ChromaFix",
   screening: "Screening · ChromaFix",
   profile: "Your profile · ChromaFix",
   images: "Recolor an image · ChromaFix",
@@ -51,7 +53,7 @@ export function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <a className="wordmark" href={routeHref("welcome")}>
+        <a className="wordmark" href={routeHref("home")}>
           ChromaFix
         </a>
         <nav className="app-nav" aria-label="Sections">
@@ -76,6 +78,7 @@ export function App() {
         </a>
       </header>
       <main className="app-main">
+        {route === "home" && <HomePage profile={profile} source={source} />}
         {route === "screening" && <ScreeningView onScored={onScored} />}
         {route === "profile" && <ProfilePage state={state} onChange={setState} />}
         {route === "images" && <ImageView profile={profile} />}

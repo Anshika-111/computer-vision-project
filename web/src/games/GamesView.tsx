@@ -1,4 +1,5 @@
-// Color-match mini-game: pick the outlined region that answers the prompt, log every trial. Author: Iris.
+// Mini-games (color match, ripe fruit): pick the outlined region that answers the prompt, log
+// every trial. One session plays every game back to back. Author: Iris.
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import {
@@ -15,7 +16,24 @@ import {
 import { profileLabel } from "../profile/profileStore";
 import { routeHref } from "../router";
 
-const GAME = "color_match";
+/** Games in one session. Answer keys live in server/games/<id>.json. */
+const GAMES = [
+  { id: "color_match", title: "Color match" },
+  { id: "ripe_fruit", title: "Ripe fruit" },
+] as const;
+
+/** Odd participant numbers play the games in listed order, even numbers in reverse,
+ * so neither game is always played first (when players are fresher or less practiced). */
+function gameOrder(participantId: string): (typeof GAMES)[number][] {
+  const odd = Number(participantId.slice(1)) % 2 === 1;
+  return odd ? [...GAMES] : [...GAMES].reverse();
+}
+
+/** A server trial plus the game it belongs to (trial_id is unique only within a game). */
+interface SessionTrial extends GameTrial {
+  game: string;
+  gameTitle: string;
+}
 
 const CONDITION_LABELS: Record<Method, string> = {
   none: "No recoloring",
@@ -42,7 +60,7 @@ interface Session {
   /** Locked when the session starts, so changing the profile mid-game has no effect. */
   profile: CVDProfile;
   simulateView: boolean;
-  trials: GameTrial[];
+  trials: SessionTrial[];
 }
 
 /** e.g. s_20261127_142305 (local time). Matches the server's safe-id pattern. */
@@ -55,7 +73,7 @@ function newSessionId(): string {
 }
 
 /** The image the player sees: recolored for the trial's condition, then optionally simulated. */
-async function prepareImage(trial: GameTrial, session: Session): Promise<string> {
+async function prepareImage(trial: SessionTrial, session: Session): Promise<string> {
   const original = await getGameImage(trial.image_id);
   const recolored = await recolorImage(original, session.profile, trial.condition);
   // Recolor first, then simulate (S @ R): how a viewer with this profile sees the result.
@@ -94,7 +112,17 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
     setStarting(true);
     setError(null);
     try {
-      const trials = await getGameTrials(GAME, participantId);
+      const order = gameOrder(participantId);
+      const lists = await Promise.all(
+        order.map(async (g) =>
+          (await getGameTrials(g.id, participantId)).map((t) => ({
+            ...t,
+            game: g.id,
+            gameTitle: g.title,
+          })),
+        ),
+      );
+      const trials: SessionTrial[] = lists.flat();
       prepared.current.forEach((p) => p.then(URL.revokeObjectURL, () => undefined));
       prepared.current = new Map();
       setResults([]);
@@ -152,7 +180,7 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
       session_id: session.sessionId,
       participant_id: session.participantId,
       profile: session.profile,
-      game: GAME,
+      game: trial.game,
       trial_id: trial.trial_id,
       image_id: trial.image_id,
       condition: trial.condition,
@@ -198,7 +226,11 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
           </>
         ) : (
           <>
-            <h1>Color match</h1>
+            <h1>Mini-games</h1>
+            <p>
+              Two short games, {GAMES.map((g) => g.title).join(" and ")}, played one after the
+              other.
+            </p>
             <ol className="game-steps">
               <li>Each round shows one image with two outlined regions, labeled A and B.</li>
               <li>Read the question above the image.</li>
@@ -289,7 +321,8 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
       <div className="screening-progress">
         <div className="screening-progress-text">
           <span>
-            Round {index + 1} of {total} · Participant {session.participantId}
+            {trial!.gameTitle} · Round {index + 1} of {total} · Participant{" "}
+            {session.participantId}
           </span>
           <a
             href={routeHref("games")}

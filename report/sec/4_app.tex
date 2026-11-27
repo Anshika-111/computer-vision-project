@@ -82,16 +82,18 @@ Because of the project timeline, the game is run in short demonstration sessions
 a formally recruited study. Each session runs on one laptop in a desktop browser. Before
 playing, the participant is told that the session is anonymous, that only their answers and
 response times are recorded under a code instead of their name, and that they may stop at any
-time. A session consists of an optional screening, the 12 game rounds, and the per-condition
-summary the game shows at the end. For participants with normal vision the profile is set to
-deutan at severity 1.0, the most common deficiency~\cite{birch2012}, which matches the mostly
-red--green rounds; participants whose screening finds a CVD keep their own profile.
+time. A session consists of the screening, the 12 game rounds, and the per-condition summary
+the game shows at the end. The screening result (type and severity, under the participant's
+code and without a name) is written to a separate table before the game starts, because the
+game log stores only the profile applied during play. For participants with normal vision that
+profile is set to deutan at severity 1.0, the most common deficiency~\cite{birch2012}, which
+matches the mostly red--green rounds; participants whose screening finds a CVD keep their own
+profile. The analysis in \cref{sec:study} decides who has a CVD from the screening table only,
+never from the applied profile.
 % Participant counts come from the real logs via results/report/study_numbers.tex
 % (scripts/analyze_study.py); never type them by hand.
 \ifnum\StudyParticipants>0
-\StudyParticipants{} people took part in \StudySessions{} sessions. Because the log records
-the profile that was applied rather than the screening result, players with a simulated
-deficiency cannot be told apart from players with a real one in the logs.
+\StudyParticipants{} people took part in \StudySessions{} sessions.
 \else
 No sessions had been logged at the time of writing.
 \fi

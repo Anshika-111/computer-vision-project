@@ -1,0 +1,14 @@
+[
+  {"image_id": "food_0005", "pair_id": "food_0005_p1", "prompt": "Which apple is green?", "correct": "b"},
+  {"image_id": "food_0006", "pair_id": "food_0006_p0", "prompt": "Which apple is red?", "correct": "a"},
+  {"image_id": "food_0006", "pair_id": "food_0006_p1", "prompt": "Which apple is green?", "correct": "b"},
+  {"image_id": "food_0007", "pair_id": "food_0007_p0", "prompt": "Which tomato is ripe (red)?", "correct": "a"},
+  {"image_id": "food_0008", "pair_id": "food_0008_p1", "prompt": "Which pepper is green?", "correct": "b"},
+  {"image_id": "food_0008", "pair_id": "food_0008_p2", "prompt": "Which pepper is red?", "correct": "a"},
+  {"image_id": "food_0010", "pair_id": "food_0010_p1", "prompt": "Which bananas are ripe (yellow)?", "correct": "b"},
+  {"image_id": "food_0010", "pair_id": "food_0010_p2", "prompt": "Which bananas are unripe (green)?", "correct": "a"},
+  {"image_id": "food_0015", "pair_id": "food_0015_p0", "prompt": "Which part is the green rind?", "correct": "b"},
+  {"image_id": "food_0034", "pair_id": "food_0034_p0", "prompt": "Which is the red tomato?", "correct": "a"},
+  {"image_id": "food_0034", "pair_id": "food_0034_p1", "prompt": "Which is the green basil leaf?", "correct": "b"},
+  {"image_id": "food_0037", "pair_id": "food_0037_p0", "prompt": "Which part is the pink skin?", "correct": "a"}
+]

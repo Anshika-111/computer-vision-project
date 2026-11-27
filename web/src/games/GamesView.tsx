@@ -1,4 +1,5 @@
-// Color-match mini-game: pick the outlined region that answers the prompt, log every trial. Author: Iris.
+// Mini-games (color match, ripe fruit): pick the outlined region that answers the prompt, log
+// every trial. One session plays every game back to back. Author: Iris.
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import {
@@ -15,7 +16,39 @@ import {
 import { profileLabel } from "../profile/profileStore";
 import { routeHref } from "../router";
 
-const GAME = "color_match";
+/** Games in one session. Answer keys live in server/games/<id>.json. */
+const GAMES = [
+  { id: "color_match", title: "Color match" },
+  { id: "ripe_fruit", title: "Ripe fruit" },
+] as const;
+
+type Game = (typeof GAMES)[number];
+
+/** The game this participant should start with: odd numbers start with the first game, even
+ * numbers with the second, so neither game is always played first (when players are fresher or
+ * less practiced). The researcher can still pick either; the session always plays both. */
+function suggestedFirst(participantId: string): Game["id"] {
+  return Number(participantId.slice(1)) % 2 === 1 ? GAMES[0].id : GAMES[1].id;
+}
+
+/** Every game, starting with `first`. */
+function gameOrder(first: Game["id"]): Game[] {
+  return [...GAMES.filter((g) => g.id === first), ...GAMES.filter((g) => g.id !== first)];
+}
+
+/** Which game of the session a trial index falls in. */
+interface SessionPart {
+  title: string;
+  /** Index of the part's first trial in Session.trials. */
+  start: number;
+  length: number;
+}
+
+/** A server trial plus the game it belongs to (trial_id is unique only within a game). */
+interface SessionTrial extends GameTrial {
+  game: string;
+  gameTitle: string;
+}
 
 const CONDITION_LABELS: Record<Method, string> = {
   none: "No recoloring",
@@ -42,7 +75,8 @@ interface Session {
   /** Locked when the session starts, so changing the profile mid-game has no effect. */
   profile: CVDProfile;
   simulateView: boolean;
-  trials: GameTrial[];
+  trials: SessionTrial[];
+  parts: SessionPart[];
 }
 
 /** e.g. s_20261127_142305 (local time). Matches the server's safe-id pattern. */
@@ -55,7 +89,7 @@ function newSessionId(): string {
 }
 
 /** The image the player sees: recolored for the trial's condition, then optionally simulated. */
-async function prepareImage(trial: GameTrial, session: Session): Promise<string> {
+async function prepareImage(trial: SessionTrial, session: Session): Promise<string> {
   const original = await getGameImage(trial.image_id);
   const recolored = await recolorImage(original, session.profile, trial.condition);
   // Recolor first, then simulate (S @ R): how a viewer with this profile sees the result.
@@ -81,6 +115,8 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [starting, setStarting] = useState(false);
+  // True on the break screen between two games; the next game starts on a button press.
+  const [between, setBetween] = useState(false);
 
   // Image URLs being prepared, by trial index, so the next trial loads while this one shows.
   const prepared = useRef(new Map<number, Promise<string>>());
@@ -90,16 +126,40 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
   const done = session !== null && index >= session.trials.length;
   const trial = session && !done ? session.trials[index] : null;
 
-  const start = async () => {
+  const start = async (first: Game["id"]) => {
     setStarting(true);
     setError(null);
     try {
-      const trials = await getGameTrials(GAME, participantId);
+      const order = gameOrder(first);
+      const lists = await Promise.all(
+        order.map(async (g) =>
+          (await getGameTrials(g.id, participantId)).map((t) => ({
+            ...t,
+            game: g.id,
+            gameTitle: g.title,
+          })),
+        ),
+      );
+      const trials: SessionTrial[] = lists.flat();
+      let offset = 0;
+      const parts = lists.map((list, i) => {
+        const part = { title: order[i]?.title ?? "", start: offset, length: list.length };
+        offset += list.length;
+        return part;
+      });
       prepared.current.forEach((p) => p.then(URL.revokeObjectURL, () => undefined));
       prepared.current = new Map();
       setResults([]);
       setIndex(0);
-      setSession({ sessionId: newSessionId(), participantId, profile, simulateView, trials });
+      setBetween(false);
+      setSession({
+        sessionId: newSessionId(),
+        participantId,
+        profile,
+        simulateView,
+        trials,
+        parts,
+      });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : String(cause));
     } finally {
@@ -152,7 +212,7 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
       session_id: session.sessionId,
       participant_id: session.participantId,
       profile: session.profile,
-      game: GAME,
+      game: trial.game,
       trial_id: trial.trial_id,
       image_id: trial.image_id,
       condition: trial.condition,
@@ -163,12 +223,17 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
     }).catch((cause) =>
       setError(`Trial was not logged: ${cause instanceof Error ? cause.message : cause}`),
     );
-    setIndex((i) => i + 1);
-  }, [session, trial]);
+    const next = index + 1;
+    // Finished a game that is not the last one: show the break screen before the next game.
+    if (next < session.trials.length && session.parts.some((part) => part.start === next)) {
+      setBetween(true);
+    }
+    setIndex(next);
+  }, [session, trial, index]);
 
   // A and B keys answer the current round once its image is showing.
   useEffect(() => {
-    if (!trial || !size) return;
+    if (!trial || !size || between) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
       const target = event.target as HTMLElement | null;
@@ -181,7 +246,7 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [trial, size, answer]);
+  }, [trial, size, answer, between]);
 
   if (!session || done) {
     const idInvalid = participantId !== "" && !participantValid;
@@ -191,14 +256,18 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
           <>
             <h1>Session complete</h1>
             <p>
-              Thank you. All {session.trials.length} rounds are saved under participant{" "}
-              {session.participantId}.
+              Thank you. Both games, all {session.trials.length} rounds, are saved under
+              participant {session.participantId}.
             </p>
             <ResultsTable results={results} />
           </>
         ) : (
           <>
-            <h1>Color match</h1>
+            <h1>Mini-games</h1>
+            <p>
+              Two short games, {GAMES.map((g) => g.title).join(" and ")}. Pick either one to
+              start; the other follows right after, so every session plays both.
+            </p>
             <ol className="game-steps">
               <li>Each round shows one image with two outlined regions, labeled A and B.</li>
               <li>Read the question above the image.</li>
@@ -238,7 +307,7 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
           className="game-form"
           onSubmit={(e) => {
             e.preventDefault();
-            if (participantValid && !starting) void start();
+            if (participantValid && !starting) void start(suggestedFirst(participantId));
           }}
         >
           <div className="field">
@@ -270,13 +339,29 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
             />
             Demo only: simulate this profile, for viewers with typical color vision
           </label>
-          <button
-            type="submit"
-            className="primary button-lg"
-            disabled={!participantValid || starting || profileIsExample}
-          >
-            {starting ? "Loading rounds…" : done ? "Start another session" : "Start"}
-          </button>
+          <div className="game-choice" role="group" aria-label="Start with">
+            {GAMES.map((g) => {
+              const suggested = participantValid && suggestedFirst(participantId) === g.id;
+              return (
+                <button
+                  key={g.id}
+                  type="button"
+                  className={suggested ? "primary button-lg" : "button-lg"}
+                  disabled={!participantValid || starting || profileIsExample}
+                  onClick={() => void start(g.id)}
+                >
+                  {starting ? "Loading rounds…" : `Start with ${g.title}`}
+                </button>
+              );
+            })}
+          </div>
+          <span className="muted">
+            {participantValid
+              ? `Suggested for ${participantId}: start with ${
+                  GAMES.find((g) => g.id === suggestedFirst(participantId))?.title
+                }, so the game order stays balanced across participants.`
+              : "Enter a participant ID to start."}
+          </span>
         </form>
         {error && <p role="alert">{error}</p>}
       </section>
@@ -284,12 +369,38 @@ export function GamesView({ profile, profileIsExample }: GamesViewProps) {
   }
 
   const total = session.trials.length;
+  const partIndex = session.parts.findIndex((p) => index >= p.start && index < p.start + p.length);
+  const part = session.parts[partIndex];
+
+  if (between && part) {
+    const finished = session.parts[partIndex - 1];
+    return (
+      <section className="game-setup">
+        <p className="muted">
+          Game {partIndex} of {session.parts.length} done · Participant {session.participantId}
+        </p>
+        <h1>{finished?.title ?? "Game"} complete</h1>
+        <p>
+          Nice work. Next is <strong>{part.title}</strong>, {part.length} rounds, same rules:
+          read the question, then click A or B, or press the A or B key.
+        </p>
+        <div>
+          <button type="button" className="primary button-lg" onClick={() => setBetween(false)}>
+            Start {part.title}
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="game">
       <div className="screening-progress">
         <div className="screening-progress-text">
           <span>
-            Round {index + 1} of {total} · Participant {session.participantId}
+            {trial!.gameTitle} (game {partIndex + 1} of {session.parts.length}) · Round{" "}
+            {index - (part?.start ?? 0) + 1} of {part?.length ?? total} · Participant{" "}
+            {session.participantId}
           </span>
           <a
             href={routeHref("games")}

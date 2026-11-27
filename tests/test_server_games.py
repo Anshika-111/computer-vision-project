@@ -171,13 +171,17 @@ def test_image_id_pattern_blocks_paths(client: TestClient) -> None:
 # --- the real answer key -----------------------------------------------------
 
 
-def test_real_color_match_key_is_valid() -> None:
-    """The shipped answer key only uses annotated test-split images."""
+@pytest.mark.parametrize("game", ["color_match", "ripe_fruit"])
+def test_real_answer_key_is_valid(game: str) -> None:
+    """Each shipped answer key only uses annotated test-split images, balanced A/B."""
     app.dependency_overrides[game_conditions] = lambda: ["none", "fixed"]
     try:
-        body = trials(TestClient(app), "P01")
+        body = trials(TestClient(app), "P01", game)
     finally:
         app.dependency_overrides.clear()
     assert len(body) >= 8
     answers = [t["correct_answer"] for t in body]
     assert answers.count("a") == answers.count("b")
+    # Both conditions appear, and no region pair is asked twice.
+    assert {t["condition"] for t in body} == {"none", "fixed"}
+    assert len({t["pair_id"] for t in body}) == len(body)

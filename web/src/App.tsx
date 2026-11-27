@@ -1,4 +1,4 @@
-// App shell: header with nav and profile chip, shared CVD profile, one page per route. Author: Iris.
+// App shell: header, nav (or tab bar when installed), profile chip, one page per route. Author: Iris.
 import { useCallback, useEffect } from "react";
 
 import type { CVDProfile } from "./api";
@@ -10,6 +10,7 @@ import { ProfilePage } from "./profile/ProfilePage";
 import { profileLabel, useProfileStore } from "./profile/profileStore";
 import { routeHref, useRoute, type Route } from "./router";
 import { ScreeningView } from "./screening/ScreeningView";
+import { TabBar } from "./TabBar";
 import { WelcomePage } from "./welcome/WelcomePage";
 
 const NAV: { route: Route; label: string }[] = [
@@ -87,6 +88,7 @@ export function App() {
           <GamesView profile={profile} profileIsExample={source === "example"} />
         )}
       </main>
+      <TabBar route={route} />
     </div>
   );
 }

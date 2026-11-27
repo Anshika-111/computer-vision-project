@@ -1813,3 +1813,91 @@ button,
     min-height: 72px;
   }
 }
+
+/* ---------- Installed app (opened from the home screen) ----------
+   <html data-standalone> is set by displayMode.ts. No browser bars here, so the app supplies
+   its own: a bottom tab bar instead of the top nav, and padding for the notch and home
+   indicator (env(safe-area-inset-*), enabled by viewport-fit=cover in index.html). */
+
+.tab-bar {
+  display: none;
+}
+
+:root[data-standalone] .app {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+:root[data-standalone] .app-nav {
+  display: none;
+}
+
+:root[data-standalone] .app-header {
+  padding-bottom: var(--space-1);
+}
+
+:root[data-standalone] .tab-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  /* The bar's background runs down behind the home indicator. */
+  padding: var(--space-1) 2px env(safe-area-inset-bottom);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.tab-bar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 52px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 30px;
+  border-radius: var(--radius);
+}
+
+.tab-icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Selected tab: black fill behind the icon and a bold label, never hue. */
+.tab-bar a[aria-current="page"] {
+  font-weight: 700;
+}
+
+.tab-bar a[aria-current="page"] .tab-icon {
+  background: var(--ink);
+  color: var(--surface-strong);
+}
+
+/* During a plate or a study round the tab bar goes too; Stop and Leave are the exits. */
+:root[data-standalone][data-focus] .tab-bar {
+  display: none;
+}
+
+:root[data-standalone][data-focus] .app-main {
+  padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
+}
+
+:root[data-standalone] .live-stage:has(.live-view) {
+  top: env(safe-area-inset-top);
+}

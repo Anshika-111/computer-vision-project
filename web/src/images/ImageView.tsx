@@ -10,6 +10,7 @@ import {
   type CVDProfile,
   type Method,
 } from "../api";
+import { isStandalone } from "../displayMode";
 import { typeLabel } from "../profile/profileStore";
 import { routeHref } from "../router";
 
@@ -150,6 +151,27 @@ export function ImageView({ profile }: ImageViewProps) {
     />
   );
 
+  // Installed iPhone apps ignore download links, so there the share sheet saves the image.
+  const canShare = isStandalone() && typeof navigator.canShare === "function";
+
+  const share = async () => {
+    if (!downloadUrl || !file) return;
+    const blob = await (await fetch(downloadUrl)).blob();
+    const png = new File([blob], downloadName(file), { type: "image/png" });
+    if (!navigator.canShare({ files: [png] })) {
+      setError("This device can't share images. Open ChromaFix in the browser to download it.");
+      return;
+    }
+    try {
+      await navigator.share({ files: [png] });
+    } catch (cause) {
+      // Closing the share sheet is not an error.
+      if (!(cause instanceof DOMException && cause.name === "AbortError")) {
+        setError(`Couldn't share the image: ${cause instanceof Error ? cause.message : cause}`);
+      }
+    }
+  };
+
   const profileText = describe(profile);
   const recoloredCaption =
     method === "none" ? "Not recolored" : `Recolored · ${METHOD_LABELS[method].toLowerCase()}`;
@@ -220,7 +242,11 @@ export function ImageView({ profile }: ImageViewProps) {
               <button type="button" onClick={() => inputRef.current?.click()}>
                 Choose another image
               </button>
-              {downloadUrl && !busy ? (
+              {downloadUrl && !busy && canShare ? (
+                <button type="button" className="primary" onClick={() => void share()}>
+                  Save or share
+                </button>
+              ) : downloadUrl && !busy ? (
                 <a className="button primary" href={downloadUrl} download={downloadName(file)}>
                   Download recolored PNG
                 </a>

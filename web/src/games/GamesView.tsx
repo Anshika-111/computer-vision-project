@@ -1,5 +1,5 @@
 // Color-match mini-game: pick the outlined region that answers the prompt, log every trial. Author: Iris.
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import {
   getGameImage,
@@ -12,6 +12,8 @@ import {
   type GameTrial,
   type Method,
 } from "../api";
+import { profileLabel } from "../profile/profileStore";
+import { routeHref } from "../router";
 
 const GAME = "color_match";
 
@@ -24,6 +26,8 @@ const CONDITION_LABELS: Record<Method, string> = {
 
 interface GamesViewProps {
   profile: CVDProfile;
+  /** True while the app only has the example profile; sessions must not log it. */
+  profileIsExample: boolean;
 }
 
 interface TrialResult {
@@ -64,9 +68,12 @@ function centroid(points: [number, number][]): [number, number] {
   return [sum[0] / points.length, sum[1] / points.length];
 }
 
-export function GamesView({ profile }: GamesViewProps) {
-  const [participantId, setParticipantId] = useState("P01");
-  const [simulateView, setSimulateView] = useState(true);
+export function GamesView({ profile, profileIsExample }: GamesViewProps) {
+  const ids = useId();
+  const [participantId, setParticipantId] = useState("");
+  // Off by default: a participant with CVD must see the recolored image directly.
+  // Simulation is only for demos to viewers with typical color vision.
+  const [simulateView, setSimulateView] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<TrialResult[]>([]);
@@ -134,7 +141,7 @@ export function GamesView({ profile }: GamesViewProps) {
     return () => map.forEach((p) => p.then(URL.revokeObjectURL, () => undefined));
   }, []);
 
-  const answer = (side: GameSide) => {
+  const answer = useCallback((side: GameSide) => {
     if (!session || !trial || shownAt.current === null) return;
     const rtMs = Math.round(performance.now() - shownAt.current);
     // One answer per trial, even on a fast double click.
@@ -157,57 +164,148 @@ export function GamesView({ profile }: GamesViewProps) {
       setError(`Trial was not logged: ${cause instanceof Error ? cause.message : cause}`),
     );
     setIndex((i) => i + 1);
-  };
+  }, [session, trial]);
+
+  // A and B keys answer the current round once its image is showing.
+  useEffect(() => {
+    if (!trial || !size) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
+      const target = event.target as HTMLElement | null;
+      if (target && ["INPUT", "SELECT", "TEXTAREA"].includes(target.tagName)) return;
+      const side = event.key.toLowerCase();
+      if ((side === "a" || side === "b") && trial.options.includes(side)) {
+        event.preventDefault();
+        answer(side);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [trial, size, answer]);
 
   if (!session || done) {
+    const idInvalid = participantId !== "" && !participantValid;
     return (
-      <section className="game">
-        <h2>Color match</h2>
-        <p>
-          Each round shows an image with two outlined regions, A and B. Pick the one that answers
-          the question as fast as you can. Rounds use different recoloring methods.
-        </p>
-        {profile.type === "normal" && (
+      <section className="game-setup">
+        {done ? (
+          <>
+            <h1>Session complete</h1>
+            <p>
+              Thank you. All {session.trials.length} rounds are saved under participant{" "}
+              {session.participantId}.
+            </p>
+            <ResultsTable results={results} />
+          </>
+        ) : (
+          <>
+            <h1>Color match</h1>
+            <ol className="game-steps">
+              <li>Each round shows one image with two outlined regions, labeled A and B.</li>
+              <li>Read the question above the image.</li>
+              <li>
+                Click <strong>A</strong> or <strong>B</strong>, or press the A or B key. Answer as
+                quickly as you can while staying accurate.
+              </li>
+            </ol>
+            <p className="muted">
+              Rounds use different recoloring methods. The next round starts right after you
+              answer.
+            </p>
+          </>
+        )}
+
+        {profileIsExample ? (
           <p role="alert">
-            Your profile is normal vision, so every method shows the same image. Pick a CVD type
-            on your <a href="#profile">profile</a> page for the demo.
+            You need a profile before starting. <a href={routeHref("screening")}>Take the
+            screening</a>, or set your type on the <a href={routeHref("profile")}>profile</a> page.
+          </p>
+        ) : (
+          <div className="game-profile">
+            <span>
+              Profile for every round: <strong>{profileLabel(profile)}</strong>
+            </span>
+            <a href={routeHref("profile")}>Change</a>
+          </div>
+        )}
+        {!profileIsExample && profile.type === "normal" && (
+          <p role="alert">
+            Your profile is typical color vision, so every method shows the same image. Pick a CVD
+            type on your <a href={routeHref("profile")}>profile</a> page for the demo.
           </p>
         )}
-        <div className="toolbar">
-          <label>
-            Participant ID{" "}
+
+        <form
+          className="game-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (participantValid && !starting) void start();
+          }}
+        >
+          <div className="field">
+            <label className="field-label" htmlFor={`${ids}-pid`}>
+              Participant ID
+            </label>
             <input
+              id={`${ids}-pid`}
               value={participantId}
-              onChange={(e) => setParticipantId(e.target.value.trim())}
-              size={6}
-              aria-invalid={!participantValid}
+              onChange={(e) => setParticipantId(e.target.value.trim().toUpperCase())}
+              placeholder="P07"
+              autoComplete="off"
+              spellCheck={false}
+              size={8}
+              aria-invalid={idInvalid}
+              aria-describedby={`${ids}-pid-hint`}
             />
-          </label>
-          <label>
+            <span id={`${ids}-pid-hint`} className={idInvalid ? "field-error" : "muted"}>
+              {idInvalid
+                ? "Use P followed by up to 4 digits, like P07."
+                : "The anonymous ID you were given, like P07. No names are stored."}
+            </span>
+          </div>
+          <label className="game-sim">
             <input
               type="checkbox"
               checked={simulateView}
               onChange={(e) => setSimulateView(e.target.checked)}
-            />{" "}
-            Show images as a viewer with this profile sees them
+            />
+            Demo only: simulate this profile, for viewers with typical color vision
           </label>
-          <button onClick={() => void start()} disabled={!participantValid || starting}>
-            {done ? "Play again" : "Start"}
+          <button
+            type="submit"
+            className="primary button-lg"
+            disabled={!participantValid || starting || profileIsExample}
+          >
+            {starting ? "Loading rounds…" : done ? "Start another session" : "Start"}
           </button>
-        </div>
-        <p className="muted">Use an anonymous ID like P07. No names are stored.</p>
+        </form>
         {error && <p role="alert">{error}</p>}
-        {done && <ResultsTable results={results} />}
       </section>
     );
   }
 
+  const total = session.trials.length;
   return (
     <section className="game">
-      <p className="muted">
-        Round {index + 1} of {session.trials.length}
-      </p>
-      <h2>{trial!.prompt}</h2>
+      <div className="screening-progress">
+        <div className="screening-progress-text">
+          <span>
+            Round {index + 1} of {total} · Participant {session.participantId}
+          </span>
+          <a
+            href={routeHref("games")}
+            onClick={(e) => {
+              e.preventDefault();
+              setSession(null);
+            }}
+          >
+            Leave session
+          </a>
+        </div>
+        <progress value={index} max={total} aria-label={`${index} of ${total} rounds answered`} />
+      </div>
+
+      <h1 className="game-prompt">{trial!.prompt}</h1>
+
       <div className="game-stage">
         {imageUrl ? (
           <>
@@ -245,21 +343,25 @@ export function GamesView({ profile }: GamesViewProps) {
             )}
           </>
         ) : (
-          <p className="muted">Loading…</p>
+          <p className="game-loading">Loading the image…</p>
         )}
       </div>
-      <div className="answer-buttons">
+
+      <div className="answer-buttons" role="group" aria-label="Your answer">
         {trial!.options.map((side) => (
-          <button key={side} onClick={() => answer(side)} disabled={!size}>
+          <button key={side} type="button" onClick={() => answer(side)} disabled={!size}>
             {side.toUpperCase()}
           </button>
         ))}
       </div>
+      <p className="muted game-hint">Click A or B, or press the A or B key.</p>
+
       {error && (
-        <div>
+        <div className="toolbar">
           <p role="alert">{error}</p>
           {!imageUrl && (
             <button
+              type="button"
               onClick={() => {
                 // Not logged: the player never saw this round.
                 setError(null);

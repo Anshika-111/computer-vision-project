@@ -80,7 +80,9 @@ export function App() {
         {route === "profile" && <ProfilePage state={state} onChange={setState} />}
         {route === "images" && <ImageView profile={profile} />}
         {route === "live" && <LiveMode profile={profile} />}
-        {route === "games" && <GamesView profile={profile} />}
+        {route === "games" && (
+          <GamesView profile={profile} profileIsExample={source === "example"} />
+        )}
       </main>
     </div>
   );
